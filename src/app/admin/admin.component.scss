@@ -1,99 +1,137 @@
 // Media breakpoint mixin
 @mixin for-size($size) {
-	// No media query for `xs` since this is the default
+  // No media query for `xs` since this is the default
 
-	// Small devices (landscape phones, 576px and up)
-	@if $size == sm {
-		@media (min-width: 576px) {
-			@content;
-		}
-	} @else if $size == md {
-		@media (min-width: 768px) {
-			@content;
-		}
-	} @else if $size == lg {
-		@media (min-width: 992px) {
-			@content;
-		}
-	} @else if $size == xl {
-		@media (min-width: 1200px) {
-			@content;
-		}
+  // Small devices (landscape phones, 576px and up)
+  @if $size == sm {
+    @media (min-width: 576px) {
+      @content;
+    }
+  } @else if $size == md {
+    @media (min-width: 768px) {
+      @content;
+    }
+  } @else if $size == lg {
+    @media (min-width: 992px) {
+      @content;
+    }
+  } @else if $size == xl {
+    @media (min-width: 1200px) {
+      @content;
+    }
+  }
+}
+@mixin for-size-reverse($size) {
+  @if $size == sm {
+    @media (max-width: 576px) {
+      @content;
+    }
+  } @else if $size == md {
+    @media (max-width: 768px) {
+      @content;
+    }
+  } @else if $size == lg {
+    @media (max-width: 992px) {
+      @content;
+    }
+  } @else if $size == xl {
+    @media (max-width: 1200px) {
+      @content;
+    }
+  }
+}
+
+
+
+#admin-wrapper {
+	padding: 31px 0 0 160px;
+	@include for-size-reverse(md) {
+		padding-left: 0;
 	}
 }
-body {
-	padding: 31px 0 0 160px;
-	min-height: 100vh;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-		Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+
+.p-side-nav {
+  padding-left: 160px !important;
 }
 
 .top-navbar {
-	min-width: 250px;
-	margin: 0 !important;
-	padding: 0 !important;
-	background-color: rgb(35, 40, 45) !important;
-	z-index: 1500;	
-	.hamburger-icon {
-		color: #eee;
-		&:hover {
-			cursor: pointer;
-			color: #fff;
-		}
-	}
-	.nav-item.active {
-		a,
-		i {
-			color: #fff !important;
-		}
+  min-width: 250px;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: rgb(35, 40, 45) !important;
+  z-index: 1500;
+  .hamburger-icon {
+    color: #eee;
+    &:hover {
+      cursor: pointer;
+      color: #fff;
+    }
+  }
+  .nav-item.active {
+    a,
+    i {
+      color: #fff !important;
+    }
 
-		background-color: rgb(50, 55, 60) !important;
-	}
-	.navbar-nav {
-		.nav-link {
-			i {
-				color: #aaa;
-			}
-			vertical-align: middle;
-			text-transform: capitalize;
-			&:hover {
-				color: #fff;
-			}
-			color: #eee;
-			padding: 6px 10px;
-		}
-		i.nav-icon-mr {
-			margin-right: 6px;
-		}
-	}
-	font-size: 13px;
+    background-color: rgb(50, 55, 60) !important;
+  }
+  .navbar-nav {
+    .nav-link {
+      i {
+        color: #aaa;
+      }
+      vertical-align: middle;
+      text-transform: capitalize;
+      &:hover {
+        color: #fff;
+      }
+      color: #eee;
+      padding: 6px 10px;
+    }
+    i.nav-icon-mr {
+      margin-right: 6px;
+    }
+    #side-nav-collapse {
+      @include for-size(md) {
+        display: none;
+      }
+    }
+  }
+  font-size: 13px;
 }
 
 .side-navbar {
-	z-index: 1000;
-	position: fixed;
-	padding: 42px 0 0;
-	top: 0px;
-	left: 0;
-	background-color: rgb(35, 40, 45) !important;
-	min-width: 160px;
-	width: 160px;
-	height: 100vh;
-	box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-	transition: all 0.4s;
-	nav {
-		a {
-			&.active {
-				background-color: rgb(50, 55, 60) !important;
-				color: #fff !important;
-				i {
-					color: #fff !important;
-				}
-			}
-			color: #eee;
-			i {
-				color: #aaa;
-			}
-		}
+	@include for-size-reverse(md) {
+		display: none;
 	}
+	@include for-size(md) {
+		display: block!important;
+	}
+  z-index: 1000;
+  position: fixed;
+  padding: 42px 0 0;
+  top: 0px;
+  left: 0;
+  background-color: rgb(35, 40, 45) !important;
+  min-width: 160px;
+  width: 160px;
+  height: 100vh;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s;
+  nav {
+    a {
+      position: relative;
+      &.active {
+        background-color: rgb(50, 55, 60) !important;
+        color: #fff !important;
+        i {
+          color: #fff !important;
+        }
+      }
+      color: #eee;
+      i {
+        color: #aaa;
+      }
+    }
+  }
 }

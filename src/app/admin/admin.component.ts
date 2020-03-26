@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 
 @Component({
   selector: 'app-admin',
@@ -6,10 +12,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+  sideNavVisible: boolean;
+  constructor() {}
+  toggleSideNav() {
+    this.sideNavVisible = !this.sideNavVisible;
   }
-
+  ngOnInit() {}
 }

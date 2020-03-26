@@ -1,50 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
+<header>
+    <nav class="top-navbar navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
+        <ul class="navbar-nav flex-row">
+            <li class="nav-item">
+                <a (click)="toggleSideNav()" id="side-nav-collapse" class="nav-link hamburger-icon"><i
+                        class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-external-link-alt nav-icon-mr"></i>Visit
+                    Site</a></li>
+        </ul>
+        <ul class="ml-auto navbar-nav flex-row">
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-user nav-icon-mr"></i>Ali
+                    Raza</a>
+            </li>
+        </ul>
+    </nav>
+</header>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Admin Dashboard</title>
-    </head>
+<div [ngStyle]="{'display': sideNavVisible === true ? 'block' : sideNavVisible === false ? 'none' : null}"  class="side-navbar">
+    <nav class="nav flex-column mb-0">
 
-    <body>
-        <header>
-            <nav class="top-navbar navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
-                <ul class="navbar-nav flex-row">
-                    <li class="nav-item active">
-                        <!-- <a href="#" class="nav-link hamburger-icon"><i class="fas fa-bars"></i></a> -->
-                        <a href="#" class="nav-link hamburger-icon"><i style="color: #fff;" class="fas fa-bars"></i></a>
-                    </li>
-                    <li class="nav-item"><a href="#" class="nav-link"><i
-                                class="fas fa-external-link-alt nav-icon-mr"></i>Visit
-                            Site</a></li>
-                </ul>
-                <ul class="ml-auto navbar-nav flex-row">
-                    <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-user nav-icon-mr"></i>Ali
-                            Raza</a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+        <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: 'true'}" class="nav-link"><i
+                class="fas fa-fw fa-tachometer-alt mr-2"></i>Dashboard</a>
+        <a [routerLink]="['/admin/posts']" routerLinkActive="active" class="nav-link"><i
+                class="fas fa-fw fa-file mr-2"></i>Posts</a>
+        <a class="nav-link"><i class="fas fa-fw fa-comment mr-2"></i>Comments</a>
+        <a class="nav-link"><i class="fas fa-fw fa-users mr-2"></i>Users</a>
+        <a class="nav-link"><i class="fas fa-fw fa-cog mr-2"></i>Settings</a>
+    </nav>
+</div>
 
-        <div class="side-navbar">
-            <nav class="nav flex-column mb-0">
-                
-                <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: 'true'}" class="nav-link"><i
-                        class="fas fa-fw fa-tachometer-alt mr-2"></i>Dashboard</a>
-                <a [routerLink]="['/admin/posts']" routerLinkActive="active"  class="nav-link"><i class="fas fa-fw fa-file mr-2"></i>Posts</a>
-                <a class="nav-link"><i class="fas fa-fw fa-comment mr-2"></i>Comments</a>
-                <a class="nav-link"><i class="fas fa-fw fa-users mr-2"></i>Users</a>
-                <a class="nav-link"><i class="fas fa-fw fa-cog mr-2"></i>Settings</a>
-            </nav>
+<div [ngClass]="{'p-side-nav': sideNavVisible}" id="admin-wrapper">
+    <section id="main">
+        <div class="container">
+            <router-outlet></router-outlet>
         </div>
-
-        <section id="main">
-            <div class="container">
-                    <router-outlet></router-outlet>
-            </div>
-        </section>
-
-    </body>
-
-</html>
+    </section>
+</div>

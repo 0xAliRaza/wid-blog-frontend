@@ -3,19 +3,44 @@ import {
   OnInit,
   ViewEncapsulation,
   ViewChild,
-  ElementRef
-} from '@angular/core';
+  ElementRef,
+  OnDestroy,
+} from "@angular/core";
+import { User } from "./_models";
+import { Router } from "@angular/router";
+import { AuthenticationService } from "./_services";
+import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+  selector: "app-admin",
+  templateUrl: "./admin.component.html",
+  styleUrls: ["./admin.component.scss"],
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnDestroy {
   sideNavVisible: boolean;
-  constructor() {}
+  currentUser: User;
+  private authSubscription: Subscription;
+
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) {
+    this.authSubscription = this.authenticationService.currentUser.subscribe(
+      (x) => (this.currentUser = x)
+    );
+  }
+
   toggleSideNav() {
     this.sideNavVisible = !this.sideNavVisible;
   }
+
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(["/login"]);
+  }
+
   ngOnInit() {}
+  ngOnDestroy() {
+    this.authSubscription.unsubscribe();
+  }
 }

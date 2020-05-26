@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://wid-blog-backend/api'
+  apiUrl: 'http://localhost:8000/api'
 };
 
 /*

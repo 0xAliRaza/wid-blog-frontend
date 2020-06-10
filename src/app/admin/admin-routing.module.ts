@@ -23,7 +23,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: "login",
+    path: "admin/login",
     component: LoginComponent,
   },
 ];

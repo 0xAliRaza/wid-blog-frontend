@@ -6,7 +6,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { AdminRoutingModule } from "./admin-routing.module";
 import { AuthGuard } from "./_helpers/auth.guard";
 import { LoginComponent } from "./login/login.component";
-import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { JwtInterceptor, ErrorInterceptor } from "./_helpers";
 import { AuthenticationService } from "./_services";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -18,7 +18,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     DashboardComponent,
     PostsComponent,
   ],
-  imports: [CommonModule, AdminRoutingModule, ReactiveFormsModule],
+  imports: [CommonModule, AdminRoutingModule, ReactiveFormsModule, HttpClientModule],
   providers: [
     AuthenticationService,
     AuthGuard,

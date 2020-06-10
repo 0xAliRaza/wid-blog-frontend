@@ -1,17 +1,19 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { first } from "rxjs/operators";
 
 import { AuthenticationService } from "@admin/_services";
+import { Subscription } from "rxjs";
 
 @Component({ templateUrl: "login.component.html" })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
   returnUrl: string;
   error = "";
+  private loginSubscription: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,6 +27,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.loginForm.controls;
+  }
+
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       email: ["", Validators.required],
@@ -35,11 +42,6 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/admin";
   }
 
-  // convenience getter for easy access to form fields
-  get f() {
-    return this.loginForm.controls;
-  }
-
   onSubmit() {
     this.submitted = true;
 
@@ -48,8 +50,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
-    this.authenticationService
+    this.loginSubscription = this.authenticationService
       .login(this.f.email.value, this.f.password.value)
       .pipe(first())
       .subscribe(
@@ -57,9 +58,13 @@ export class LoginComponent implements OnInit {
           this.router.navigate([this.returnUrl]);
         },
         (error) => {
+          console.log(error);
           this.error = error;
-          this.loading = false;
         }
       );
+  }
+
+  ngOnDestroy() {
+    this.loginSubscription.unsubscribe();
   }
 }

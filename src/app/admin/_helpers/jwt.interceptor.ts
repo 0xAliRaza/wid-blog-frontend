@@ -4,29 +4,54 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpClient,
+  HttpHeaders,
 } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, throwError } from "rxjs";
 
 import { AuthenticationService } from "@admin/_services";
+import { environment } from "@environments/environment";
+import {
+  flatMap,
+  map,
+  mergeMap,
+  catchError,
+  switchMap,
+  concatMap,
+  tap,
+} from "rxjs/operators";
+import { User } from "../_models";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private http: HttpClient
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     // add authorization header with jwt token if available
-    let currentUser = this.authenticationService.currentUserValue;
-    if (currentUser && currentUser.token) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${currentUser.token}`,
-        },
-      });
+    if (!!this.currentUser && this.currentUser.token) {
+      request = this.cloneRequest(request);
     }
 
     return next.handle(request);
+  }
+
+  private cloneRequest(request: HttpRequest<any>) {
+    return request.clone({
+      setHeaders: {
+        Accept: `application/json`,
+        "Content-Type": `application/json`,
+        Authorization: `Bearer ${this.currentUser.token}`,
+      },
+    });
+  }
+
+  private get currentUser() {
+    return this.authenticationService.currentUserValue;
   }
 }

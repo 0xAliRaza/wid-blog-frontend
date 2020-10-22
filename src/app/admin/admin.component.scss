@@ -1,6 +1,11 @@
 @import "./sass/index.scss";
 @import "~bootstrap/scss/bootstrap.scss";
 
+:host {
+
+  background-color: $body-bg;
+}
+
 .header {
   &__nav {
     position: relative;
@@ -11,7 +16,6 @@
   }
   &__nav &__nav-link {
     padding: pxToRem(8);
-    // margin: 0 pxToRem(8);
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -24,6 +28,11 @@
     & > span {
       margin-left: pxToRem(5);
     }
+    &--menu {
+      @include media-breakpoint-up(md) {
+        display: none;
+      }
+    }
   }
 }
 
@@ -31,12 +40,31 @@
   display: flex;
 
   &__sidebar {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-110%);
     background-color: $color-grey-dark-3;
     position: absolute;
     top: $navbar-top-height;
     left: 0;
     height: calc(100vh - #{$navbar-top-height});
-    // flex-basis: pxToRem(200px);
+    transition: opacity .1s 0.3s, visibility .1s 0.3s,
+      transform 0.3s cubic-bezier(0.83, 0, 0.17, 1);
+    
+    &--show {
+      transition: transform 0.3s 0.01s cubic-bezier(0.83, 0, 0.17, 1);
+      opacity: 1;
+      visibility: visible;
+      transform: translate(0);
+    }
+    @include media-breakpoint-up(md) {
+      transition: transform 0.3s 0.01s cubic-bezier(0.83, 0, 0.17, 1);
+      position: initial;
+      flex-basis: pxToRem(200px);
+      opacity: 1;
+      visibility: visible;
+      transform: translate(0);
+    }
   }
 
   &__nav-list {
@@ -108,7 +136,6 @@
   }
 
   &__content {
-    background-color: $body-bg;
     flex: 1;
   }
 }

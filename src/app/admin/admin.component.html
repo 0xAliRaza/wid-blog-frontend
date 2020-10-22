@@ -1,7 +1,7 @@
 <header class="header">
     <nav class="header__nav">
         <div>
-            <a (click)="toggleSideNav()" id="side-nav-collapse" class="header__nav-link hamburger-icon">
+            <a (click)="toggleSideNav()" id="side-nav-collapse" class="header__nav-link header__nav-link--menu">
                 <svg-icon icon="menu"></svg-icon>
             </a>
             <a href="#" class="header__nav-link">
@@ -24,7 +24,7 @@
 
 <div class="main">
     <aside class="main__sidebar"
-        [ngStyle]="{'display': sideNavVisible === true ? 'flex' : sideNavVisible === false ? 'none' : null}">
+        [ngClass]="{'main__sidebar--show': sideNavVisible}">
         <nav class="main__nav">
             <ul class="main__nav-list">
                 <li class="main__nav-item active">

@@ -13,12 +13,22 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: "",
+        path: "dashboard",
         component: DashboardComponent,
       },
       {
         path: "posts",
         component: PostsComponent,
+      },
+      {
+        path: "",
+        redirectTo: "dashboard",
+        pathMatch: "full",
+      },
+      {
+        path: "**",
+        redirectTo: "dashboard",
+        pathMatch: "full",
       },
     ],
   },

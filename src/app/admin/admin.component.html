@@ -1,40 +1,96 @@
-<header>
-    <nav class="top-navbar navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
-        <ul class="navbar-nav flex-row">
-            <li class="nav-item">
-                <a (click)="toggleSideNav()" id="side-nav-collapse" class="nav-link hamburger-icon"><i
-                        class="fas fa-bars"></i></a>
-            </li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-external-link-alt nav-icon-mr"></i>Visit
-                    Site</a></li>
-        </ul>
-        <ul class="ml-auto navbar-nav flex-row">
-            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-user nav-icon-mr"></i>Ali
-                    Raza</a>
-            </li>
-            <li class="nav-item" *ngIf="currentUser"><a  class="nav-link" (click)="logout()">Logout</a>
-        </li>
-        </ul>
+<header class="header">
+    <nav class="header__nav">
+        <div>
+            <a (click)="toggleSideNav()" id="side-nav-collapse" class="header__nav-link hamburger-icon">
+                <svg-icon icon="menu"></svg-icon>
+            </a>
+            <a href="#" class="header__nav-link">
+                <svg-icon icon="external-link"></svg-icon>
+                <span>
+                    Visit Site
+                </span>
+            </a>
+        </div>
+        <div class="ml-auto navbar-nav">
+            <a href="#" class="header__nav-link">
+                <svg-icon icon="user"></svg-icon>
+                <span>John Doe</span>
+            </a>
+            <!-- <li class="nav-item" *ngIf="currentUser"><a class="nav-link" (click)="logout()">Logout</a>
+            </li> -->
+        </div>
     </nav>
 </header>
 
-<div [ngStyle]="{'display': sideNavVisible === true ? 'block' : sideNavVisible === false ? 'none' : null}"  class="side-navbar">
-    <nav class="nav flex-column mb-0">
+<div class="main">
+    <aside class="main__sidebar"
+        [ngStyle]="{'display': sideNavVisible === true ? 'flex' : sideNavVisible === false ? 'none' : null}">
+        <nav class="main__nav">
+            <ul class="main__nav-list">
+                <li class="main__nav-item active">
+                    <a href="#" class="main__nav-link">
+                        <svg-icon icon="home" class="main__nav-icon"></svg-icon>
+                        <span>Dashboard</span>
+                        <svg-icon icon="chevron-down" class="main__nav-icon"></svg-icon>
+                    </a>
+                    <div class="main__inner-nav">
+                        <a href="#" class="main__inner-nav-link">Graph</a>
+                        <a href="#" class="main__inner-nav-link active">Data</a>
+                        <a href="#" class="main__inner-nav-link">Stats</a>
+                    </div>
+                </li>
+                <li class="main__nav-item">
+                    <a href="#" class="main__nav-link">
+                        <svg-icon icon="files-empty" class="main__nav-icon"></svg-icon>
+                        <span>Posts</span>
+                        <svg-icon icon="chevron-right" class="main__nav-icon"></svg-icon>
+                    </a>
+                </li>
+                <li class="main__nav-item">
+                    <a href="#" class="main__nav-link">
+                        <svg-icon icon="comment" class="main__nav-icon"></svg-icon>
+                        <span>Comments</span>
+                        <svg-icon icon="chevron-right" class="main__nav-icon"></svg-icon>
+                    </a>
+                </li>
+                <li class="main__nav-item">
+                    <a href="#" class="main__nav-link">
+                        <svg-icon icon="user" class="main__nav-icon"></svg-icon>
+                        <span>User</span>
+                    </a>
+                </li>
+                <li class="main__nav-item">
+                    <a href="#" class="main__nav-link">
+                        <svg-icon icon="settings" class="main__nav-icon"></svg-icon>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
 
-        <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: 'true'}" class="nav-link"><i
-                class="fas fa-fw fa-tachometer-alt mr-2"></i>Dashboard</a>
-        <a [routerLink]="['/admin/posts']" routerLinkActive="active" class="nav-link"><i
-                class="fas fa-fw fa-file mr-2"></i>Posts</a>
-        <a class="nav-link"><i class="fas fa-fw fa-comment mr-2"></i>Comments</a>
-        <a class="nav-link"><i class="fas fa-fw fa-users mr-2"></i>Users</a>
-        <a class="nav-link"><i class="fas fa-fw fa-cog mr-2"></i>Settings</a>
-    </nav>
-</div>
+            <!-- <a routerLink="/admin/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: 'true'}"
+                class="nav-link">
+                Dashboard
+            </a>
+            <a [routerLink]="['/admin/posts']" routerLinkActive="active" class="nav-link">
+                Posts
+            </a>
+            <a class="nav-link">
+                Comments
+            </a>
+            <a class="nav-link">
+                Users
+            </a>
+            <a class="nav-link">
+                Settings
+            </a> -->
+        </nav>
+    </aside>
 
-<div [ngClass]="{'p-side-nav': sideNavVisible}" id="admin-wrapper">
-    <section id="main">
+    <!-- [ngClass]="{'p-side-nav': sideNavVisible}" -->
+    <section class="main__content">
         <div class="container">
             <router-outlet></router-outlet>
         </div>
     </section>
+
 </div>

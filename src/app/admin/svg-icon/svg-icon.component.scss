@@ -1,0 +1,15 @@
+:host {
+  &,
+  & > svg {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 1em;
+    height: 1em;
+  }
+  svg {
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+  }
+}

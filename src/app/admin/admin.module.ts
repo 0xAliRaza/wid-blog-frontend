@@ -10,6 +10,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { JwtInterceptor, ErrorInterceptor } from "./_helpers";
 import { AuthenticationService } from "./_services";
 import { ReactiveFormsModule } from "@angular/forms";
+import { SvgIconComponent } from './svg-icon/svg-icon.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     LoginComponent,
     DashboardComponent,
     PostsComponent,
+    SvgIconComponent,
   ],
   imports: [CommonModule, AdminRoutingModule, ReactiveFormsModule, HttpClientModule],
   providers: [

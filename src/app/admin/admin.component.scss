@@ -2,7 +2,6 @@
 @import "~bootstrap/scss/bootstrap.scss";
 
 :host {
-
   background-color: $body-bg;
 }
 
@@ -103,11 +102,17 @@
     & > svg-icon:last-child {
       margin-left: auto;
     }
+  
+    &.active {
+      background-color: $color-grey-dark-4;
+
+    }
+
   }
 
-  &__nav-item.active > &__nav-link {
-    background-color: $color-grey-dark-4;
-  }
+  // &__nav-item.active > &__nav-link {
+  //   background-color: $color-grey-dark-4;
+  // }
 
   &__inner-nav {
     display: flex;

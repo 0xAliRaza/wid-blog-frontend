@@ -15,6 +15,9 @@
             <a href="#" class="header__nav-link">
                 <svg-icon icon="user"></svg-icon>
                 <span>John Doe</span>
+                <!-- <div class="header__nav-dropdown">
+                    
+                </div> -->
             </a>
             <!-- <li class="nav-item" *ngIf="currentUser"><a class="nav-link" (click)="logout()">Logout</a>
             </li> -->
@@ -23,12 +26,12 @@
 </header>
 
 <div class="main">
-    <aside class="main__sidebar"
-        [ngClass]="{'main__sidebar--show': sideNavVisible}">
+    <aside class="main__sidebar" [ngClass]="{'main__sidebar--show': sideNavVisible}">
         <nav class="main__nav">
             <ul class="main__nav-list">
-                <li class="main__nav-item active">
-                    <a href="#" class="main__nav-link">
+                <li class="main__nav-item">
+                    <a routerLink="dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: 'true'}"
+                        class="main__nav-link">
                         <svg-icon icon="home" class="main__nav-icon"></svg-icon>
                         <span>Dashboard</span>
                         <svg-icon icon="chevron-down" class="main__nav-icon"></svg-icon>
@@ -40,7 +43,8 @@
                     </div>
                 </li>
                 <li class="main__nav-item">
-                    <a href="#" class="main__nav-link">
+                    <a routerLink="posts" routerLinkActive="active" [routerLinkActiveOptions]="{exact: 'true'}"
+                        class="main__nav-link">
                         <svg-icon icon="files-empty" class="main__nav-icon"></svg-icon>
                         <span>Posts</span>
                         <svg-icon icon="chevron-right" class="main__nav-icon"></svg-icon>

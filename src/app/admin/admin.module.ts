@@ -13,6 +13,8 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { SvgIconComponent } from './svg-icon/svg-icon.component';
 import { TopNavComponent } from './top-nav/top-nav.component';
 import { TopNavItemComponent } from './top-nav/top-nav-item/top-nav-item.component';
+import { SideNavComponent } from './side-nav/side-nav.component';
+import { SideNavItemComponent } from './side-nav/side-nav-item/side-nav-item.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { TopNavItemComponent } from './top-nav/top-nav-item/top-nav-item.compone
     SvgIconComponent,
     TopNavComponent,
     TopNavItemComponent,
+    SideNavComponent,
+    SideNavItemComponent,
   ],
   imports: [CommonModule, AdminRoutingModule, ReactiveFormsModule, HttpClientModule],
   providers: [

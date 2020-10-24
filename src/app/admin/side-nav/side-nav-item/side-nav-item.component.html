@@ -1,0 +1,20 @@
+<li>
+    <a *ngIf="toggler == undefined || toggler == null;else elseNav" class="nav-link">
+        <svg-icon [icon]="iconLeft"></svg-icon>
+        <span>{{ linkText }}</span>
+    </a>
+
+    <ng-template #elseNav>
+        <a class="nav-link nav-link--toggler" (click)="toggleInnerNav()">
+            <svg-icon [icon]="iconLeft"></svg-icon>
+            <span>{{ linkText }}</span>
+            <svg-icon icon="chevron-right" [ngStyle]="{transform: isInnerNavOpen ? 'rotate(90deg)' : ''}"></svg-icon>
+        </a>
+        <div class="inner-nav" @slideInOut *ngIf="isInnerNavOpen">
+            <ng-content></ng-content>
+        </div>
+    </ng-template>
+
+
+
+</li>

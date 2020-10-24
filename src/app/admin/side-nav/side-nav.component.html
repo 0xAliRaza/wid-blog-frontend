@@ -1,0 +1,17 @@
+<aside [@slideInOut]="innerWidth >= 768 ? 'fixed' : sideNavVisible ? 'in' : 'out'">
+    <nav>
+        <ul>
+            <admin-side-nav-item routerLink="dashboard" toggler iconLeft="home" linkText="Dashboard">
+                <a href="#" class="">Graph</a>
+                <a href="#" class="active">Data</a>
+                <a href="#" class="">Stats</a>
+            </admin-side-nav-item>
+
+            <admin-side-nav-item routerLink="posts" iconLeft="edit" linkText="posts"></admin-side-nav-item>
+            <admin-side-nav-item iconLeft="comment" linkText="comments"></admin-side-nav-item>
+            <admin-side-nav-item iconLeft="user" linkText="user"></admin-side-nav-item>
+            <admin-side-nav-item iconLeft="settings" linkText="settings"></admin-side-nav-item>
+
+        </ul>
+    </nav>
+</aside>

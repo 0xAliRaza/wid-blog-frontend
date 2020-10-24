@@ -1,72 +1,8 @@
+<admin-top-nav (toggleSideNav)="toggleSideNav()"></admin-top-nav>
 
-
-<admin-top-nav (toggleSidebarEmitter)="toggleSideNav()"></admin-top-nav>
 <div class="main">
-    <aside class="main__sidebar" [ngClass]="{'main__sidebar--show': sideNavVisible}">
-        <nav class="main__nav">
-            <ul class="main__nav-list">
-                <li class="main__nav-item">
-                    <a routerLink="dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: 'true'}"
-                        class="main__nav-link">
-                        <svg-icon icon="home" class="main__nav-icon"></svg-icon>
-                        <span>Dashboard</span>
-                        <svg-icon icon="chevron-down" class="main__nav-icon"></svg-icon>
-                    </a>
-                    <div class="main__inner-nav">
-                        <a href="#" class="main__inner-nav-link">Graph</a>
-                        <a href="#" class="main__inner-nav-link active">Data</a>
-                        <a href="#" class="main__inner-nav-link">Stats</a>
-                    </div>
-                </li>
-                <li class="main__nav-item">
-                    <a routerLink="posts" routerLinkActive="active" [routerLinkActiveOptions]="{exact: 'true'}"
-                        class="main__nav-link">
-                        <svg-icon icon="files-empty" class="main__nav-icon"></svg-icon>
-                        <span>Posts</span>
-                        <svg-icon icon="chevron-right" class="main__nav-icon"></svg-icon>
-                    </a>
-                </li>
-                <li class="main__nav-item">
-                    <a href="#" class="main__nav-link">
-                        <svg-icon icon="comment" class="main__nav-icon"></svg-icon>
-                        <span>Comments</span>
-                        <svg-icon icon="chevron-right" class="main__nav-icon"></svg-icon>
-                    </a>
-                </li>
-                <li class="main__nav-item">
-                    <a href="#" class="main__nav-link">
-                        <svg-icon icon="user" class="main__nav-icon"></svg-icon>
-                        <span>User</span>
-                    </a>
-                </li>
-                <li class="main__nav-item">
-                    <a href="#" class="main__nav-link">
-                        <svg-icon icon="settings" class="main__nav-icon"></svg-icon>
-                        <span>Settings</span>
-                    </a>
-                </li>
-            </ul>
+    <admin-side-nav [sideNavVisible]="sideNavVisible"></admin-side-nav>
 
-            <!-- <a routerLink="/admin/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: 'true'}"
-                class="nav-link">
-                Dashboard
-            </a>
-            <a [routerLink]="['/admin/posts']" routerLinkActive="active" class="nav-link">
-                Posts
-            </a>
-            <a class="nav-link">
-                Comments
-            </a>
-            <a class="nav-link">
-                Users
-            </a>
-            <a class="nav-link">
-                Settings
-            </a> -->
-        </nav>
-    </aside>
-
-    <!-- [ngClass]="{'p-side-nav': sideNavVisible}" -->
     <section class="main__content">
         <div class="container">
             <router-outlet></router-outlet>

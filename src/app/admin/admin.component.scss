@@ -2,7 +2,9 @@
 @import "~bootstrap/scss/bootstrap.scss";
 
 :host {
+  background-color: $body-bg;
   max-width: pxToRem(2000);
+  min-height: 100vh;
   display: block;
   margin: 0 auto;
   box-shadow: 0 0 pxToRem(20) $color-grey-dark-3;
@@ -12,110 +14,7 @@
 }
 
 .main {
-  background-color: $body-bg;
   display: flex;
-
-  &__sidebar {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateX(-110%);
-    background-color: $color-grey-dark-3;
-    position: absolute;
-    top: $navbar-top-height;
-    left: 0;
-    height: calc(100vh - #{$navbar-top-height});
-    transition: opacity .1s 0.3s, visibility .1s 0.3s,
-      transform 0.3s cubic-bezier(0.83, 0, 0.17, 1);
-    
-    &--show {
-      transition: transform 0.3s 0.01s cubic-bezier(0.83, 0, 0.17, 1);
-      opacity: 1;
-      visibility: visible;
-      transform: translate(0);
-    }
-    @include media-breakpoint-up(md) {
-      transition: transform 0.3s 0.01s cubic-bezier(0.83, 0, 0.17, 1);
-      position: initial;
-      flex-basis: pxToRem(200px);
-      opacity: 1;
-      visibility: visible;
-      transform: translate(0);
-    }
-  }
-
-  &__nav-list {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    margin: pxToRem(16) 0;
-    padding: pxToRem(10);
-  }
-
-  &__nav-item {
-    &:not(:last-of-type) {
-      margin-bottom: pxToRem(10);
-    }
-  }
-
-  &__nav-link {
-    display: flex;
-    align-items: center;
-    font-size: pxToRem(16);
-    color: $color-text-white;
-    padding: pxToRem(8) pxToRem(8) pxToRem(8) pxToRem(16);
-    border-radius: pxToRem(5);
-    @include hover-focus-active {
-      color: $color-text-white;
-      text-decoration: none;
-      background-color: $color-grey-dark-2;
-    }
-
-    & > svg-icon:first-child {
-      margin-right: pxToRem(8);
-    }
-    & > span {
-      margin-right: pxToRem(10);
-    }
-    & > svg-icon:last-child {
-      margin-left: auto;
-    }
-  
-    &.active {
-      background-color: $color-grey-dark-4;
-
-    }
-
-  }
-
-  // &__nav-item.active > &__nav-link {
-  //   background-color: $color-grey-dark-4;
-  // }
-
-  &__inner-nav {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: pxToRem(10) pxToRem(16);
-  }
-
-  &__inner-nav-link {
-    display: flex;
-    align-items: center;
-    border-radius: pxToRem(5);
-    font-size: pxToRem(16);
-    padding: pxToRem(5) pxToRem(8);
-    color: $color-grey-light-4;
-    @include hover-focus-active {
-      text-decoration: none;
-      color: $color-text-white;
-    }
-    &.active {
-      color: $color-text-white;
-    }
-    & > svg-icon:first-child {
-      margin-right: pxToRem(6);
-    }
-  }
 
   &__content {
     flex: 1;

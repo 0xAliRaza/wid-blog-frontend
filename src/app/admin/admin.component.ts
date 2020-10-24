@@ -1,9 +1,6 @@
 import {
   Component,
   OnInit,
-  ViewEncapsulation,
-  ViewChild,
-  ElementRef,
   OnDestroy,
 } from "@angular/core";
 import { User } from "./_models";
@@ -11,14 +8,13 @@ import { Router } from "@angular/router";
 import { AuthenticationService } from "./_services";
 import { Subscription } from "rxjs";
 
-
 @Component({
   selector: "app-admin",
   templateUrl: "./admin.component.html",
   styleUrls: ["./admin.component.scss"],
-
 })
 export class AdminComponent implements OnInit, OnDestroy {
+  innerWidth: any;
   sideNavVisible: boolean;
   currentUser: User;
   private authSubscription: Subscription;
@@ -32,7 +28,6 @@ export class AdminComponent implements OnInit, OnDestroy {
     );
   }
 
-
   toggleSideNav() {
     this.sideNavVisible = !this.sideNavVisible;
   }
@@ -43,6 +38,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {}
+
   ngOnDestroy() {
     this.authSubscription.unsubscribe();
   }

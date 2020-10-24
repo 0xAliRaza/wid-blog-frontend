@@ -8,10 +8,10 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 export class TopNavComponent implements OnInit {
   constructor() {}
 
-  @Output() toggleSidebarEmitter = new EventEmitter<boolean>();
+  @Output() toggleSideNav = new EventEmitter<boolean>();
 
-  toggleSidebar() {
-    this.toggleSidebarEmitter.emit(true);
+  sideNavEmit() {
+    this.toggleSideNav.emit(true);
   }
   ngOnInit() {}
 }

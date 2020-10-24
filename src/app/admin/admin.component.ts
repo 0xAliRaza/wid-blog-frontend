@@ -11,10 +11,12 @@ import { Router } from "@angular/router";
 import { AuthenticationService } from "./_services";
 import { Subscription } from "rxjs";
 
+
 @Component({
   selector: "app-admin",
   templateUrl: "./admin.component.html",
   styleUrls: ["./admin.component.scss"],
+
 })
 export class AdminComponent implements OnInit, OnDestroy {
   sideNavVisible: boolean;
@@ -29,6 +31,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       (x) => (this.currentUser = x)
     );
   }
+
 
   toggleSideNav() {
     this.sideNavVisible = !this.sideNavVisible;

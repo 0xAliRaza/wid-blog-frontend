@@ -1,30 +1,6 @@
-<header class="header">
-    <nav class="header__nav">
-        <div>
-            <a (click)="toggleSideNav()" id="side-nav-collapse" class="header__nav-link header__nav-link--menu">
-                <svg-icon icon="menu"></svg-icon>
-            </a>
-            <a href="#" class="header__nav-link">
-                <svg-icon icon="external-link"></svg-icon>
-                <span>
-                    Visit Site
-                </span>
-            </a>
-        </div>
-        <div class="ml-auto navbar-nav">
-            <a href="#" class="header__nav-link">
-                <svg-icon icon="user"></svg-icon>
-                <span>John Doe</span>
-                <!-- <div class="header__nav-dropdown">
-                    
-                </div> -->
-            </a>
-            <!-- <li class="nav-item" *ngIf="currentUser"><a class="nav-link" (click)="logout()">Logout</a>
-            </li> -->
-        </div>
-    </nav>
-</header>
 
+
+<admin-top-nav (toggleSidebarEmitter)="toggleSideNav()"></admin-top-nav>
 <div class="main">
     <aside class="main__sidebar" [ngClass]="{'main__sidebar--show': sideNavVisible}">
         <nav class="main__nav">

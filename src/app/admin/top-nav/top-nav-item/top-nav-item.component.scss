@@ -1,0 +1,29 @@
+@import "admin/sass/index";
+
+li {
+  position: relative;
+  a {
+    padding: pxToRem(8);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: pxToRem(15);
+    color: $color-text-white;
+    transition: color .2s ease;
+    text-decoration: none;
+    
+    @include hover-focus-active {
+      color: $color-white;
+    }
+    svg-icon:first-child {
+      margin-right: pxToRem(5);
+    }
+    svg-icon:last-child {
+      margin-left: pxToRem(5);
+    }
+
+    &.dropdown-toggler {
+      user-select: none;
+    }
+  }
+}

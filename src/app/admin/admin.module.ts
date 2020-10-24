@@ -11,6 +11,8 @@ import { JwtInterceptor, ErrorInterceptor } from "./_helpers";
 import { AuthenticationService } from "./_services";
 import { ReactiveFormsModule } from "@angular/forms";
 import { SvgIconComponent } from './svg-icon/svg-icon.component';
+import { TopNavComponent } from './top-nav/top-nav.component';
+import { TopNavItemComponent } from './top-nav/top-nav-item/top-nav-item.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { SvgIconComponent } from './svg-icon/svg-icon.component';
     DashboardComponent,
     PostsComponent,
     SvgIconComponent,
+    TopNavComponent,
+    TopNavItemComponent,
   ],
   imports: [CommonModule, AdminRoutingModule, ReactiveFormsModule, HttpClientModule],
   providers: [

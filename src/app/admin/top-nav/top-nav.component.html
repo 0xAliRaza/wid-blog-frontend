@@ -1,0 +1,42 @@
+<nav>
+    <ul>
+
+        <a (click)="toggleSidebar()" id="top-nav-menu">
+            <svg-icon icon="menu"></svg-icon>
+        </a>
+
+        <admin-top-nav-item iconLeft="external-link" linkDestination="#" linkText="Visit Blog"></admin-top-nav-item>
+
+        <admin-top-nav-item class="ml-auto" iconLeft="user" iconRight="chevron-down" linkText="John Doe">
+
+            <div class="user-dropdown shadow-sm">
+                <figure>
+                    <div>
+                        <img src="assets/img/developer.jpg" alt="John Doe" class="img-fluid shadow-sm">
+                    </div>
+                    <figcaption>John Doe</figcaption>
+                </figure>
+                <ul>
+                    <li><a class="user-dropdown__link" href="#"><svg-icon icon="user"></svg-icon>Profile</a></li>
+                    <li><a class="user-dropdown__link" href="#"><svg-icon icon="settings"></svg-icon>Settings</a></li>
+                    <li><a class="user-dropdown__link" href="#"><svg-icon icon="log-out"></svg-icon>Logout</a></li>
+                </ul>
+            </div>
+
+        </admin-top-nav-item>
+
+        <!-- <a href="#" class="header__nav-link">
+            <svg-icon icon="external-link"></svg-icon>
+            <span>
+                Visit Site
+            </span>
+        </a> -->
+        <!--  <a href="#" class="header__nav-link">
+            <svg-icon icon="user"></svg-icon>
+            <span>John Doe</span>
+            <div class="header__nav-dropdown">
+
+            </div>
+        </a> -->
+    </ul>
+</nav>

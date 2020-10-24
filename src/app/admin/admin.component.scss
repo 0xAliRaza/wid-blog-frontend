@@ -1,41 +1,12 @@
 @import "./sass/index.scss";
 @import "~bootstrap/scss/bootstrap.scss";
 
-:host {
-  background-color: $body-bg;
-}
 
 .header {
-  &__nav {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: $navbar-top-height;
-    background-color: $color-grey-dark-3;
-  }
-  &__nav &__nav-link {
-    padding: pxToRem(8);
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    font-size: pxToRem(15);
-    color: $color-text-white;
-    @include hover-focus-active {
-      text-decoration: none;
-      color: $color-white;
-    }
-    & > span {
-      margin-left: pxToRem(5);
-    }
-    &--menu {
-      @include media-breakpoint-up(md) {
-        display: none;
-      }
-    }
-  }
 }
 
 .main {
+  background-color: $body-bg;
   display: flex;
 
   &__sidebar {

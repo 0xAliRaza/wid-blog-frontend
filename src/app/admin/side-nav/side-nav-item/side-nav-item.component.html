@@ -1,5 +1,5 @@
 <li>
-    <a *ngIf="toggler == undefined || toggler == null;else elseNav" class="nav-link">
+    <a [routerLink]="routeDestination" *ngIf="toggler == undefined || toggler == null;else elseNav" class="nav-link">
         <svg-icon [icon]="iconLeft"></svg-icon>
         <span>{{ linkText }}</span>
     </a>

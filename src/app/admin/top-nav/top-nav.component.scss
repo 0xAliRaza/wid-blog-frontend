@@ -42,16 +42,21 @@ nav {
   right: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: pxToRem(16);
+  padding: pxToRem(16) pxToRem(8);
   border: 1px solid $color-grey-light-2;
   border-radius: pxToRem(4);
   overflow: hidden;
   min-width: pxToRem(180);
 
-  figure {
-    width: 100%;
+  .fig-box {
+    margin: 0 pxToRem(8);
     border-bottom: 1px solid $color-grey-light-2;
+    margin-bottom: pxToRem(16);
+  }
+
+  figure {
+    margin-bottom: pxToRem(10);
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -66,7 +71,6 @@ nav {
       font-size: pxToRem(20);
       text-transform: capitalize;
       color: $color-primary;
-      margin-bottom: pxToRem(8);
     }
   }
 

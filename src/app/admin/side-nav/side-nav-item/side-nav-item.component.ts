@@ -47,6 +47,7 @@ export class SideNavItemComponent implements OnInit {
   @Input() linkText: string;
   @Input() iconLeft: string;
   @Input() toggler: boolean;
+  @Input() routeDestination: string;
   isInnerNavOpen = false;
 
   toggleInnerNav() {

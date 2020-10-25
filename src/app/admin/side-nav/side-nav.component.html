@@ -1,7 +1,7 @@
 <aside [@slideInOut]="innerWidth >= 768 ? 'fixed' : sideNavVisible ? 'in' : 'out'">
     <nav>
         <ul>
-            <admin-side-nav-item routerLink="dashboard" toggler iconLeft="home" linkText="Dashboard">
+            <admin-side-nav-item routeDestination="dashboard" toggler iconLeft="home" linkText="Dashboard">
                 <a href="#" class="">Graph</a>
                 <a href="#" class="active">Data</a>
                 <a href="#" class="">Stats</a>

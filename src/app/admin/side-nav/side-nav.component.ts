@@ -42,7 +42,6 @@ import {
           visibility: "visible",
           transform: "translateX(0)",
           position: "initial",
-          flexBasis: "12.5rem"
         })
       ),
       transition("in <=> out", animate(".2s ease-in-out")),

@@ -7,7 +7,11 @@
                 <a href="#" class="">Stats</a>
             </admin-side-nav-item>
 
-            <admin-side-nav-item routerLink="posts" iconLeft="edit" linkText="posts"></admin-side-nav-item>
+            <admin-side-nav-item toggler routerLink="posts" iconLeft="edit" linkText="posts">
+                <a routerLink="posts/create" class="">New</a>
+                <a href="#" class="active">Data</a>
+                <a href="#" class="">Stats</a>
+            </admin-side-nav-item>
             <admin-side-nav-item iconLeft="comment" linkText="comments"></admin-side-nav-item>
             <admin-side-nav-item iconLeft="user" linkText="user"></admin-side-nav-item>
             <admin-side-nav-item iconLeft="settings" linkText="settings"></admin-side-nav-item>

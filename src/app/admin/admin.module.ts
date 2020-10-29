@@ -15,6 +15,8 @@ import { TopNavComponent } from './top-nav/top-nav.component';
 import { TopNavItemComponent } from './top-nav/top-nav-item/top-nav-item.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { SideNavItemComponent } from './side-nav/side-nav-item/side-nav-item.component';
+import { CreateComponent } from './posts/create/create.component';
+import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 @NgModule({
   declarations: [
@@ -27,13 +29,15 @@ import { SideNavItemComponent } from './side-nav/side-nav-item/side-nav-item.com
     TopNavItemComponent,
     SideNavComponent,
     SideNavItemComponent,
+    CreateComponent,
   ],
-  imports: [CommonModule, AdminRoutingModule, ReactiveFormsModule, HttpClientModule],
+  imports: [CommonModule, AdminRoutingModule, ReactiveFormsModule, HttpClientModule, EditorModule],
   providers: [
     AuthenticationService,
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
   ],
 })
 export class AdminModule {}

@@ -12,6 +12,7 @@ li {
   overflow: hidden;
 }
 .nav-link {
+  text-transform: capitalize;
   display: flex;
   align-items: center;
   font-size: pxToRem(16);
@@ -35,7 +36,7 @@ li {
     margin-right: pxToRem(8);
   }
   & > span {
-    margin-right: pxToRem(10);
+    margin-right: pxToRem(16);
   }
   & > svg-icon:last-child {
     margin-left: auto;

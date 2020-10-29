@@ -1,22 +1,23 @@
 @import "admin/sass/index";
+:host {
+  @include media-breakpoint-up(md) {
+    flex-basis: pxToRem(200px);
+  }
+}
 aside {
   z-index: 1030;
   background-color: $color-grey-dark-3;
   position: absolute;
   top: $navbar-top-height;
   left: 0;
+  display: flex;
   height: calc(100vh - #{$navbar-top-height});
   overflow: auto;
 
-
-  @include media-breakpoint-up(md) {
-    transition: transform 0.3s 0.01s cubic-bezier(0.83, 0, 0.17, 1);
-    opacity: 1;
-    transform: translate(0);
-    visibility: visible;
-    position: initial;
-    flex-basis: pxToRem(200px);
+  nav {
+    width: 100%;
   }
+
   ul {
     display: flex;
     flex-direction: column;

@@ -41,9 +41,6 @@ nav#editor-top-nav {
 
   .posts-link {
     border-right: 1px solid $color-grey-light-3;
-    &:hover {
-      transform: rotate(90deg);
-    }
   }
 
   .navbar-text {
@@ -58,11 +55,13 @@ nav#editor-top-nav {
       color: $color-grey-dark-1;
     }
     svg-icon {
-      transition: transform .2s;
-      @include hover-focus-active {
 
-        transform: rotate(90deg);
-      }
+      transition: transform 0.2s;
+    }
+    &:hover svg-icon,
+    &:active svg-icon,
+    &:focus svg-icon {
+      transform: rotate(90deg);
     }
   }
 }

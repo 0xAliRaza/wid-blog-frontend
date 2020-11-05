@@ -1,1 +1,68 @@
 @import "admin/sass/index";
+
+:host ::ng-deep editor {
+  .tox-tinymce {
+    border: none;
+  }
+}
+
+.post-title-box {
+  margin-bottom: pxToRem(32);
+  .post-title {
+    color: $color-text-black;
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: pxToRem(32);
+    background-attachment: scroll;
+    // border-bottom: 1px solid $color-grey-light-2;
+
+    @include hover-focus-active {
+      outline: none;
+    }
+  }
+}
+
+nav#editor-top-nav {
+  .nav-link {
+    height: 100%;
+    padding: pxToRem(8) pxToRem(16);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: pxToRem(14);
+    @include plain-hover-focus {
+      color: $color-primary;
+    }
+    svg-icon {
+      font-size: pxToRem(16);
+    }
+  }
+
+  .posts-link {
+    border-right: 1px solid $color-grey-light-3;
+    &:hover {
+      transform: rotate(90deg);
+    }
+  }
+
+  .navbar-text {
+    padding: pxToRem(8) pxToRem(16);
+    font-size: pxToRem(14);
+    color: $color-grey-dark-1;
+  }
+
+  .settings-icon {
+    font-size: 16px;
+    @include plain-hover-focus {
+      color: $color-grey-dark-1;
+    }
+    svg-icon {
+      transition: transform .2s;
+      @include hover-focus-active {
+
+        transform: rotate(90deg);
+      }
+    }
+  }
+}

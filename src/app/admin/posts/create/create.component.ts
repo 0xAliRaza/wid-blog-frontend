@@ -7,16 +7,22 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
   styleUrls: ["./create.component.scss"],
 })
 export class CreateComponent implements OnInit {
+  timeout: any;
   constructor() {
-    this.postForm.valueChanges.subscribe(data => console.log(data));
+    this.postForm.valueChanges.subscribe((data) => this.scheduleSave(data));
   }
 
-
   postForm = new FormGroup({
-    postTitle: new FormControl('', Validators.required),
-    postText: new FormControl('', Validators.required)
+    postTitle: new FormControl("", Validators.required),
+    postText: new FormControl("", Validators.required),
   });
 
+  scheduleSave(data: FormGroup) {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      console.log(data);
+    }, 5000);
+  }
 
   ngOnInit() {}
 }

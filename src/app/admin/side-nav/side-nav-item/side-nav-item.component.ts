@@ -13,33 +13,17 @@ import { Component, Input, OnInit } from "@angular/core";
   styleUrls: ["./side-nav-item.component.scss"],
   animations: [
     trigger("slideInOut", [
-      state(
-        "in",
-        style({
-          visibility: "visible",
-          opacity: 1,
-          transform: "translateY(0)",
-        })
-      ),
-      state(
-        "out",
-        style({
-          visibility: "hidden",
-          opacity: 0,
-          transform: "translateY(-100%)",
-        })
-      ),
       transition(":enter", [
         style({
-          transform: 'translateY(-100%)'
+          display: 'none'
         }),
-        animate('.2s ease-in-out', style({transform: 'translateY(0)'}))
+        animate('.2s ease-in-out', style({display: 'initial'}))
       ]),
       transition(":leave", [
-        animate('.2s ease-in-out', style({transform: 'translateY(-100%)'}))
+        animate('.2s ease-in-out', style({display: 'none'}))
       ])
     ]),
-  ],
+    ],
 })
 export class SideNavItemComponent implements OnInit {
   constructor() {}

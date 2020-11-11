@@ -7,7 +7,7 @@
 }
 
 .post-title-box {
-  margin-bottom: pxToRem(32);
+  margin: 0 pxToRem(16) pxToRem(32);
   .post-title {
     color: $color-text-black;
     width: 100%;
@@ -15,8 +15,6 @@
     background: transparent;
     font-size: pxToRem(32);
     background-attachment: scroll;
-    // border-bottom: 1px solid $color-grey-light-2;
-
     @include hover-focus-active {
       outline: none;
     }
@@ -50,7 +48,7 @@ nav#editor-top-nav {
     color: $color-grey-dark-1;
   }
 
-  .settings-icon {
+  .settings-btn {
     font-size: 16px;
     @include plain-hover-focus {
       color: $color-grey-dark-1;

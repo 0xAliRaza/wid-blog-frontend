@@ -17,9 +17,9 @@
             <a class="nav-link" href="#">Publish</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link settings-icon" href="#">
+            <button class="nav-link btn settings-btn" (click)="toggleSideNav()">
                 <svg-icon icon="settings"></svg-icon>
-            </a>
+            </button>
         </li>
     </ul>
 </nav>
@@ -48,10 +48,10 @@
     </div>
 </div>
 
-<aside class="sidebar">
+<aside class="sidebar" @slideInOut *ngIf="isSideNavOpen">
     <div class="sidebar__top-intro">
         <h4 class="sidebar__top-intro-heading">Post Settings</h4>
-        <button class="sidebar__close-button btn">
+        <button class="sidebar__close-button btn" (click)="toggleSideNav()">
             <svg-icon icon="close"></svg-icon>
         </button>
     </div>

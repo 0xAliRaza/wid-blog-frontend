@@ -55,4 +55,45 @@
             <svg-icon icon="close"></svg-icon>
         </button>
     </div>
+    <div class="sidebar__form">
+        <form [formGroup]="postForm">
+            <div class="form-group">
+                <label for="post-featured-image">Featured Image</label>
+                <input type="file" id="post-featured-image" class="form-control-file"
+                    formControlName="postFeaturedImage">
+            </div>
+            <div class="form-group">
+                <label for="post-url">URL</label>
+                <input type="text" id="post-url" class="form-control" formControlName="postUrl">
+            </div>
+            <div class="form-group">
+                <label for="post-tags">Tags</label>
+                <input type="text" id="post-tags" class="form-control" formControlName="postTags">
+            </div>
+            <div class="form-group">
+                <label for="post-excerpt">Excerpt</label>
+                <textarea rows="3" type="text" id="post-excerpt" class="form-control"
+                    formControlName="postExcerpt"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="post-meta-title">Meta Title</label>
+                <input type="text" id="post-meta-title" class="form-control" formControlName="postMetaTitle">
+            </div>
+            <div class="form-group">
+                <label for="post-meta-description">Meta Description</label>
+                <textarea rows="3" type="text" id="post-meta-description" class="form-control"
+                    formControlName="postMetaDescription"></textarea>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" id="post-featured" class="form-check-input" formControlName="postFeatured">
+                <label for="post-featured" class="form-check-label">Feature this post</label>
+            </div>
+        </form>
+    </div>
+    <div class="sidebar__delete-post">
+        <button class="btn text-danger sidebar__delete-post-btn">
+            <svg-icon icon="trash"></svg-icon>
+            <span>Delete Post</span>
+        </button>
+    </div>
 </aside>

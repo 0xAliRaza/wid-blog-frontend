@@ -69,19 +69,18 @@ nav#editor-top-nav {
   right: 0;
   top: 0;
   z-index: 1030;
-  width: pxToRem(300);
+  width: pxToRem(350);
   height: 100%;
   display: flex;
   flex-direction: column;
   background-color: $color-grey-light-1;
   color: $color-text-black;
-  // box-shadow: pxToRem(0) 0 pxToRem(10) rgba($color-black, 0.2);
   border-left: 1px solid $color-grey-light-2;
+  padding: pxToRem(16) pxToRem(24);
   &__top-intro {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: pxToRem(16);
   }
   &__top-intro-heading {
     font-size: pxToRem(20);
@@ -90,5 +89,21 @@ nav#editor-top-nav {
   &__close-button {
     padding: 0;
     font-size: pxToRem(13);
+  }
+
+  &__form {
+    margin-top: pxToRem(32);
+  }
+
+  &__delete-post {
+    margin-top: auto;
+    padding-top: pxToRem(32);
+  }
+  &__delete-post-btn {
+    display: inline-flex;
+    align-items: center;
+    svg-icon {
+      margin-right: pxToRem(5)
+    }
   }
 }

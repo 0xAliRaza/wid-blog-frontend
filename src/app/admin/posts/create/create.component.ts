@@ -47,6 +47,14 @@ export class CreateComponent implements OnInit {
   postForm = new FormGroup({
     postTitle: new FormControl("", Validators.required),
     postText: new FormControl("", Validators.required),
+    postFeaturedImage: new FormControl(""),
+    postUrl: new FormControl(""),
+    postTags: new FormControl(""),
+    postExcerpt: new FormControl(""),
+    postMetaTitle: new FormControl(""),
+    postMetaDescription: new FormControl(""),
+    postFeatured: new FormControl("")
+
   });
 
   scheduleSave(data: FormGroup) {

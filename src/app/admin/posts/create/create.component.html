@@ -26,24 +26,30 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10 col-lg-8 my-5 py-5">
-            <form [formGroup]="postForm">
-                <div class="post-title-box">
-                    <input placeholder="Post Title" class="post-title" formControlName="postTitle">
-                </div>
-                <div class="post-text-box">
-                    <editor [init]="{
-                            menubar: false,
-                            toolbar: false,
-                            placeholder: 'Write it all down...',
-                            plugins: 'autoresize quickbars image media hr codesample code',
-                            quickbars_selection_toolbar: 'bold italic link | h2 h3 | blockquote',
-                            quickbars_insert_toolbar: 'image media hr codesample code',
-                            statusbar: false
-                        }" formControlName="postText"></editor>
-                </div>
+        <div class="post col-md-10 col-lg-8 my-5 py-5">
+            <div class="post__form">
+                <form [formGroup]="postForm">
+                    <div class="post__title">
+                        <input placeholder="Post Title" class="post__title-input" formControlName="postTitle">
+                    </div>
+                    <div class="post__text">
+                        <editor [init]="{
+                                menubar: false,
+                                toolbar: false,
+                                placeholder: 'Write it all down...',
+                                plugins: 'autoresize quickbars image media hr codesample code autolink image',
+                                quickbars_selection_toolbar: 'bold italic link | h2 h3 | blockquote',
+                                quickbars_insert_toolbar: 'image media hr codesample code',
+                                statusbar: false,
+                                images_upload_url: 'test.php',
+                                automatic_uploads: false,
+                                block_unsupported_drop: false
 
-            </form>
+                            }" formControlName="postText"></editor>
+                    </div>
+
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -59,7 +65,7 @@
         <form [formGroup]="postForm">
             <div class="form-group">
                 <label for="post-featured-image">Featured Image</label>
-                <input type="file" id="post-featured-image" class="form-control-file"
+                <input  type="file" id="post-featured-image" class="form-control-file"
                     formControlName="postFeaturedImage">
             </div>
             <div class="form-group">
@@ -91,7 +97,7 @@
         </form>
     </div>
     <div class="sidebar__delete-post">
-        <button class="btn text-danger sidebar__delete-post-btn">
+        <button class="btn btn-outline-danger sidebar__delete-post-btn">
             <svg-icon icon="trash"></svg-icon>
             <span>Delete Post</span>
         </button>

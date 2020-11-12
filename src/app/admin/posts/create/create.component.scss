@@ -6,9 +6,11 @@
   }
 }
 
-.post-title-box {
-  margin: 0 pxToRem(16) pxToRem(32);
-  .post-title {
+.post {
+  &__title {
+    margin: 0 pxToRem(16) pxToRem(32);
+  }
+  &__title-input {
     color: $color-text-black;
     width: 100%;
     border: none;
@@ -71,19 +73,20 @@ nav#editor-top-nav {
   z-index: 1030;
   width: pxToRem(350);
   height: 100%;
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   background-color: $color-grey-light-1;
   color: $color-text-black;
   border-left: 1px solid $color-grey-light-2;
-  padding: pxToRem(16) pxToRem(24);
   &__top-intro {
+    padding: pxToRem(16) pxToRem(24);
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
   &__top-intro-heading {
-    font-size: pxToRem(20);
+    font-size: pxToRem(18);
     margin: 0;
   }
   &__close-button {
@@ -92,10 +95,12 @@ nav#editor-top-nav {
   }
 
   &__form {
-    margin-top: pxToRem(32);
+    padding: 0 pxToRem(24);
+    margin-top: pxToRem(16);
   }
 
   &__delete-post {
+    padding: pxToRem(16) pxToRem(24);
     margin-top: auto;
     padding-top: pxToRem(32);
   }
@@ -103,7 +108,7 @@ nav#editor-top-nav {
     display: inline-flex;
     align-items: center;
     svg-icon {
-      margin-right: pxToRem(5)
+      margin-right: pxToRem(5);
     }
   }
 }

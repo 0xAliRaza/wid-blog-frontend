@@ -33,19 +33,7 @@
                         <input placeholder="Post Title" class="post__title-input" formControlName="postTitle">
                     </div>
                     <div class="post__text">
-                        <editor [init]="{
-                                menubar: false,
-                                toolbar: false,
-                                placeholder: 'Write it all down...',
-                                plugins: 'autoresize quickbars image media hr codesample code autolink image',
-                                quickbars_selection_toolbar: 'bold italic link | h2 h3 | blockquote',
-                                quickbars_insert_toolbar: 'image media hr codesample code',
-                                statusbar: false,
-                                images_upload_url: 'test.php',
-                                automatic_uploads: false,
-                                block_unsupported_drop: false
-
-                            }" formControlName="postText"></editor>
+                        <editor [init]="tinymceInit" formControlName="postText"></editor>
                     </div>
 
                 </form>

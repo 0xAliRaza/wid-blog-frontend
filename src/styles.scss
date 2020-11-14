@@ -1,5 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+
+// BOOTSTRAP MODIFIERS
+$input-btn-focus-width: .1rem;
+
+
 @import "~bootstrap/scss/bootstrap";
+
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;

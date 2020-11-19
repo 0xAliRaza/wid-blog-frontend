@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpResponse, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject, Observable, throwError, ObservableInput } from "rxjs";
-import { map, catchError, tap } from "rxjs/operators";
+import { map, catchError, tap, first } from "rxjs/operators";
 import { environment } from "@environments/environment";
 import { User } from "@admin/_models";
 import { AdminModule } from "../admin.module";
@@ -16,6 +16,12 @@ export class AuthenticationService {
       JSON.parse(localStorage.getItem("currentUser"))
     );
     this.currentUser = this.currentUserSubject.asObservable();
+  }
+
+  public me(): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/auth/me`, {
+      Title: "Getting current user from API",
+    });
   }
 
   public get currentUserValue(): User {
@@ -46,6 +52,19 @@ export class AuthenticationService {
     return this.http
       .post<any>(`${environment.apiUrl}/auth/login`, { email, password })
       .pipe(map((res) => this.storeUserData(res)));
+  }
+
+  updateUserData() {
+    this.me()
+      .pipe(first())
+      .pipe(
+        map((user: User) => {
+          user.token = this.getToken;
+          return user;
+        })
+      )
+      .subscribe((res) => this.storeUserData(res));
+    return this.currentUserValue;
   }
 
   refreshToken(): Observable<any> {

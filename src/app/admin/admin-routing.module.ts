@@ -31,7 +31,7 @@ const routes: Routes = [
   {
     path: "admin/posts/create",
     component: CreateComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard]
   },
   {
     path: "admin/login",

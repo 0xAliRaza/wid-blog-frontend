@@ -5,8 +5,17 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
+import {
+  HttpClient,
+  HttpEvent,
+  HttpEventType,
+  HttpRequest,
+} from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { AuthenticationService } from "@app/admin/_services";
+import { environment } from "@environments/environment";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-create",
@@ -40,20 +49,25 @@ export class CreateComponent implements OnInit {
   timeout: any;
   isSideNavOpen = false;
   tinymceInit: any;
-  constructor() {
+  private imageUploadSubscription: Subscription;
+
+  constructor(private http: HttpClient, private auth: AuthenticationService) {
     this.postForm.valueChanges.subscribe((data) => this.scheduleSave(data));
+
     this.tinymceInit = {
       menubar: false,
       toolbar: false,
       placeholder: "Write it all down...",
       plugins:
-        "autoresize quickbars image media hr codesample code autolink image",
+        "autoresize quickbars image media hr codesample code autolink image advimagescale",
       quickbars_selection_toolbar: "bold italic link | h2 h3 | blockquote",
       quickbars_insert_toolbar: "image media hr codesample code",
       statusbar: false,
-      image_advtab: true,
+      image_title: true,
+      file_picker_types: "image",
       block_unsupported_drop: false,
-      images_upload_url: 'http://wid-blog-backend/api/v1/image'
+      images_upload_url: "http://wid-blog-backend/api/v1/image",
+      images_upload_handler: this.imagesUploadHandler(),
     };
   }
 
@@ -69,50 +83,51 @@ export class CreateComponent implements OnInit {
     postFeatured: new FormControl(""),
   });
 
-  imagesUploadHandler(blobInfo, success, failure, progress) {
-    var xhr, formData;
+  imagesUploadHandler() {
+    // let subscription = this.http
+    //   .post<any>(`${environment.apiUrl}/auth/me`, {
+    //     Title: "Verifying if token is not expired!",
+    //   })
+    //   .subscribe((res) => {});
+    const that = this;
+    return (blobInfo, success, failure, progress) => {
+      var xhr, formData;
+      xhr = new XMLHttpRequest();
+      xhr.withCredentials = false;
+      xhr.open("POST", `${environment.apiUrl}/post/imageUpload`);
+      xhr.setRequestHeader("Accept", "application/json");
+      xhr.setRequestHeader("Authorization", `Bearer ${that.auth.getToken}`);
 
-    xhr = new XMLHttpRequest();
-    xhr.withCredentials = false;
-    xhr.open("POST", "postAcceptor.php");
-
-    xhr.upload.onprogress = function (e) {
-      progress((e.loaded / e.total) * 100);
+      xhr.upload.onprogress = function (e) {
+        progress((e.loaded / e.total) * 100);
+      };
+      xhr.onload = function () {
+        let json;
+        if (xhr.status === 403) {
+          failure("HTTP Error: " + xhr.status, { remove: true });
+          return;
+        }
+        if (xhr.status < 200 || xhr.status >= 300) {
+          failure("HTTP Error: " + xhr.status);
+          return;
+        }
+        json = JSON.parse(xhr.responseText);
+        if (!json || typeof json.location != "string") {
+          failure("Invalid JSON: " + xhr.responseText);
+          return;
+        }
+        success(json.location);
+      };
+      xhr.onerror = function () {
+        failure(
+          "Image upload failed due to a XHR Transport error. Code: " +
+            xhr.status
+        );
+      };
+      formData = new FormData();
+      formData.append("file", blobInfo.blob(), blobInfo.filename());
+      xhr.send(formData);
     };
-
-    xhr.onload = function () {
-      var json;
-
-      if (xhr.status === 403) {
-        failure("HTTP Error: " + xhr.status, { remove: true });
-        return;
-      }
-
-      if (xhr.status < 200 || xhr.status >= 300) {
-        failure("HTTP Error: " + xhr.status);
-        return;
-      }
-
-      json = JSON.parse(xhr.responseText);
-
-      if (!json || typeof json.location != "string") {
-        failure("Invalid JSON: " + xhr.responseText);
-        return;
-      }
-
-      success(json.location);
-    };
-
-    xhr.onerror = function () {
-      failure(
-        "Image upload failed due to a XHR Transport error. Code: " + xhr.status
-      );
-    };
-
-    formData = new FormData();
-    formData.append("file", blobInfo.blob(), blobInfo.filename());
-
-    xhr.send(formData);
   }
 
   scheduleSave(data: FormGroup) {

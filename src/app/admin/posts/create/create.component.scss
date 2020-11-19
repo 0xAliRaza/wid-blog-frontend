@@ -3,6 +3,10 @@
 :host ::ng-deep editor {
   .tox-tinymce {
     border: none;
+    overflow-x: hidden;
+  }
+  .tox-edit-area__iframe#tinymce {
+    overflow: hidden;
   }
 }
 

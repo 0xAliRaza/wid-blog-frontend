@@ -11,12 +11,13 @@ import {
   HttpEventType,
   HttpRequest,
 } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { AuthenticationService } from "@app/admin/_services";
+import { AuthenticationService, PostsService } from "@app/admin/_services";
 import { SlugifyPipe } from "@app/slugify.pipe";
 import { environment } from "@environments/environment";
 import { Subscription } from "rxjs";
+import { debounceTime, first, map } from "rxjs/operators";
 
 @Component({
   selector: "app-create",
@@ -46,26 +47,26 @@ import { Subscription } from "rxjs";
     ]),
   ],
 })
-export class CreateComponent implements OnInit {
-  timeout: any;
+export class CreateComponent implements OnInit, OnDestroy {
+  private timeout: any;
   isSideNavOpen = false;
   tinymceInit: any;
+  private postFormChangesSubscription: Subscription;
+  private postId: number;
   private imageUploadSubscription: Subscription;
 
   constructor(
-    private http: HttpClient,
     private auth: AuthenticationService,
-    private slugify: SlugifyPipe
+    private slugifyPipe: SlugifyPipe,
+    private postsService: PostsService
   ) {
-    this.postForm.valueChanges.subscribe((formData) => {
-      if (!this.isObjEmpty(formData)) {
-        console.log(this.setSlug());
-        // console.log(formData);
-      } else console.log("some");
+    this.postFormChangesSubscription = this.postForm.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe(() => {
+        this.processForm() ? this.scheduleSave() : false;
+      });
 
-      // this.scheduleSave(formData)
-    });
-
+    /* Initialize tinymce  */
     this.tinymceInit = {
       menubar: false,
       toolbar: false,
@@ -84,25 +85,38 @@ export class CreateComponent implements OnInit {
   }
 
   postForm = new FormGroup({
-    id: new FormControl(""),
     userId: new FormControl(this.auth.userId),
-    postTitle: new FormControl("", Validators.required),
-    postText: new FormControl("", Validators.required),
-    postFeaturedImage: new FormControl(""),
-    postUrl: new FormControl(""),
-    postTags: new FormControl(""),
-    postExcerpt: new FormControl(""),
-    postMetaTitle: new FormControl(""),
-    postMetaDescription: new FormControl(""),
-    postFeatured: new FormControl(""),
+    title: new FormControl("", Validators.required),
+    html: new FormControl("", Validators.required),
+    featuredImage: new FormControl(""),
+    slug: new FormControl(""),
+    tags: new FormControl(""),
+    customExcerpt: new FormControl(""),
+    metaTitle: new FormControl(""),
+    metaDescription: new FormControl(""),
+    featured: new FormControl(""),
   });
 
-  setSlug(): void {
-    let title = this.postForm.get("postTitle").value;
-    if (title && title !== "") {
-      title = this.slugify.transform(title);
+  processForm() {
+    const f = this.postForm;
+    if (f.get("html").value !== "") {
+      if (f.get("title").value === "") {
+        f.get("title").setValue("(Untitled)", { emitEvent: false });
+      }
+      if (!f.get("slug").dirty) {
+        f.get("slug").setValue(this.slugify(f.get("title").value), {
+          emitEvent: false,
+        });
+      }
+      return true;
     }
-    this.postForm.get("postUrl").setValue(title, { emitEvent: false });
+    return false;
+  }
+
+  processServerResponse(response) {
+    return this.postForm
+      .get("slug")
+      .setValue(response.slug, { emitEvent: false });
   }
 
   imagesUploadHandler() {
@@ -148,11 +162,20 @@ export class CreateComponent implements OnInit {
     };
   }
 
-  scheduleSave(data: FormGroup) {
+  scheduleSave() {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
-      console.log(data);
-    }, 5000);
+      if (!this.postId) {
+        return this.postsService
+          .create(this.postForm.value)
+          .pipe(first())
+          .subscribe((res) => this.processServerResponse(res));
+      }
+      return this.postsService
+        .update(this.postForm.value)
+        .pipe(first())
+        .subscribe((res) => this.processServerResponse(res));
+    }, 4000);
   }
 
   toggleSideNav() {
@@ -162,10 +185,18 @@ export class CreateComponent implements OnInit {
   isObjEmpty(data: any): any {
     let empty = true;
     Object.keys(data).forEach((key) => {
-      key !== "userId" && data[key] !== "" ? (empty = false) : true;
+      data[key] !== "" ? (empty = false) : true;
     });
     return empty;
   }
 
+  slugify(input: string): string {
+    return this.slugifyPipe.transform(input);
+  }
+
   ngOnInit() {}
+
+  ngOnDestroy() {
+    this.postFormChangesSubscription.unsubscribe();
+  }
 }

@@ -30,10 +30,10 @@
             <div class="post__form">
                 <form [formGroup]="postForm">
                     <div class="post__title">
-                        <input placeholder="Post Title" class="post__title-input" formControlName="postTitle">
+                        <input placeholder="Post Title" class="post__title-input" formControlName="title">
                     </div>
                     <div class="post__text">
-                        <editor [init]="tinymceInit" formControlName="postText"></editor>
+                        <editor [init]="tinymceInit" formControlName="html"></editor>
                     </div>
 
                 </form>
@@ -54,32 +54,32 @@
             <div class="form-group">
                 <label for="post-featured-image">Featured Image</label>
                 <input  type="file" id="post-featured-image" class="form-control-file"
-                    formControlName="postFeaturedImage">
+                    formControlName="featuredImage">
             </div>
             <div class="form-group">
                 <label for="post-url">URL</label>
-                <input type="text" id="post-url" class="form-control" formControlName="postUrl">
+                <input type="text" id="post-url" class="form-control" formControlName="slug">
             </div>
             <div class="form-group">
                 <label for="post-tags">Tags</label>
-                <input type="text" id="post-tags" class="form-control" formControlName="postTags">
+                <input type="text" id="post-tags" class="form-control" formControlName="tags">
             </div>
             <div class="form-group">
                 <label for="post-excerpt">Excerpt</label>
                 <textarea rows="3" type="text" id="post-excerpt" class="form-control"
-                    formControlName="postExcerpt"></textarea>
+                    formControlName="customExcerpt"></textarea>
             </div>
             <div class="form-group">
                 <label for="post-meta-title">Meta Title</label>
-                <input type="text" id="post-meta-title" class="form-control" formControlName="postMetaTitle">
+                <input type="text" id="post-meta-title" class="form-control" formControlName="metaTitle">
             </div>
             <div class="form-group">
                 <label for="post-meta-description">Meta Description</label>
                 <textarea rows="3" type="text" id="post-meta-description" class="form-control"
-                    formControlName="postMetaDescription"></textarea>
+                    formControlName="metaDescription"></textarea>
             </div>
             <div class="form-check">
-                <input type="checkbox" id="post-featured" class="form-check-input" formControlName="postFeatured">
+                <input type="checkbox" id="post-featured" class="form-check-input" formControlName="featured">
                 <label for="post-featured" class="form-check-label">Feature this post</label>
             </div>
         </form>

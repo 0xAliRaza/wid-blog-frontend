@@ -53,8 +53,7 @@
         <form [formGroup]="postForm">
             <div class="form-group">
                 <label for="post-featured-image">Featured Image</label>
-                <input  type="file" id="post-featured-image" class="form-control-file"
-                    formControlName="featuredImage">
+                <input type="file" id="post-featured-image" class="form-control-file" formControlName="featuredImage">
             </div>
             <div class="form-group">
                 <label for="post-url">URL</label>
@@ -62,7 +61,10 @@
             </div>
             <div class="form-group">
                 <label for="post-tags">Tags</label>
-                <input type="text" id="post-tags" class="form-control" formControlName="tags">
+                <!-- <input type="text" id="post-tags" class="form-control" formControlName="tags"> -->
+                <ng-select [items]="tags" [multiple]="true" [addTag]="true" bindLabel="name" bindValue="id" formControlName="tags">
+                </ng-select>
+
             </div>
             <div class="form-group">
                 <label for="post-excerpt">Custom Excerpt</label>

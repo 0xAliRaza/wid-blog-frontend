@@ -1,23 +1,11 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from "@angular/animations";
-import {
-  HttpClient,
-  HttpEvent,
-  HttpEventType,
-  HttpRequest,
-} from "@angular/common/http";
+import { animate, style, transition, trigger } from "@angular/animations";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthenticationService, PostsService } from "@app/admin/_services";
 import { SlugifyPipe } from "@app/slugify.pipe";
 import { environment } from "@environments/environment";
 import { Subscription } from "rxjs";
-import { debounceTime, first, map } from "rxjs/operators";
+import { debounceTime, first } from "rxjs/operators";
 
 @Component({
   selector: "app-create",
@@ -84,6 +72,14 @@ export class CreateComponent implements OnInit, OnDestroy {
     };
   }
 
+
+  tags = [
+    { id: 1, name: "Volvo" },
+    { id: 2, name: "Saab" },
+    { id: 3, name: "Opel" },
+    { id: 4, name: "Audi" },
+  ];
+
   postForm = new FormGroup({
     userId: new FormControl(this.auth.userId),
     title: new FormControl("", Validators.required),
@@ -121,6 +117,7 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   imagesUploadHandler() {
     this.auth.updateUserData();
+    /* Create an reference of 'this' to use outside */
     const that = this;
     return (blobInfo, success, failure, progress) => {
       let formData;
@@ -129,6 +126,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       xhr.open("POST", `${environment.apiUrl}/post/imageUpload`);
       xhr.setRequestHeader("Accept", "application/json");
       xhr.setRequestHeader("Authorization", `Bearer ${that.auth.getToken}`);
+      // xhr.setRequestHeader("Content-Type", `multipart/form-data`);
 
       xhr.upload.onprogress = (e) => {
         progress((e.loaded / e.total) * 100);

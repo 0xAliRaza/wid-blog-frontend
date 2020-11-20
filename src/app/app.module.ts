@@ -7,7 +7,8 @@ import { AppComponent } from "./app.component";
 import { AdminModule } from "./admin/admin.module";
 import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule } from "@angular/forms";
-import { SlugifyPipe } from './slugify.pipe';
+import { SlugifyPipe } from "./slugify.pipe";
+import { NgSelectModule } from "@ng-select/ng-select";
 @NgModule({
   declarations: [AppComponent, SlugifyPipe],
   imports: [
@@ -16,7 +17,8 @@ import { SlugifyPipe } from './slugify.pipe';
     ReactiveFormsModule,
     HttpClientModule,
     AdminModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgSelectModule,
   ],
   providers: [SlugifyPipe],
   bootstrap: [AppComponent],

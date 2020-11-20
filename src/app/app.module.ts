@@ -7,8 +7,9 @@ import { AppComponent } from "./app.component";
 import { AdminModule } from "./admin/admin.module";
 import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule } from "@angular/forms";
+import { SlugifyPipe } from './slugify.pipe';
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, SlugifyPipe],
   imports: [
     BrowserModule,
     AppRoutingModule,

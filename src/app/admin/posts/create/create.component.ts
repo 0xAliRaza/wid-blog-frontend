@@ -14,6 +14,7 @@ import {
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthenticationService } from "@app/admin/_services";
+import { SlugifyPipe } from '@app/slugify.pipe';
 import { environment } from "@environments/environment";
 import { Subscription } from "rxjs";
 
@@ -51,7 +52,7 @@ export class CreateComponent implements OnInit {
   tinymceInit: any;
   private imageUploadSubscription: Subscription;
 
-  constructor(private http: HttpClient, private auth: AuthenticationService) {
+  constructor(private http: HttpClient, private auth: AuthenticationService, private slugifyPipe: SlugifyPipe) {
     this.postForm.valueChanges.subscribe((data) => this.scheduleSave(data));
 
     this.tinymceInit = {

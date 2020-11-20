@@ -5,6 +5,7 @@ import { first } from "rxjs/operators";
 
 import { AuthenticationService } from "@admin/_services";
 import { Subscription } from "rxjs";
+import { User } from '../_models';
 
 @Component({ templateUrl: "login.component.html" })
 export class LoginComponent implements OnInit, OnDestroy {
@@ -54,7 +55,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       .login(this.f.email.value, this.f.password.value)
       .pipe(first())
       .subscribe(
-        (data) => {
+        (data: User) => {
+          let user = User;
           this.router.navigate([this.returnUrl]);
         },
         (error) => {

@@ -22,10 +22,12 @@ export class AuthenticationService {
     return this.currentUserValue.id;
   }
 
-  public get me(): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/auth/me`, {
-      Title: "Getting current user from API",
-    });
+  public get me(): Observable<User> {
+    return this.http
+      .post(`${environment.apiUrl}/auth/me`, {
+        Title: "Getting current user from API",
+      })
+      .pipe(map((res) => Object.assign(new User(), res)));
   }
 
   public get currentUserValue(): User {
@@ -52,13 +54,14 @@ export class AuthenticationService {
     this.currentUserSubject.next(user);
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string): Observable<User> {
     return this.http
-      .post<any>(`${environment.apiUrl}/auth/login`, { email, password })
-      .pipe(map((res) => this.storeUserData(res)));
+      .post(`${environment.apiUrl}/auth/login`, { email, password })
+      .pipe(map((res) => Object.assign(new User(), res)))
+      .pipe(tap((res: User) => this.storeUserData(res)));
   }
 
-  updateUserData() {
+  updateUserData(): User {
     this.me
       .pipe(first())
       .pipe(
@@ -67,6 +70,7 @@ export class AuthenticationService {
           return user;
         })
       )
+      .pipe(map((res) => Object.assign(new User(), res)))
       .subscribe((res) => this.storeUserData(res));
     return this.currentUserValue;
   }

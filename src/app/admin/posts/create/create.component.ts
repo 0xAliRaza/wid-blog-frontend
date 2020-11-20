@@ -14,7 +14,7 @@ import {
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthenticationService } from "@app/admin/_services";
-import { SlugifyPipe } from '@app/slugify.pipe';
+import { SlugifyPipe } from "@app/slugify.pipe";
 import { environment } from "@environments/environment";
 import { Subscription } from "rxjs";
 
@@ -52,15 +52,26 @@ export class CreateComponent implements OnInit {
   tinymceInit: any;
   private imageUploadSubscription: Subscription;
 
-  constructor(private http: HttpClient, private auth: AuthenticationService, private slugifyPipe: SlugifyPipe) {
-    this.postForm.valueChanges.subscribe((data) => this.scheduleSave(data));
+  constructor(
+    private http: HttpClient,
+    private auth: AuthenticationService,
+    private slugify: SlugifyPipe
+  ) {
+    this.postForm.valueChanges.subscribe((formData) => {
+      if (!this.isObjEmpty(formData)) {
+        console.log(this.setSlug());
+        // console.log(formData);
+      } else console.log("some");
+
+      // this.scheduleSave(formData)
+    });
 
     this.tinymceInit = {
       menubar: false,
       toolbar: false,
       placeholder: "Write it all down...",
       plugins:
-        "autoresize quickbars image media hr codesample code autolink image advimagescale",
+        "autoresize quickbars image media hr codesample code autolink image",
       quickbars_selection_toolbar: "bold italic link | h2 h3 | blockquote",
       quickbars_insert_toolbar: "image media hr codesample code",
       statusbar: false,
@@ -73,6 +84,8 @@ export class CreateComponent implements OnInit {
   }
 
   postForm = new FormGroup({
+    id: new FormControl(""),
+    userId: new FormControl(this.auth.userId),
     postTitle: new FormControl("", Validators.required),
     postText: new FormControl("", Validators.required),
     postFeaturedImage: new FormControl(""),
@@ -84,25 +97,29 @@ export class CreateComponent implements OnInit {
     postFeatured: new FormControl(""),
   });
 
+  setSlug(): void {
+    let title = this.postForm.get("postTitle").value;
+    if (title && title !== "") {
+      title = this.slugify.transform(title);
+    }
+    this.postForm.get("postUrl").setValue(title, { emitEvent: false });
+  }
+
   imagesUploadHandler() {
-    // let subscription = this.http
-    //   .post<any>(`${environment.apiUrl}/auth/me`, {
-    //     Title: "Verifying if token is not expired!",
-    //   })
-    //   .subscribe((res) => {});
+    this.auth.updateUserData();
     const that = this;
     return (blobInfo, success, failure, progress) => {
-      var xhr, formData;
-      xhr = new XMLHttpRequest();
+      let formData;
+      const xhr = new XMLHttpRequest();
       xhr.withCredentials = false;
       xhr.open("POST", `${environment.apiUrl}/post/imageUpload`);
       xhr.setRequestHeader("Accept", "application/json");
       xhr.setRequestHeader("Authorization", `Bearer ${that.auth.getToken}`);
 
-      xhr.upload.onprogress = function (e) {
+      xhr.upload.onprogress = (e) => {
         progress((e.loaded / e.total) * 100);
       };
-      xhr.onload = function () {
+      xhr.onload = () => {
         let json;
         if (xhr.status === 403) {
           failure("HTTP Error: " + xhr.status, { remove: true });
@@ -119,7 +136,7 @@ export class CreateComponent implements OnInit {
         }
         success(json.location);
       };
-      xhr.onerror = function () {
+      xhr.onerror = () => {
         failure(
           "Image upload failed due to a XHR Transport error. Code: " +
             xhr.status
@@ -140,6 +157,14 @@ export class CreateComponent implements OnInit {
 
   toggleSideNav() {
     this.isSideNavOpen = !this.isSideNavOpen;
+  }
+
+  isObjEmpty(data: any): any {
+    let empty = true;
+    Object.keys(data).forEach((key) => {
+      key !== "userId" && data[key] !== "" ? (empty = false) : true;
+    });
+    return empty;
   }
 
   ngOnInit() {}

@@ -18,7 +18,11 @@ export class AuthenticationService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public me(): Observable<any> {
+  public get userId(): number {
+    return this.currentUserValue.id;
+  }
+
+  public get me(): Observable<any> {
     return this.http.post(`${environment.apiUrl}/auth/me`, {
       Title: "Getting current user from API",
     });
@@ -55,7 +59,7 @@ export class AuthenticationService {
   }
 
   updateUserData() {
-    this.me()
+    this.me
       .pipe(first())
       .pipe(
         map((user: User) => {

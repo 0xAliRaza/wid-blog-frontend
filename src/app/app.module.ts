@@ -18,7 +18,7 @@ import { SlugifyPipe } from './slugify.pipe';
     AdminModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [SlugifyPipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

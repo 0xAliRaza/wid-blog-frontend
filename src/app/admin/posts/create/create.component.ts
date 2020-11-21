@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from "@angular/animations";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Tag } from "@app/admin/_models/tag";
 import { AuthenticationService, PostsService } from "@app/admin/_services";
 import { SlugifyPipe } from "@app/slugify.pipe";
 import { environment } from "@environments/environment";
@@ -40,19 +41,33 @@ export class CreateComponent implements OnInit, OnDestroy {
   isSideNavOpen = false;
   tinymceInit: any;
   private postFormChangesSubscription: Subscription;
+  private tagsSubscription: Subscription;
   private postId: number;
   private imageUploadSubscription: Subscription;
+  tags: Tag[] = [];
 
   constructor(
     private auth: AuthenticationService,
     private slugifyPipe: SlugifyPipe,
     private postsService: PostsService
   ) {
+    this.tagsSubscription = this.postsService.tagsSubject.subscribe(
+      (tags: Tag[]) => {
+        if (tags) {
+          this.tags = tags;
+        }
+      }
+    );
+
     this.postFormChangesSubscription = this.postForm.valueChanges
       .pipe(debounceTime(1000))
       .subscribe(() => {
-        this.processForm() ? this.scheduleSave() : false;
+        if (this.processForm()) {
+          this.scheduleSave();
+        }
       });
+
+    this.auth.updateUserData();
 
     /* Initialize tinymce  */
     this.tinymceInit = {
@@ -71,14 +86,6 @@ export class CreateComponent implements OnInit, OnDestroy {
       images_upload_handler: this.imagesUploadHandler(),
     };
   }
-
-
-  tags = [
-    { id: 1, name: "Volvo" },
-    { id: 2, name: "Saab" },
-    { id: 3, name: "Opel" },
-    { id: 4, name: "Audi" },
-  ];
 
   postForm = new FormGroup({
     userId: new FormControl(this.auth.userId),
@@ -116,7 +123,6 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   imagesUploadHandler() {
-    this.auth.updateUserData();
     /* Create an reference of 'this' to use outside */
     const that = this;
     return (blobInfo, success, failure, progress) => {
@@ -192,9 +198,20 @@ export class CreateComponent implements OnInit, OnDestroy {
     return this.slugifyPipe.transform(input);
   }
 
+  createTag(): any {
+    const slugify = this.slugifyPipe.transform;
+    return (input) => {
+      return {
+        name: input,
+        slug: slugify(input),
+      };
+    };
+  }
+
   ngOnInit() {}
 
   ngOnDestroy() {
     this.postFormChangesSubscription.unsubscribe();
+    this.tagsSubscription.unsubscribe();
   }
 }

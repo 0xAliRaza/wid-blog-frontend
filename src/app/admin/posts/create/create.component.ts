@@ -124,7 +124,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     console.log(response);
     return this.postForm
       .get("slug")
-      .setValue(response.slug, { emitEvent: false });
+      .setValue(response.post.slug, { emitEvent: false });
   }
 
   imagesUploadHandler() {

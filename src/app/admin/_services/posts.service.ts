@@ -4,7 +4,7 @@ import { FormGroup } from "@angular/forms";
 import { environment } from "@environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { first, map, retry } from "rxjs/operators";
-import { Post } from "../_models";
+import { Post, User } from "../_models";
 import { Tag } from "../_models/tag";
 
 @Injectable({

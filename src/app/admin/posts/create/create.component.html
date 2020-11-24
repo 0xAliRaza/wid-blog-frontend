@@ -53,7 +53,7 @@
         <form [formGroup]="postForm">
             <div class="form-group">
                 <label for="post-featured-image">Featured Image</label>
-                <input type="file" id="post-featured-image" class="form-control-file" formControlName="featuredImage">
+                <input type="file" id="post-featured-image" class="form-control-file" formControlName="featured_image">
             </div>
             <div class="form-group">
                 <label for="post-url">URL</label>
@@ -61,23 +61,23 @@
             </div>
             <div class="form-group">
                 <label for="post-tags">Tags</label>
-                <ng-select  [items]="tags" [multiple]="true" [addTag]="createTag()" bindLabel="name" bindValue="slug" formControlName="tags">
+                <ng-select placeholder="Select or create tags..." [items]="tags" [multiple]="true" [addTag]="createTag()" bindLabel="name" formControlName="tags">
                 </ng-select>
 
             </div>
             <div class="form-group">
                 <label for="post-excerpt">Custom Excerpt</label>
                 <textarea rows="3" type="text" id="post-excerpt" class="form-control"
-                    formControlName="customExcerpt"></textarea>
+                    formControlName="custom_excerpt"></textarea>
             </div>
             <div class="form-group">
                 <label for="post-meta-title">Meta Title</label>
-                <input type="text" id="post-meta-title" class="form-control" formControlName="metaTitle">
+                <input type="text" id="post-meta-title" class="form-control" formControlName="meta_title">
             </div>
             <div class="form-group">
                 <label for="post-meta-description">Meta Description</label>
                 <textarea rows="3" type="text" id="post-meta-description" class="form-control"
-                    formControlName="metaDescription"></textarea>
+                    formControlName="meta_description"></textarea>
             </div>
             <div class="form-check">
                 <input type="checkbox" id="post-featured" class="form-check-input" formControlName="featured">

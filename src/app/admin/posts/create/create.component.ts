@@ -51,6 +51,11 @@ export class CreateComponent implements OnInit, OnDestroy {
     private slugifyPipe: SlugifyPipe,
     private postsService: PostsService
   ) {
+    this.auth.updateUserData();
+    this.postForm
+      .get("user_id")
+      .setValue(this.auth.userId, { emitEvent: false });
+
     this.tagsSubscription = this.postsService.tagsSubject.subscribe(
       (tags: Tag[]) => {
         if (tags) {
@@ -66,8 +71,6 @@ export class CreateComponent implements OnInit, OnDestroy {
           this.scheduleSave();
         }
       });
-
-    this.auth.updateUserData();
 
     /* Initialize tinymce  */
     this.tinymceInit = {
@@ -88,16 +91,17 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   postForm = new FormGroup({
-    userId: new FormControl(this.auth.userId),
+    user_id: new FormControl(""),
+    type_id: new FormControl(1),
     title: new FormControl("", Validators.required),
     html: new FormControl("", Validators.required),
-    featuredImage: new FormControl(""),
+    featured_image: new FormControl(""),
     slug: new FormControl(""),
     tags: new FormControl(""),
-    customExcerpt: new FormControl(""),
-    metaTitle: new FormControl(""),
-    metaDescription: new FormControl(""),
-    featured: new FormControl(""),
+    custom_excerpt: new FormControl(""),
+    meta_title: new FormControl(""),
+    meta_description: new FormControl(""),
+    featured: new FormControl(false),
   });
 
   processForm() {
@@ -117,6 +121,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   processServerResponse(response) {
+    console.log(response);
     return this.postForm
       .get("slug")
       .setValue(response.slug, { emitEvent: false });

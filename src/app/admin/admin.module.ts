@@ -8,7 +8,7 @@ import { AuthGuard } from "./_helpers/auth.guard";
 import { LoginComponent } from "./login/login.component";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { JwtInterceptor, ErrorInterceptor } from "./_helpers";
-import { AuthenticationService } from "./_services";
+import { AuthenticationService, PostsService } from "./_services";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SvgIconComponent } from './svg-icon/svg-icon.component';
 import { TopNavComponent } from './top-nav/top-nav.component';
@@ -35,6 +35,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
   imports: [CommonModule, AdminRoutingModule, ReactiveFormsModule, FormsModule, HttpClientModule, EditorModule, NgSelectModule],
   providers: [
     AuthenticationService,
+    PostsService,
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

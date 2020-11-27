@@ -45,13 +45,13 @@ export class CreateComponent implements OnInit, OnDestroy {
   private postId: number;
   private imageUploadSubscription: Subscription;
   tags: Tag[] = [];
+  featImgUrl: any;
 
   constructor(
     private auth: AuthenticationService,
     private slugifyPipe: SlugifyPipe,
     private postsService: PostsService
   ) {
-    this.auth.updateUserData();
     this.postForm
       .get("user_id")
       .setValue(this.auth.userId, { emitEvent: false });
@@ -210,6 +210,28 @@ export class CreateComponent implements OnInit, OnDestroy {
         name: input,
         slug: slugify(input),
       };
+    };
+  }
+
+  onFeatImgChanged(event) {
+    const files = event.target.files;
+    if (files.length === 0) {
+      return;
+    }
+
+    const mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      alert("Only images are supported.");
+      {
+        return;
+      }
+    }
+
+    const reader = new FileReader();
+    // this.imagePath = files;
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
+      this.featImgUrl = reader.result;
     };
   }
 

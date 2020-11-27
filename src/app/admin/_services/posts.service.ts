@@ -1,5 +1,4 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { environment } from "@environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
@@ -7,9 +6,6 @@ import { first, map, retry } from "rxjs/operators";
 import { Post, User } from "../_models";
 import { Tag } from "../_models/tag";
 
-@Injectable({
-  providedIn: "root",
-})
 export class PostsService {
   tagsSubject: BehaviorSubject<Tag[] | undefined>;
   constructor(private http: HttpClient) {
@@ -28,7 +24,6 @@ export class PostsService {
   getTagsObservable(): Observable<Tag[]> {
     return this.http
       .get<Tag[]>(`${environment.apiUrl}/post/tags`)
-      .pipe(retry(1))
       .pipe(
         map((tags) => {
           const tagModels: Tag[] = [];

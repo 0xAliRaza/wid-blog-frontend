@@ -13,4 +13,5 @@ export class Post {
   meta_title: string;
   meta_description: string;
   featured: string;
+  status: string;
 }

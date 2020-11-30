@@ -14,7 +14,7 @@
     </ul>
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="#">Publish</a>
+            <button [disabled]="postForm.invalid" class="btn nav-link" (click)="publish()">Publish</button>
         </li>
         <li class="nav-item">
             <button class="nav-link btn settings-btn" (click)="toggleSideNav()">

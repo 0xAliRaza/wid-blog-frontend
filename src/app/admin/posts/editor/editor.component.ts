@@ -6,12 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
+import { FormBuilder, Validators } from "@angular/forms";
 import { Post } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
 import { AuthenticationService, PostsService } from "@app/admin/_services";
@@ -105,7 +100,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     title: [""],
     html: ["", Validators.required],
     slug: [""],
-    tags: ["", Validators.required],
+    tags: [""],
     custom_excerpt: [""],
     meta_title: [""],
     meta_description: [""],
@@ -128,6 +123,12 @@ export class EditorComponent implements OnInit, OnDestroy {
         emitEvent: false,
       });
     }
+  }
+
+  publish() {
+    this.f.status.setValue("published", { emitEvent: false });
+    this.setDefaults();
+    this.onSubmit();
   }
 
   private scheduleSave() {
@@ -163,14 +164,15 @@ export class EditorComponent implements OnInit, OnDestroy {
     // }
   }
 
-  private processServerResponse(response: Post) {
-    console.log(response);
-    this.f.slug.setValue(response.slug, { emitEvent: false });
-    this.id = response.id;
-    if (response.featured_image_url) {
-      this.featuredImageUrl = response.featured_image_url;
+  private processServerResponse(post: Post) {
+    console.log(post);
+    this.f.slug.setValue(post.slug, { emitEvent: false });
+    this.id = post.id;
+    if (post.featured_image_url) {
+      this.featuredImageUrl = post.featured_image_url;
       this.resetFeaturedImage();
     }
+    this.status = post.status;
   }
 
   onFeaturedImageChange(event) {

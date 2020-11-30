@@ -21,9 +21,9 @@ import { Subscription } from "rxjs";
 import { debounceTime, first } from "rxjs/operators";
 
 @Component({
-  selector: "app-create",
-  templateUrl: "./create.component.html",
-  styleUrls: ["./create.component.scss"],
+  selector: "admin-post-editor",
+  templateUrl: "./editor.component.html",
+  styleUrls: ["./editor.component.scss"],
   animations: [
     trigger("slideInOut", [
       transition(":enter", [
@@ -48,7 +48,7 @@ import { debounceTime, first } from "rxjs/operators";
     ]),
   ],
 })
-export class CreateComponent implements OnInit, OnDestroy {
+export class EditorComponent implements OnInit, OnDestroy {
   private timeout: any;
   private postFormChangesSubscription: Subscription;
   private tagsSubscription: Subscription;
@@ -117,6 +117,9 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   private setDefaults() {
+    if (this.f.html.value === "") {
+      return;
+    }
     if (this.f.title.value === "") {
       this.f.title.setValue("(Untitled)", { emitEvent: false });
     }
@@ -129,6 +132,7 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   private scheduleSave() {
     clearTimeout(this.timeout);
+    this.setDefaults();
     if (this.postForm.valid) {
       this.timeout = setTimeout(() => {
         this.onSubmit();
@@ -140,7 +144,6 @@ export class CreateComponent implements OnInit, OnDestroy {
     if (this.postForm.invalid) {
       return;
     }
-    this.setDefaults();
     const formData = new FormData();
     if (this.featuredImage) {
       formData.set("featured_image", this.featuredImage);

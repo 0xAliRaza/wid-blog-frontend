@@ -6,6 +6,7 @@ import { PostsComponent } from "./posts/posts.component";
 import { AuthGuard } from "./_helpers";
 import { LoginComponent } from "./login/login.component";
 import { CreateComponent } from "./posts/create/create.component";
+import { EditorComponent } from './posts/editor/editor.component';
 
 const routes: Routes = [
   {
@@ -29,8 +30,13 @@ const routes: Routes = [
     ],
   },
   {
-    path: "admin/posts/create",
-    component: CreateComponent,
+    path: "admin/editor/post",
+    component: EditorComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "admin/editor/post/:id",
+    component: EditorComponent,
     canActivate: [AuthGuard]
   },
   {

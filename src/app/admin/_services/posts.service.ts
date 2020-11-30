@@ -22,19 +22,17 @@ export class PostsService {
   }
 
   getTagsObservable(): Observable<Tag[]> {
-    return this.http
-      .get<Tag[]>(`${environment.apiUrl}/post/tags`)
-      .pipe(
-        map((tags) => {
-          const tagModels: Tag[] = [];
-          tags.forEach((val: Tag) => {
-            val.created_at = new Date(val.created_at);
-            val.updated_at = new Date(val.updated_at);
-            tagModels.push(Object.assign(new Tag(), val));
-          });
-          return tagModels;
-        })
-      );
+    return this.http.get<Tag[]>(`${environment.apiUrl}/post/tags`).pipe(
+      map((tags) => {
+        const tagModels: Tag[] = [];
+        tags.forEach((val: Tag) => {
+          val.created_at = new Date(val.created_at);
+          val.updated_at = new Date(val.updated_at);
+          tagModels.push(Object.assign(new Tag(), val));
+        });
+        return tagModels;
+      })
+    );
   }
 
   updateTags(): Tag[] {

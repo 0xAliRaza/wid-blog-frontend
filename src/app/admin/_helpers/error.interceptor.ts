@@ -35,7 +35,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                   request = request.clone({
                     setHeaders: {
                       Accept: `application/json`,
-                      "Content-Type": `application/json`,
+                      // "Content-Type": `application/json`,
                       Authorization: `Bearer ${user.token}`,
                     },
                   });

@@ -1,6 +1,18 @@
 import { animate, style, transition, trigger } from "@angular/animations";
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
+import { Post } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
 import { AuthenticationService, PostsService } from "@app/admin/_services";
 import { SlugifyPipe } from "@app/slugify.pipe";
@@ -38,24 +50,24 @@ import { debounceTime, first } from "rxjs/operators";
 })
 export class CreateComponent implements OnInit, OnDestroy {
   private timeout: any;
-  isSideNavOpen = false;
-  tinymceInit: any;
   private postFormChangesSubscription: Subscription;
   private tagsSubscription: Subscription;
-  private postId: number;
-  private imageUploadSubscription: Subscription;
-  tags: Tag[] = [];
-  featImgUrl: any;
+  public isSideNavOpen = false;
+  public tinymceInit: any;
+  public id: number;
+  public featuredImageUrl: any;
+  private featuredImage: File;
+  public tags: Tag[] = [];
+  public status = "draft";
+
+  @ViewChild("featuredImage", { static: false }) featuredImageEl: ElementRef;
 
   constructor(
     private auth: AuthenticationService,
     private slugifyPipe: SlugifyPipe,
-    private postsService: PostsService
+    private postsService: PostsService,
+    private fb: FormBuilder
   ) {
-    this.postForm
-      .get("user_id")
-      .setValue(this.auth.userId, { emitEvent: false });
-
     this.tagsSubscription = this.postsService.tagsSubject.subscribe(
       (tags: Tag[]) => {
         if (tags) {
@@ -67,9 +79,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.postFormChangesSubscription = this.postForm.valueChanges
       .pipe(debounceTime(1000))
       .subscribe(() => {
-        if (this.processForm()) {
-          this.scheduleSave();
-        }
+        this.scheduleSave();
       });
 
     /* Initialize tinymce  */
@@ -90,41 +100,119 @@ export class CreateComponent implements OnInit, OnDestroy {
     };
   }
 
-  postForm = new FormGroup({
-    user_id: new FormControl(""),
-    type_id: new FormControl(1),
-    title: new FormControl("", Validators.required),
-    html: new FormControl("", Validators.required),
-    featured_image: new FormControl(""),
-    slug: new FormControl(""),
-    tags: new FormControl(""),
-    custom_excerpt: new FormControl(""),
-    meta_title: new FormControl(""),
-    meta_description: new FormControl(""),
-    featured: new FormControl(false),
+  postForm = this.fb.group({
+    status: [this.status],
+    title: [""],
+    html: ["", Validators.required],
+    slug: [""],
+    tags: ["", Validators.required],
+    custom_excerpt: [""],
+    meta_title: [""],
+    meta_description: [""],
+    featured: [false],
   });
 
-  processForm() {
-    const f = this.postForm;
-    if (f.get("html").value !== "") {
-      if (f.get("title").value === "") {
-        f.get("title").setValue("(Untitled)", { emitEvent: false });
-      }
-      if (!f.get("slug").dirty) {
-        f.get("slug").setValue(this.slugify(f.get("title").value), {
-          emitEvent: false,
-        });
-      }
-      return true;
-    }
-    return false;
+  get f() {
+    return this.postForm.controls;
   }
 
-  processServerResponse(response) {
+  private setDefaults() {
+    if (this.f.title.value === "") {
+      this.f.title.setValue("(Untitled)", { emitEvent: false });
+    }
+    if (!this.f.slug.dirty && this.f.slug.value === "") {
+      this.f.slug.setValue(this.slugify(this.f.title.value), {
+        emitEvent: false,
+      });
+    }
+  }
+
+  private scheduleSave() {
+    clearTimeout(this.timeout);
+    if (this.postForm.valid) {
+      this.timeout = setTimeout(() => {
+        this.onSubmit();
+      }, 4000);
+    }
+  }
+
+  onSubmit() {
+    if (this.postForm.invalid) {
+      return;
+    }
+    this.setDefaults();
+    const formData = new FormData();
+    if (this.featuredImage) {
+      formData.set("featured_image", this.featuredImage);
+    }
+    formData.set("user_id", JSON.stringify(this.auth.userId));
+    formData.set("postData", JSON.stringify(this.postForm.value));
+    // if (!!this.id) {
+    //   this.postsService
+    //     .update(formData)
+    //     .pipe(first())
+    //     .subscribe((res: Post) => this.processServerResponse(res));
+    // } else {
+    this.postsService
+      .create(formData)
+      .pipe(first())
+      .subscribe((res: Post) => this.processServerResponse(res));
+    // }
+  }
+
+  private processServerResponse(response: Post) {
     console.log(response);
-    return this.postForm
-      .get("slug")
-      .setValue(response.post.slug, { emitEvent: false });
+    this.f.slug.setValue(response.slug, { emitEvent: false });
+    this.id = response.id;
+    if (response.featured_image_url) {
+      this.featuredImageUrl = response.featured_image_url;
+      this.resetFeaturedImage();
+    }
+  }
+
+  onFeaturedImageChange(event) {
+    if (event.target.files.length === 0) {
+      return;
+    }
+    const file = event.target.files[0];
+
+    const mimeType = file.type;
+    if (mimeType.match(/image\/*/) == null) {
+      {
+        return;
+      }
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (_event) => {
+      this.featuredImageUrl = reader.result;
+      this.featuredImage = file;
+      this.scheduleSave();
+    };
+  }
+
+  resetFeaturedImage() {
+    this.featuredImage = undefined;
+    this.featuredImageEl.nativeElement.value = "";
+  }
+
+  toggleSideNav() {
+    this.isSideNavOpen = !this.isSideNavOpen;
+  }
+
+  slugify(input: string): string {
+    return this.slugifyPipe.transform(input);
+  }
+
+  createTag(): any {
+    const slugify = this.slugifyPipe.transform;
+    return (input) => {
+      return {
+        name: input,
+        slug: slugify(input),
+      };
+    };
   }
 
   imagesUploadHandler() {
@@ -168,70 +256,6 @@ export class CreateComponent implements OnInit, OnDestroy {
       formData = new FormData();
       formData.append("file", blobInfo.blob(), blobInfo.filename());
       xhr.send(formData);
-    };
-  }
-
-  scheduleSave() {
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      if (!this.postId) {
-        return this.postsService
-          .create(this.postForm.value)
-          .pipe(first())
-          .subscribe((res) => this.processServerResponse(res));
-      }
-      return this.postsService
-        .update(this.postForm.value)
-        .pipe(first())
-        .subscribe((res) => this.processServerResponse(res));
-    }, 4000);
-  }
-
-  toggleSideNav() {
-    this.isSideNavOpen = !this.isSideNavOpen;
-  }
-
-  isObjEmpty(data: any): any {
-    let empty = true;
-    Object.keys(data).forEach((key) => {
-      data[key] !== "" ? (empty = false) : true;
-    });
-    return empty;
-  }
-
-  slugify(input: string): string {
-    return this.slugifyPipe.transform(input);
-  }
-
-  createTag(): any {
-    const slugify = this.slugifyPipe.transform;
-    return (input) => {
-      return {
-        name: input,
-        slug: slugify(input),
-      };
-    };
-  }
-
-  onFeatImgChanged(event) {
-    const files = event.target.files;
-    if (files.length === 0) {
-      return;
-    }
-
-    const mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      alert("Only images are supported.");
-      {
-        return;
-      }
-    }
-
-    const reader = new FileReader();
-    // this.imagePath = files;
-    reader.readAsDataURL(files[0]);
-    reader.onload = (_event) => {
-      this.featImgUrl = reader.result;
     };
   }
 

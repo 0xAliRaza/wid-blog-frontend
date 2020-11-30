@@ -5,11 +5,12 @@ export class Post {
   user: User;
   title: string;
   html: string;
-  featuredImage: string;
+  featured_image: string;
+  featured_image_url: string;
   slug: string;
   tags: any;
-  customExcerpt: string;
-  metaTitle: string;
-  metaDescription: string;
+  custom_excerpt: string;
+  meta_title: string;
+  meta_description: string;
   featured: string;
 }

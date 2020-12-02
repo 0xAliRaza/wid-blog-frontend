@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Post } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
 import { AuthenticationService, PostsService } from "@app/admin/_services";
@@ -16,10 +16,12 @@ import { first } from "rxjs/operators";
 export class CreateComponent implements OnInit, OnDestroy {
   public post: Post;
   private tagsSubscription: Subscription;
+  private routerSubscription: Subscription;
   public allTags: Tag[];
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private posts: PostsService,
     private auth: AuthenticationService,
     private slugifyPipe: SlugifyPipe
@@ -28,6 +30,12 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.tagsSubscription = this.posts.tags.subscribe((tags: Tag[]) => {
       if (tags) {
         this.allTags = tags;
+      }
+    });
+
+    this.route.params.subscribe((params: Params) => {
+      if (params.id) {
+        console.log(params.id);
       }
     });
   }
@@ -57,6 +65,9 @@ export class CreateComponent implements OnInit, OnDestroy {
       .subscribe((res: Post) => {
         console.log(res);
         this.post = res;
+        if (this.post.id) {
+          this.router.navigate(["admin/editor/post", +this.post.id]);
+        }
       });
     // }
   }

@@ -1,9 +1,8 @@
 import { HttpClient } from "@angular/common/http";
-import { FormGroup } from "@angular/forms";
 import { environment } from "@environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
-import { first, map, retry } from "rxjs/operators";
-import { Post, User } from "../_models";
+import { first, map } from "rxjs/operators";
+import { Post } from "../_models";
 import { Tag } from "../_models/tag";
 
 export class PostsService {
@@ -37,15 +36,15 @@ export class PostsService {
     return this.tags.value;
   }
 
-  get(id: number) {}
+  get(id: number): Observable<Post> {
+    return this.http.get<Post>(`${environment.apiUrl}/post/${id}`);
+  }
 
   create(postData): Observable<Post> {
     return this.http.post<Post>(`${environment.apiUrl}/post/create`, postData);
-    // .pipe(map((res) => Object.assign(new Post(), res)));
   }
 
   update(postData): Observable<Post> {
-    return this.http.post<Post>(`${environment.apiUrl}/post/update`, postData);
-    // .pipe(map((res) => Object.assign(new Post(), res)));
+    return this.http.put<Post>(`${environment.apiUrl}/post/update`, postData);
   }
 }

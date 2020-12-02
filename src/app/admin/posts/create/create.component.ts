@@ -6,7 +6,7 @@ import { AuthenticationService, PostsService } from "@app/admin/_services";
 import { SlugifyPipe } from "@app/slugify.pipe";
 import { environment } from "@environments/environment";
 import { Subscription } from "rxjs";
-import { first } from "rxjs/operators";
+import { first, map, switchMap } from "rxjs/operators";
 
 @Component({
   selector: "app-create",
@@ -33,11 +33,22 @@ export class CreateComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.route.params.subscribe((params: Params) => {
+    this.route.params.subscribe((params) => {
       if (params.id) {
-        console.log(params.id);
+        if (!this.post.id) {
+          this.fetchPost(params.id);
+        }
       }
     });
+  }
+
+  fetchPost(id: number) {
+    this.posts
+      .get(id)
+      .pipe(first())
+      .subscribe((res: Post) => {
+        this.post = res;
+      });
   }
 
   onPostChange(post: Post) {
@@ -53,23 +64,25 @@ export class CreateComponent implements OnInit, OnDestroy {
     });
 
     formData.set("user_id", JSON.stringify(this.auth.userId));
-    // if (!this.post.id) {
-    //   this.postsService
-    //     .update(formData)
-    //     .pipe(first())
-    //     .subscribe((res: Post) => this.processServerResponse(res));
-    // } else {
-    this.posts
-      .create(formData)
-      .pipe(first())
-      .subscribe((res: Post) => {
-        console.log(res);
-        this.post = res;
-        if (this.post.id) {
-          this.router.navigate(["admin/editor/post", +this.post.id]);
-        }
-      });
-    // }
+    if (this.post.id) {
+      this.posts
+        .update(formData)
+        .pipe(first())
+        .subscribe((res: Post) => this.handleServerResponse(res));
+    } else {
+      this.posts
+        .create(formData)
+        .pipe(first())
+        .subscribe((res: Post) => this.handleServerResponse(res));
+    }
+  }
+
+  private handleServerResponse(res: Post) {
+    console.log(res);
+    this.post = res;
+    if (this.post.id) {
+      this.router.navigate(["admin/editor/post", +this.post.id]);
+    }
   }
 
   getTinymceImgUploader() {
@@ -131,9 +144,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     };
   }
 
-  ngOnInit() {
-    console.log(this.route.snapshot.params.id);
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.tagsSubscription.unsubscribe();

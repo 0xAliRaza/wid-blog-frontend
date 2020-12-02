@@ -21,7 +21,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     private posts: PostsService,
     private auth: AuthenticationService
   ) {
-    this.post = new Post();
+    this.post = {} as Post;
     this.tagsSubscription = this.posts.tags.subscribe((tags: Tag[]) => {
       if (tags) {
         this.post.tags = tags;

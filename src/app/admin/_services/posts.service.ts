@@ -37,19 +37,15 @@ export class PostsService {
     return this.tags.value;
   }
 
-  get(id: number) {
-
-  }
+  get(id: number) {}
 
   create(postData): Observable<Post> {
-    return this.http
-      .post(`${environment.apiUrl}/post/create`, postData)
-      .pipe(map((res) => Object.assign(new Post(), res)));
+    return this.http.post<Post>(`${environment.apiUrl}/post/create`, postData);
+    // .pipe(map((res) => Object.assign(new Post(), res)));
   }
 
   update(postData): Observable<Post> {
-    return this.http
-      .post(`${environment.apiUrl}/post/update`, postData)
-      .pipe(map((res) => Object.assign(new Post(), res)));
+    return this.http.post<Post>(`${environment.apiUrl}/post/update`, postData);
+    // .pipe(map((res) => Object.assign(new Post(), res)));
   }
 }

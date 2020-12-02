@@ -17,7 +17,8 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import { SideNavItemComponent } from './side-nav/side-nav-item/side-nav-item.component';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { EditorComponent } from './posts/editor/editor.component';
+import { EditorComponent } from './posts/create/editor/editor.component';
+import { CreateComponent } from './posts/create/create.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { EditorComponent } from './posts/editor/editor.component';
     SideNavComponent,
     SideNavItemComponent,
     EditorComponent,
+    CreateComponent,
   ],
   imports: [CommonModule, AdminRoutingModule, ReactiveFormsModule, FormsModule, HttpClientModule, EditorModule, NgSelectModule],
   providers: [

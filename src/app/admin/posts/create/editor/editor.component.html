@@ -14,7 +14,7 @@
     </ul>
     <ul class="navbar-nav">
         <li class="nav-item">
-            <button [disabled]="postForm.invalid" class="btn nav-link" (click)="publish()">Publish</button>
+            <button [disabled]="postForm.invalid" class="btn nav-link">Publish</button>
         </li>
         <li class="nav-item">
             <button class="nav-link btn settings-btn" (click)="toggleSideNav()">
@@ -33,7 +33,7 @@
                         <input placeholder="Post Title" class="post__title-input" formControlName="title">
                     </div>
                     <div class="post__text">
-                        <editor [init]="tinymceInit" formControlName="html"></editor>
+                        <editor [init]="tinymceInit" id="tinymce-editor" formControlName="html"></editor>
                     </div>
 
                 </form>
@@ -50,8 +50,7 @@
         </button>
     </div>
     <div class="sidebar__form">
-        <form enctype="multipart/form-data"
-         [formGroup]="postForm">
+        <form enctype="multipart/form-data" [formGroup]="postForm">
             <div class="form-group">
                 <label for="post-featured-image">Featured Image</label>
                 <input #featuredImage type="file" accept="image/*" id="post-featured-image" class="form-control-file"
@@ -64,7 +63,7 @@
             </div>
             <div class="form-group">
                 <label for="post-tags">Tags</label>
-                <ng-select placeholder="Select or create tags..." [items]="tags" [multiple]="true"
+                <ng-select placeholder="Select or create tags..." [items]="post.tags" [multiple]="true"
                     [addTag]="createTag()" bindLabel="name" formControlName="tags">
                 </ng-select>
 

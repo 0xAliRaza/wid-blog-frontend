@@ -7,18 +7,10 @@ import { Post, User } from "../_models";
 import { Tag } from "../_models/tag";
 
 export class PostsService {
-  tagsSubject: BehaviorSubject<Tag[] | undefined>;
+  tags: BehaviorSubject<Tag[] | []>;
   constructor(private http: HttpClient) {
-    this.tagsSubject = new BehaviorSubject(undefined);
-    this.getTagsObservable()
-      .pipe(first())
-      .subscribe((tags: Tag[]) => {
-        this.tagsSubject.next(tags);
-      });
-  }
-
-  get tags(): Tag[] {
-    return this.tagsSubject.value;
+    this.tags = new BehaviorSubject([]);
+    this.updateTags();
   }
 
   getTagsObservable(): Observable<Tag[]> {
@@ -39,10 +31,14 @@ export class PostsService {
     this.getTagsObservable()
       .pipe(first())
       .subscribe((tags: Tag[]) => {
-        this.tagsSubject.next(tags);
+        this.tags.next(tags);
       });
 
-    return this.tags;
+    return this.tags.value;
+  }
+
+  get(id: number) {
+
   }
 
   create(postData): Observable<Post> {

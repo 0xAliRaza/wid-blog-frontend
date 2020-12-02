@@ -2,11 +2,11 @@ import { User } from "./user";
 
 export class Post {
   id: number;
-  user: User;
+  user_id: number;
   title: string;
   html: string;
+  featured_image_file: File;
   featured_image: string;
-  featured_image_url: string;
   slug: string;
   tags: any;
   custom_excerpt: string;

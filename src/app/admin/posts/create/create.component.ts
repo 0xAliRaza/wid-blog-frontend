@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Post } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
 import { AuthenticationService, PostsService } from "@app/admin/_services";
+import { SlugifyPipe } from "@app/slugify.pipe";
 import { environment } from "@environments/environment";
 import { Subscription } from "rxjs";
 import { first } from "rxjs/operators";
@@ -15,21 +16,21 @@ import { first } from "rxjs/operators";
 export class CreateComponent implements OnInit, OnDestroy {
   public post: Post;
   private tagsSubscription: Subscription;
+  public allTags: Tag[];
 
   constructor(
     private route: ActivatedRoute,
     private posts: PostsService,
-    private auth: AuthenticationService
+    private auth: AuthenticationService,
+    private slugifyPipe: SlugifyPipe
   ) {
     this.post = {} as Post;
     this.tagsSubscription = this.posts.tags.subscribe((tags: Tag[]) => {
       if (tags) {
-        this.post.tags = tags;
+        this.allTags = tags;
       }
     });
   }
-
-  onSubmit() {}
 
   onPostChange(post: Post) {
     const formData = new FormData();
@@ -60,7 +61,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     // }
   }
 
-  tinymceImagesUploadHandler() {
+  getTinymceImgUploader() {
     /* Create an reference of 'this' to use outside */
     const that = this;
     return (blobInfo, success, failure, progress) => {
@@ -104,8 +105,23 @@ export class CreateComponent implements OnInit, OnDestroy {
     };
   }
 
+  getNgSelectTagCreator(): any {
+    const slugify = this.slugifyPipe.transform;
+    const that = this;
+    return (input): Tag => {
+      const tag: Tag = {
+        name: input,
+        slug: slugify(input),
+      } as Tag;
+      const allTags = that.posts.tags.getValue();
+      allTags.push(tag);
+      that.posts.tags.next(allTags);
+      return tag;
+    };
+  }
+
   ngOnInit() {
-    console.log(this.route.snapshot.params["id"]);
+    console.log(this.route.snapshot.params.id);
   }
 
   ngOnDestroy() {

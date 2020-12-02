@@ -11,7 +11,7 @@ import {
 } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Post } from "@app/admin/_models";
-import { Tag } from '@app/admin/_models/tag';
+import { Tag } from "@app/admin/_models/tag";
 import { SlugifyPipe } from "@app/slugify.pipe";
 import { BehaviorSubject, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
@@ -57,6 +57,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     this._post = post;
     if (this.post.featured_image) {
       this.featuredImageUrl = this.post.featured_image;
+      this.resetFeaturedImage();
     }
     this.postForm.patchValue(this.post, { emitEvent: false });
   }
@@ -64,7 +65,9 @@ export class EditorComponent implements OnInit, OnDestroy {
     return this._post;
   }
   @Output() postChange = new EventEmitter<Post>();
-  @Input() tinymceImagesUploadHandler: any;
+  @Input() tinymceImgUploader: any;
+  @Input() allTags: Tag[];
+  @Input() ngSelectTagCreator: any;
 
   constructor(private slugifyPipe: SlugifyPipe) {
     this.postFormChangesSubscription = this.postForm.valueChanges
@@ -91,7 +94,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       file_picker_types: "image",
       block_unsupported_drop: false,
       images_upload_url: "http://wid-blog-backend/api/v1/image",
-      images_upload_handler: this.tinymceImagesUploadHandler,
+      images_upload_handler: this.tinymceImgUploader,
     };
   }
 
@@ -143,6 +146,10 @@ export class EditorComponent implements OnInit, OnDestroy {
       this.f.featured_image_file.setValue(file);
     };
   }
+  resetFeaturedImage() {
+    this.f.featured_image_file.setValue("", { emitEvent: false });
+    this.featuredImageEl.nativeElement.value = "";
+  }
 
   toggleSideNav() {
     this.isSideNavOpen = !this.isSideNavOpen;
@@ -152,15 +159,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     return this.slugifyPipe.transform(input);
   }
 
-  createTag(): any {
-    const slugify = this.slugifyPipe.transform;
-    return (input) => {
-      return {
-        name: input,
-        slug: slugify(input),
-      };
-    };
-  }
+  
 
   ngOnInit() {}
 

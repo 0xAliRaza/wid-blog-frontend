@@ -1,2 +1,2 @@
-<admin-post-editor [post]="post" (postChange)="onPostChange($event)"
-    [tinymceImagesUploadHandler]="tinymceImagesUploadHandler()"></admin-post-editor>
+<admin-post-editor [post]="post" (postChange)="onPostChange($event)" [tinymceImgUploader]="getTinymceImgUploader()"
+    [allTags]="allTags" [ngSelectTagCreator]="getNgSelectTagCreator()"></admin-post-editor>

@@ -7,9 +7,9 @@ import { Post, User } from "../_models";
 import { Tag } from "../_models/tag";
 
 export class PostsService {
-  tags: BehaviorSubject<Tag[] | []>;
+  tags: BehaviorSubject<Tag[]>;
   constructor(private http: HttpClient) {
-    this.tags = new BehaviorSubject([]);
+    this.tags = new BehaviorSubject([] as Tag[]);
     this.updateTags();
   }
 

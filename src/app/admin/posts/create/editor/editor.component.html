@@ -63,8 +63,8 @@
             </div>
             <div class="form-group">
                 <label for="post-tags">Tags</label>
-                <ng-select placeholder="Select or create tags..." [items]="post.tags" [multiple]="true"
-                    [addTag]="createTag()" bindLabel="name" formControlName="tags">
+                <ng-select *ngIf="ngSelectTagCreator" placeholder="Select or create tags..." [items]="allTags" [multiple]="true"
+                    [addTag]="ngSelectTagCreator" bindLabel="name" formControlName="tags">
                 </ng-select>
 
             </div>

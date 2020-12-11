@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Post } from "@app/admin/_models";
@@ -24,7 +25,8 @@ export class CreateComponent implements OnInit, OnDestroy {
     private router: Router,
     private posts: PostsService,
     private auth: AuthenticationService,
-    private slugifyPipe: SlugifyPipe
+    private slugifyPipe: SlugifyPipe,
+    private location: Location
   ) {
     this.post = {} as Post;
     this.tagsSubscription = this.posts.tags.subscribe((tags: Tag[]) => {
@@ -81,7 +83,9 @@ export class CreateComponent implements OnInit, OnDestroy {
     console.log(res);
     this.post = res;
     if (this.post.id) {
-      this.router.navigate(["admin/editor/post", +this.post.id]);
+      // this.router.navigate(["admin/editor/post", +this.post.id]);
+      this.location.replaceState(`admin/editor/post/${+this.post.id}`);
+
     }
   }
 

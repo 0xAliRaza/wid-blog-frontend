@@ -48,7 +48,8 @@ export class EditorComponent implements OnInit, OnDestroy {
   private postFormChangesSubscription: Subscription;
   public isSideNavOpen = false;
   public featuredImageUrl: string | ArrayBuffer;
-  public tinymceInit;
+  public tinymceInst: any;
+  public tinymceConfig: any;
 
   @ViewChild("featuredImage", { static: false }) featuredImageEl: ElementRef;
 
@@ -73,18 +74,22 @@ export class EditorComponent implements OnInit, OnDestroy {
   @Input() ngSelectTagCreator: any;
 
   constructor(private slugifyPipe: SlugifyPipe) {
-    this.postFormChangesSubscription = this.postForm.valueChanges
-      .pipe(debounceTime(2000))
-      .subscribe(() => {
-        if (this.f.html.value !== "" && this.f.html.value !== this.post.html) {
-          this.setDefaults();
-          Object.assign(this.post, this.postForm.value);
-          this.postChange.emit(this.post);
-        }
-      });
+    console.log("constructed");
+    // this.postFormChangesSubscription = this.postForm.valueChanges
+    //   .pipe(debounceTime(2000))
+    //   .subscribe((val) => {
+    //     debugger;
+    //     if (this.tinymceInst.initialized) {
+    //       // debugger;
+    //       console.log("bye");
+    //       this.setDefaults();
+    //       Object.assign(this.post, this.postForm.value);
+    //       this.postChange.emit(this.post);
+    //     }
+    //   });
 
     /* Initialize tinymce  */
-    this.tinymceInit = {
+    this.tinymceConfig = {
       menubar: false,
       toolbar: false,
       placeholder: "Write it all down...",
@@ -128,7 +133,6 @@ export class EditorComponent implements OnInit, OnDestroy {
       });
     }
   }
-
   onFeaturedImageChange(event) {
     if (event.target.files.length === 0) {
       return;
@@ -152,6 +156,16 @@ export class EditorComponent implements OnInit, OnDestroy {
   resetFeaturedImage() {
     this.f.featured_image_file.setValue("", { emitEvent: false });
     this.featuredImageEl.nativeElement.value = "";
+  }
+  handleEditorInit(e) {
+    this.tinymceInst = e.editor;
+    this.postFormChangesSubscription = this.postForm.valueChanges
+      .pipe(debounceTime(2000))
+      .subscribe(() => {
+        this.setDefaults();
+        Object.assign(this.post, this.postForm.value);
+        this.postChange.emit(this.post);
+      });
   }
 
   toggleSideNav() {

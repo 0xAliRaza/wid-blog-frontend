@@ -66,14 +66,14 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   getTinymceImgUploader() {
     /* Create an reference of 'this' to use outside */
-    const that = this;
-    return (blobInfo, success, failure, progress) => {
+    // const that = this;
+    return ((blobInfo, success, failure, progress) => {
       let formData;
       const xhr = new XMLHttpRequest();
       xhr.withCredentials = false;
       xhr.open("POST", `${environment.apiUrl}/post/imageUpload`);
       xhr.setRequestHeader("Accept", "application/json");
-      xhr.setRequestHeader("Authorization", `Bearer ${that.auth.getToken}`);
+      xhr.setRequestHeader("Authorization", `Bearer ${this.auth.getToken}`);
       xhr.setRequestHeader("Content-Type", `multipart/form-data`);
 
       xhr.upload.onprogress = (e) => {
@@ -105,7 +105,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       formData = new FormData();
       formData.append("file", blobInfo.blob(), blobInfo.filename());
       xhr.send(formData);
-    };
+    }).bind(this);
   }
 
   getNgSelectTagCreator(): any {

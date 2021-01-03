@@ -33,7 +33,8 @@
                         <input placeholder="Post Title" class="post__title-input" formControlName="title">
                     </div>
                     <div class="post__text">
-                        <editor [init]="tinymceInit" id="tinymce-editor" formControlName="html"></editor>
+                        <editor formControlName="html" (onInit)="handleEditorInit($event)" [init]="tinymceConfig" id="tinymce-editor"
+                        ></editor>
                     </div>
 
                 </form>
@@ -63,8 +64,8 @@
             </div>
             <div class="form-group">
                 <label for="post-tags">Tags</label>
-                <ng-select *ngIf="ngSelectTagCreator" placeholder="Select or create tags..." [items]="allTags" [multiple]="true"
-                    [addTag]="ngSelectTagCreator" bindLabel="name" formControlName="tags">
+                <ng-select *ngIf="ngSelectTagCreator" placeholder="Select or create tags..." [items]="allTags"
+                    [multiple]="true" [addTag]="ngSelectTagCreator" bindLabel="name" formControlName="tags">
                 </ng-select>
 
             </div>

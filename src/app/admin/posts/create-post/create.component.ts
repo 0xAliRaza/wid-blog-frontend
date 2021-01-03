@@ -42,7 +42,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     );
 
     this.routerSubscription = this.route.params.subscribe((params: Params) => {
-      if (params.id) {
+      if (params.id && this.createPost.isEmpty()) {
         this.createPost.fetchPost(params.id);
       }
     });

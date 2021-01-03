@@ -42,10 +42,10 @@ export default class CreatePostService {
     } else {
       formData.set("id", JSON.stringify(this.post.id));
       this.posts
-        .update(formData)
+        .create(formData)
         .pipe(first())
         .subscribe((res: Post) => {
-          // this.setPost(res as Post);
+          this.setPost(res as Post);
         });
     }
   }

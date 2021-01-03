@@ -74,20 +74,6 @@ export class EditorComponent implements OnInit, OnDestroy {
   @Input() ngSelectTagCreator: any;
 
   constructor(private slugifyPipe: SlugifyPipe) {
-    console.log("constructed");
-    // this.postFormChangesSubscription = this.postForm.valueChanges
-    //   .pipe(debounceTime(2000))
-    //   .subscribe((val) => {
-    //     debugger;
-    //     if (this.tinymceInst.initialized) {
-    //       // debugger;
-    //       console.log("bye");
-    //       this.setDefaults();
-    //       Object.assign(this.post, this.postForm.value);
-    //       this.postChange.emit(this.post);
-    //     }
-    //   });
-
     /* Initialize tinymce  */
     this.tinymceConfig = {
       menubar: false,
@@ -155,7 +141,10 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
   resetFeaturedImage() {
     this.f.featured_image_file.setValue("", { emitEvent: false });
-    this.featuredImageEl.nativeElement.value = "";
+    this.post.featured_image = undefined;
+    this.featuredImageEl
+      ? (this.featuredImageEl.nativeElement.value = "")
+      : null;
   }
   handleEditorInit(e) {
     this.tinymceInst = e.editor;

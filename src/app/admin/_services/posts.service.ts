@@ -43,8 +43,4 @@ export class PostsService {
   create(postData): Observable<Post> {
     return this.http.post<Post>(`${environment.apiUrl}/post/create`, postData);
   }
-
-  update(postData): Observable<Post> {
-    return this.http.put<Post>(`${environment.apiUrl}/post/update`, postData);
-  }
 }

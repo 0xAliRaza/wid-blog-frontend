@@ -9,6 +9,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule } from "@angular/forms";
 import { SlugifyPipe } from "./slugify.pipe";
 import { NgSelectModule } from "@ng-select/ng-select";
+import { SharedModule } from "./shared-module";
 @NgModule({
   declarations: [AppComponent, SlugifyPipe],
   imports: [
@@ -19,6 +20,7 @@ import { NgSelectModule } from "@ng-select/ng-select";
     AdminModule,
     BrowserAnimationsModule,
     NgSelectModule,
+    SharedModule,
   ],
   providers: [SlugifyPipe],
   bootstrap: [AppComponent],

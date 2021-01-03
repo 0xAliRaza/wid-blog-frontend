@@ -1,10 +1,10 @@
 import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { environment } from "@environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { first, map } from "rxjs/operators";
 import { Post } from "../_models";
 import { Tag } from "../_models/tag";
-
 export class PostsService {
   tags: BehaviorSubject<Tag[]>;
   constructor(private http: HttpClient) {

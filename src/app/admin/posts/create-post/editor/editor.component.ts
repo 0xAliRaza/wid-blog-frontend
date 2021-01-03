@@ -55,7 +55,10 @@ export class EditorComponent implements OnInit, OnDestroy {
   private _post: Post;
   @Input() set post(post: Post) {
     this._post = post;
-    if (this.post.featured_image) {
+    if (
+      this.post.hasOwnProperty("featured_image") &&
+      this.post.featured_image
+    ) {
       this.featuredImageUrl = this.post.featured_image;
       this.resetFeaturedImage();
     }
@@ -73,7 +76,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.postFormChangesSubscription = this.postForm.valueChanges
       .pipe(debounceTime(2000))
       .subscribe(() => {
-        if (this.f.html.value !== "") {
+        if (this.f.html.value !== "" && this.f.html.value !== this.post.html) {
           this.setDefaults();
           Object.assign(this.post, this.postForm.value);
           this.postChange.emit(this.post);
@@ -158,8 +161,6 @@ export class EditorComponent implements OnInit, OnDestroy {
   slugify(input: string): string {
     return this.slugifyPipe.transform(input);
   }
-
-  
 
   ngOnInit() {}
 

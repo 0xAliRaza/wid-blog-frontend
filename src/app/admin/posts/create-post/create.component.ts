@@ -1,5 +1,4 @@
-import { Location } from '@angular/common';
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Post } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
@@ -8,17 +7,18 @@ import { SlugifyPipe } from "@app/slugify.pipe";
 import { environment } from "@environments/environment";
 import { Subscription } from "rxjs";
 import { first, map, switchMap } from "rxjs/operators";
-
+import CreatePostService from "@app/admin/posts/create-post/create-post.service";
 @Component({
   selector: "app-create",
   templateUrl: "./create.component.html",
   styleUrls: ["./create.component.scss"],
 })
 export class CreateComponent implements OnInit, OnDestroy {
-  public post: Post;
   private tagsSubscription: Subscription;
+  private savedPostSubscription: Subscription;
   private routerSubscription: Subscription;
   public allTags: Tag[];
+  public savedPost: Post = this.createPost.post;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,31 +26,26 @@ export class CreateComponent implements OnInit, OnDestroy {
     private posts: PostsService,
     private auth: AuthenticationService,
     private slugifyPipe: SlugifyPipe,
-    private location: Location
+    private createPost: CreatePostService
   ) {
-    this.post = {} as Post;
     this.tagsSubscription = this.posts.tags.subscribe((tags: Tag[]) => {
       if (tags) {
         this.allTags = tags;
       }
     });
 
-    this.route.params.subscribe((params) => {
+    this.savedPostSubscription = this.createPost.savedPost.subscribe(
+      (post: Post) => {
+        this.savedPost = post;
+        this.router.navigate([`admin/editor/post/${post.id}`]);
+      }
+    );
+
+    this.routerSubscription = this.route.params.subscribe((params: Params) => {
       if (params.id) {
-        if (!this.post.id) {
-          this.fetchPost(params.id);
-        }
+        this.createPost.fetchPost(params.id);
       }
     });
-  }
-
-  fetchPost(id: number) {
-    this.posts
-      .get(id)
-      .pipe(first())
-      .subscribe((res: Post) => {
-        this.post = res;
-      });
   }
 
   onPostChange(post: Post) {
@@ -66,27 +61,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     });
 
     formData.set("user_id", JSON.stringify(this.auth.userId));
-    if (this.post.id) {
-      this.posts
-        .update(formData)
-        .pipe(first())
-        .subscribe((res: Post) => this.handleServerResponse(res));
-    } else {
-      this.posts
-        .create(formData)
-        .pipe(first())
-        .subscribe((res: Post) => this.handleServerResponse(res));
-    }
-  }
-
-  private handleServerResponse(res: Post) {
-    console.log(res);
-    this.post = res;
-    if (this.post.id) {
-      // this.router.navigate(["admin/editor/post", +this.post.id]);
-      this.location.replaceState(`admin/editor/post/${+this.post.id}`);
-
-    }
+    this.createPost.submit(formData);
   }
 
   getTinymceImgUploader() {
@@ -152,5 +127,7 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.tagsSubscription.unsubscribe();
+    this.savedPostSubscription.unsubscribe();
+    this.routerSubscription.unsubscribe();
   }
 }

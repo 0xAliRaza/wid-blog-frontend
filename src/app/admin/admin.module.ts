@@ -10,15 +10,13 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { JwtInterceptor, ErrorInterceptor } from "./_helpers";
 import { AuthenticationService, PostsService } from "./_services";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { SvgIconComponent } from './svg-icon/svg-icon.component';
-import { TopNavComponent } from './top-nav/top-nav.component';
-import { TopNavItemComponent } from './top-nav/top-nav-item/top-nav-item.component';
-import { SideNavComponent } from './side-nav/side-nav.component';
-import { SideNavItemComponent } from './side-nav/side-nav-item/side-nav-item.component';
-import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { EditorComponent } from './posts/create/editor/editor.component';
-import { CreateComponent } from './posts/create/create.component';
+import { TopNavComponent } from "./top-nav/top-nav.component";
+import { TopNavItemComponent } from "./top-nav/top-nav-item/top-nav-item.component";
+import { SideNavComponent } from "./side-nav/side-nav.component";
+import { SideNavItemComponent } from "./side-nav/side-nav-item/side-nav-item.component";
+import { EditorModule, TINYMCE_SCRIPT_SRC } from "@tinymce/tinymce-angular";
+import { CreatePostModule } from "./posts/create-post/create-post.module";
+import { SharedModule } from "@app/shared-module";
 
 @NgModule({
   declarations: [
@@ -26,22 +24,27 @@ import { CreateComponent } from './posts/create/create.component';
     LoginComponent,
     DashboardComponent,
     PostsComponent,
-    SvgIconComponent,
     TopNavComponent,
     TopNavItemComponent,
     SideNavComponent,
     SideNavItemComponent,
-    EditorComponent,
-    CreateComponent,
   ],
-  imports: [CommonModule, AdminRoutingModule, ReactiveFormsModule, FormsModule, HttpClientModule, EditorModule, NgSelectModule],
+  imports: [
+    CommonModule,
+    AdminRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
+    CreatePostModule,
+    SharedModule
+  ],
   providers: [
     AuthenticationService,
     PostsService,
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
+    { provide: TINYMCE_SCRIPT_SRC, useValue: "tinymce/tinymce.min.js" },
   ],
 })
 export class AdminModule {}

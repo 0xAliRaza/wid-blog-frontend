@@ -2,9 +2,13 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+const SERVER_URL = "http://wid-blog-backend";
+
 export const environment = {
   production: false,
-  apiUrl: 'http://wid-blog-backend/api/v1'
+  serverUrl: SERVER_URL,
+  apiUrl: `${SERVER_URL}/api/v1`,
+  storageDir: `${SERVER_URL}/storage`,
 };
 
 /*

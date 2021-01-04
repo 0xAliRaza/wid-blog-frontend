@@ -13,6 +13,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Post } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
 import { SlugifyPipe } from "@app/slugify.pipe";
+import { environment } from "@environments/environment";
 import { BehaviorSubject, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
@@ -47,9 +48,10 @@ import { debounceTime } from "rxjs/operators";
 export class EditorComponent implements OnInit, OnDestroy {
   private postFormChangesSubscription: Subscription;
   public isSideNavOpen = false;
-  public featuredImageUrl: string | ArrayBuffer;
+  public featuredImageUrl: any;
   public tinymceInst: any;
   public tinymceConfig: any;
+  public storageDir: string = environment.storageDir;
 
   @ViewChild("featuredImage", { static: false }) featuredImageEl: ElementRef;
 
@@ -60,7 +62,8 @@ export class EditorComponent implements OnInit, OnDestroy {
       this.post.hasOwnProperty("featured_image") &&
       this.post.featured_image
     ) {
-      this.featuredImageUrl = this.post.featured_image;
+      this.featuredImageUrl =
+        environment.storageDir + "/" + this.post.featured_image;
       this.resetFeaturedImage();
     }
     this.postForm.patchValue(this.post, { emitEvent: false });
@@ -139,13 +142,21 @@ export class EditorComponent implements OnInit, OnDestroy {
       this.f.featured_image_file.setValue(file);
     };
   }
+
   resetFeaturedImage() {
     this.f.featured_image_file.setValue("", { emitEvent: false });
-    this.post.featured_image = undefined;
     this.featuredImageEl
       ? (this.featuredImageEl.nativeElement.value = "")
       : null;
   }
+
+  removeFeaturedImage() {
+    this.resetFeaturedImage();
+    delete this.post.featured_image;
+    this.featuredImageUrl = undefined;
+    this.postForm.patchValue(this.post);
+  }
+
   handleEditorInit(e) {
     this.tinymceInst = e.editor;
     this.postFormChangesSubscription = this.postForm.valueChanges

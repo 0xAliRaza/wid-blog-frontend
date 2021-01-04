@@ -72,7 +72,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     return this._post;
   }
   @Output() postChange = new EventEmitter<Post>();
-  @Input() tinymceImgUploader: any;
+  @Input() token: string;
   @Input() allTags: Tag[];
   @Input() ngSelectTagCreator: any;
 
@@ -90,8 +90,8 @@ export class EditorComponent implements OnInit, OnDestroy {
       image_title: true,
       file_picker_types: "image",
       block_unsupported_drop: false,
-      images_upload_url: "http://wid-blog-backend/api/v1/image",
-      images_upload_handler: this.tinymceImgUploader,
+      images_upload_url: environment.postImageUploadUrl,
+      images_upload_handler: this.tinymceImageUploadHandler.bind(this),
     };
   }
 
@@ -110,6 +110,44 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   get f() {
     return this.postForm.controls;
+  }
+
+  tinymceImageUploadHandler(blobInfo, success, failure, progress) {
+    let formData;
+    const xhr = new XMLHttpRequest();
+    xhr.withCredentials = false;
+    xhr.open("POST", environment.postImageUploadUrl);
+    xhr.setRequestHeader("Authorization", `Bearer ${this.token}`);
+    // xhr.setRequestHeader("Content-Type", `multipart/form-data`);
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.upload.onprogress = (e) => {
+      progress((e.loaded / e.total) * 100);
+    };
+    xhr.onload = () => {
+      let json;
+      if (xhr.status === 403) {
+        failure("HTTP Error: " + xhr.status, { remove: true });
+        return;
+      }
+      if (xhr.status < 200 || xhr.status >= 300) {
+        failure("HTTP Error: " + xhr.status);
+        return;
+      }
+      json = JSON.parse(xhr.responseText);
+      if (!json || typeof json.location != "string") {
+        failure("Invalid JSON: " + xhr.responseText);
+        return;
+      }
+      success(json.location);
+    };
+    xhr.onerror = () => {
+      failure(
+        "Image upload failed due to a XHR Transport error. Code: " + xhr.status
+      );
+    };
+    formData = new FormData();
+    formData.append("file", blobInfo.blob(), blobInfo.filename());
+    xhr.send(formData);
   }
 
   private setDefaults() {

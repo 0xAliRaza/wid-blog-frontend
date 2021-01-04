@@ -21,6 +21,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   public allTags: Tag[];
   public savedPost: Post = this.createPost.post;
   public errors: string[];
+  public userToken: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,6 +31,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     private slugifyPipe: SlugifyPipe,
     private createPost: CreatePostService
   ) {
+    this.userToken = this.auth.userToken;
     this.tagsSubscription = this.posts.tags.subscribe((tags: Tag[]) => {
       if (tags) {
         this.allTags = tags;
@@ -71,63 +73,17 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.createPost.submit(formData);
   }
 
-  getTinymceImgUploader() {
-    /* Create an reference of 'this' to use outside */
-    // const that = this;
-    return ((blobInfo, success, failure, progress) => {
-      let formData;
-      const xhr = new XMLHttpRequest();
-      xhr.withCredentials = false;
-      xhr.open("POST", `${environment.apiUrl}/post/imageUpload`);
-      xhr.setRequestHeader("Accept", "application/json");
-      xhr.setRequestHeader("Authorization", `Bearer ${this.auth.getToken}`);
-      xhr.setRequestHeader("Content-Type", `multipart/form-data`);
-
-      xhr.upload.onprogress = (e) => {
-        progress((e.loaded / e.total) * 100);
-      };
-      xhr.onload = () => {
-        let json;
-        if (xhr.status === 403) {
-          failure("HTTP Error: " + xhr.status, { remove: true });
-          return;
-        }
-        if (xhr.status < 200 || xhr.status >= 300) {
-          failure("HTTP Error: " + xhr.status);
-          return;
-        }
-        json = JSON.parse(xhr.responseText);
-        if (!json || typeof json.location != "string") {
-          failure("Invalid JSON: " + xhr.responseText);
-          return;
-        }
-        success(json.location);
-      };
-      xhr.onerror = () => {
-        failure(
-          "Image upload failed due to a XHR Transport error. Code: " +
-            xhr.status
-        );
-      };
-      formData = new FormData();
-      formData.append("file", blobInfo.blob(), blobInfo.filename());
-      xhr.send(formData);
-    }).bind(this);
-  }
-
   getNgSelectTagCreator(): any {
-    const slugify = this.slugifyPipe.transform;
-    const that = this;
-    return (input): Tag => {
+    return ((input): Tag => {
       const tag: Tag = {
         name: input,
-        slug: slugify(input),
+        slug: this.slugifyPipe.transform(input),
       } as Tag;
-      const allTags = that.posts.tags.getValue();
+      const allTags = this.posts.tags.getValue();
       allTags.push(tag);
-      that.posts.tags.next(allTags);
+      this.posts.tags.next(allTags);
       return tag;
-    };
+    }).bind(this);
   }
 
   clearErrors() {

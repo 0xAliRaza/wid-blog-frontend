@@ -33,7 +33,7 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  public get getToken(): string {
+  public get userToken(): string {
     return this.currentUserValue.token;
   }
 
@@ -65,7 +65,7 @@ export class AuthenticationService {
       .pipe(first())
       .pipe(
         map((user: User) => {
-          user.token = this.getToken;
+          user.token = this.userToken;
           return user;
         })
       )
@@ -86,7 +86,7 @@ export class AuthenticationService {
           headers: new HttpHeaders({
             Accept: `application/json`,
             "Content-Type": `application/json`,
-            Authorization: `Bearer ${this.getToken}`,
+            Authorization: `Bearer ${this.userToken}`,
           }),
         }
       )

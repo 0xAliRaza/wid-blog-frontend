@@ -9,6 +9,7 @@ export const environment = {
   serverUrl: SERVER_URL,
   apiUrl: `${SERVER_URL}/api/v1`,
   storageDir: `${SERVER_URL}/storage`,
+  postImageUploadUrl: `${SERVER_URL}/api/v1/post/imageUpload`
 };
 
 /*

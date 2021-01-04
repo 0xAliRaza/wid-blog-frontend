@@ -58,7 +58,7 @@
                     (change)="onFeaturedImageChange($event)">
                 <div class="featured-image-thumb" *ngIf="featuredImageUrl">
                     <img [src]="featuredImageUrl" alt="" class="img-fluid img-thumbnail my-1">
-                    <button (click)="removeFeaturedImage($e)" class="btn btn-sm btn-danger float-right">Remove</button>
+                    <button (click)="removeFeaturedImage($event)" class="btn btn-sm btn-danger float-right">Remove</button>
                 </div>
             </div>
             <div class="form-group">

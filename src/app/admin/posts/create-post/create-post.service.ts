@@ -44,6 +44,7 @@ export default class CreatePostService {
         catchError((err) => this.handleError(err))
       )
       .subscribe((res: Post) => {
+        this.errors.next([]);
         this.setPost(res as Post);
       });
   }

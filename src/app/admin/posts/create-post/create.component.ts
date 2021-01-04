@@ -131,7 +131,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   clearErrors() {
-    this.errors = undefined;
+    this.createPost.errors.next([]);
   }
 
   ngOnInit() {}

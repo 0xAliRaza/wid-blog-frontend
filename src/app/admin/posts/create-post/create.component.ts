@@ -16,9 +16,11 @@ import CreatePostService from "@app/admin/posts/create-post/create-post.service"
 export class CreateComponent implements OnInit, OnDestroy {
   private tagsSubscription: Subscription;
   private savedPostSubscription: Subscription;
+  private errorsSubscription: Subscription;
   private routerSubscription: Subscription;
   public allTags: Tag[];
   public savedPost: Post = this.createPost.post;
+  public errors: string[];
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +40,11 @@ export class CreateComponent implements OnInit, OnDestroy {
       (post: Post) => {
         this.savedPost = post;
         this.router.navigate([`admin/editor/post/${post.id}`]);
+      }
+    );
+    this.errorsSubscription = this.createPost.errors.subscribe(
+      (errors: string[]) => {
+        return (this.errors = errors);
       }
     );
 
@@ -123,11 +130,16 @@ export class CreateComponent implements OnInit, OnDestroy {
     };
   }
 
+  clearErrors() {
+    this.errors = undefined;
+  }
+
   ngOnInit() {}
 
   ngOnDestroy() {
     this.tagsSubscription.unsubscribe();
     this.savedPostSubscription.unsubscribe();
+    this.errorsSubscription.unsubscribe();
     this.routerSubscription.unsubscribe();
   }
 }

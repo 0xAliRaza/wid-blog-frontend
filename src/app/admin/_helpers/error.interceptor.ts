@@ -21,7 +21,14 @@ export class ErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((err) => {
-        const errorMessage = err.error.message || err.statusText;
+        let errorMessage = "Unknown error occurred.";
+        if (err.error instanceof ErrorEvent) {
+          // client-side error
+          errorMessage = err.error.message || err.statusText;
+        } else {
+          // server-side error
+          errorMessage = `Error Code: ${err.status}\nMessage: ${err.message}`;
+        }
         // Check if unauthorized error was thrown
         if (err.status === 401) {
           if (errorMessage === "Token has expired") {
@@ -59,7 +66,13 @@ export class ErrorInterceptor implements HttpInterceptor {
           location.reload();
         }
 
-        return throwError(errorMessage);
+        // Check if CRUD error
+        // if (err.status === 422) {
+        //   // Return the whole error instance to get errors[]
+        //   return throwError(err);
+        // }
+
+        return throwError(err);
       })
     );
   }

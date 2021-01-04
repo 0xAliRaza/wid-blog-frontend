@@ -1,2 +1,3 @@
 <admin-post-editor [post]="savedPost" (postChange)="onPostChange($event)" [tinymceImgUploader]="getTinymceImgUploader()"
     [allTags]="allTags" [ngSelectTagCreator]="getNgSelectTagCreator()"></admin-post-editor>
+<popup-msg *ngIf="errors" [errors]="errors" (noErrorsLeft)="clearErrors()" ></popup-msg>

@@ -14,7 +14,7 @@ import { Post } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
 import { SlugifyPipe } from "@app/slugify.pipe";
 import { environment } from "@environments/environment";
-import { BehaviorSubject, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
 @Component({
@@ -47,16 +47,21 @@ import { debounceTime } from "rxjs/operators";
 })
 export class EditorComponent implements OnInit, OnDestroy {
   private postFormChangesSubscription: Subscription;
+  private tinymceInst: any;
   public isSideNavOpen = false;
   public featuredImageUrl: any;
-  public tinymceInst: any;
   public tinymceConfig: any;
   public storageDir: string = environment.storageDir;
+  public postStatus = "New Post";
 
   @ViewChild("featuredImage", { static: false }) featuredImageEl: ElementRef;
 
-  private _post: Post;
+  private _post: Post = {} as Post;
   @Input() set post(post: Post) {
+    if (!post) {
+      return;
+    }
+
     this._post = post;
     if (
       this.post.hasOwnProperty("featured_image") &&
@@ -65,6 +70,12 @@ export class EditorComponent implements OnInit, OnDestroy {
       this.featuredImageUrl =
         environment.storageDir + "/" + this.post.featured_image;
       this.resetFeaturedImage();
+    }
+
+    this.postStatus = this.post.status;
+
+    if (this.post.status === "published" && this.postFormChangesSubscription) {
+      this.postFormChangesSubscription.unsubscribe();
     }
     this.postForm.patchValue(this.post, { emitEvent: false });
   }
@@ -197,12 +208,17 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   handleEditorInit(e) {
     this.tinymceInst = e.editor;
+    if (this.post.status === "published") {
+      return;
+    }
+    // Submitting post to server when the form changes
     this.postFormChangesSubscription = this.postForm.valueChanges
       .pipe(debounceTime(2000))
       .subscribe(() => {
         this.setDefaults();
         Object.assign(this.post, this.postForm.value);
         this.postChange.emit(this.post);
+        this.postStatus = "Saving...";
       });
   }
 

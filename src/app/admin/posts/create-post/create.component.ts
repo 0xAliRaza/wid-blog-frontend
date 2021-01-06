@@ -19,7 +19,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   private errorsSubscription: Subscription;
   private routerSubscription: Subscription;
   public allTags: Tag[];
-  public savedPost: Post = this.createPost.post;
+  public savedPost: Post;
   public errors: string[];
   public userToken: string;
 
@@ -32,6 +32,9 @@ export class CreateComponent implements OnInit, OnDestroy {
     private createPost: CreatePostService
   ) {
     this.userToken = this.auth.userToken;
+    if (this.createPost.post) {
+      this.savedPost = this.createPost.post;
+    }
     this.tagsSubscription = this.posts.tags.subscribe((tags: Tag[]) => {
       if (tags) {
         this.allTags = tags;

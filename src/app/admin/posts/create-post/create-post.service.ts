@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable, Subject, throwError } from "rxjs";
 import { catchError, first, map, switchMap } from "rxjs/operators";
 
 export default class CreatePostService {
-  private _post: Post = {} as Post;
+  private _post: Post;
   public savedPost = new Subject<Post>();
   public errors = new Subject<string[]>();
   constructor(private posts: PostsService) {}
@@ -21,7 +21,7 @@ export default class CreatePostService {
   }
 
   public isEmpty(): boolean {
-    return this.post.id ? false : true;
+    return this.post && this.post.id ? false : true;
   }
 
   public fetchPost(id: number) {

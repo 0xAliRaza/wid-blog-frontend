@@ -74,7 +74,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
     this.postStatus = this.post.status;
 
-    if (this.post.status === "published" && this.postFormChangesSubscription) {
+    if (this.isPostPublished() && this.postFormChangesSubscription) {
       this.postFormChangesSubscription.unsubscribe();
     }
     this.postForm.patchValue(this.post, { emitEvent: false });
@@ -121,6 +121,14 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   get f() {
     return this.postForm.controls;
+  }
+
+  isPostPublished() {
+    return this.post.status === "published";
+  }
+
+  isEmpty() {
+    return !this.post.id;
   }
 
   tinymceImageUploadHandler(blobInfo, success, failure, progress) {
@@ -208,18 +216,25 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   handleEditorInit(e) {
     this.tinymceInst = e.editor;
-    if (this.post.status === "published") {
+    if (this.isPostPublished()) {
       return;
     }
     // Submitting post to server when the form changes
     this.postFormChangesSubscription = this.postForm.valueChanges
       .pipe(debounceTime(2000))
       .subscribe(() => {
-        this.setDefaults();
-        Object.assign(this.post, this.postForm.value);
-        this.postChange.emit(this.post);
-        this.postStatus = "Saving...";
+        this.savePost();
       });
+  }
+
+  savePost(status?: string) {
+    if (status) {
+      this.f.status.setValue(status, { emitEvent: false });
+    }
+    this.setDefaults();
+    Object.assign(this.post, this.postForm.value);
+    this.postChange.emit(this.post);
+    this.postStatus = "Saving...";
   }
 
   toggleSideNav() {

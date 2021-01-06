@@ -54,6 +54,22 @@ nav#editor-top-nav {
     color: $color-grey-dark-1;
   }
 
+  .update-toggle {
+    position: relative;
+    &__content {
+      background-color: $body-bg;
+      position: absolute;
+      top: pxToRem(42);
+      right: 0;
+      transform: translateX(pxToRem(8));
+      padding: pxToRem(16) pxToRem(8);
+      border: 1px solid $color-grey-light-2;
+      border-radius: pxToRem(4);
+      overflow: hidden;
+      min-width: pxToRem(180);
+    }
+  }
+
   .settings-btn {
     font-size: 16px;
     @include plain-hover-focus {

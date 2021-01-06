@@ -11,6 +11,10 @@ export class TogglerDirective {
 
   @HostListener("click")
   onClick() {
+    this.toggle();
+  }
+
+  toggle() {
     this.toggled = !this.toggled;
   }
 }

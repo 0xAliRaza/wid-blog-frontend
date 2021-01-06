@@ -93,7 +93,7 @@
             </div>
             <div class="form-group">
                 <label for="post-url">URL</label>
-                <input type="text" id="post-url" class="form-control" formControlName="slug">
+                <input type="text" id="post-url" class="form-control" formControlName="slug" [value]="f.slug.value | slugify">
             </div>
             <div class="form-group">
                 <label for="post-tags">Tags</label>

@@ -7,11 +7,10 @@ import { AppComponent } from "./app.component";
 import { AdminModule } from "./admin/admin.module";
 import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule } from "@angular/forms";
-import { SlugifyPipe } from "./slugify.pipe";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { SharedModule } from "./shared-module";
 @NgModule({
-  declarations: [AppComponent, SlugifyPipe],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -22,7 +21,7 @@ import { SharedModule } from "./shared-module";
     NgSelectModule,
     SharedModule,
   ],
-  providers: [SlugifyPipe],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

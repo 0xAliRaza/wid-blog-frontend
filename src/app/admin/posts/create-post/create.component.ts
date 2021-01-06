@@ -44,7 +44,9 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.savedPostSubscription = this.createPost.savedPost.subscribe(
       (post: Post) => {
         this.savedPost = post;
-        this.router.navigate([`admin/editor/post/${post.id}`]);
+        if (post && Boolean(post.id)) {
+          this.router.navigate([`admin/editor/post/${post.id}`]);
+        }
       }
     );
     this.errorsSubscription = this.createPost.errors.subscribe(

@@ -58,7 +58,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   private _post: Post = {} as Post;
   @Input() set post(post: Post) {
-    if (!post) {
+    if (!post || !post.id) {
       return;
     }
 
@@ -116,7 +116,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     meta_description: new FormControl(""),
     featured: new FormControl(false),
     featured_image_file: new FormControl(""),
-    status: new FormControl("draft"),
+    status: new FormControl(""),
   });
 
   get f() {
@@ -177,6 +177,13 @@ export class EditorComponent implements OnInit, OnDestroy {
       this.f.slug.setValue(this.slugify(this.f.title.value), {
         emitEvent: false,
       });
+    }
+
+    if (
+      this.f.status.value !== "published" &&
+      this.f.status.value !== "draft"
+    ) {
+      this.f.status.setValue("draft", { emitEvent: false });
     }
   }
   onFeaturedImageChange(event) {

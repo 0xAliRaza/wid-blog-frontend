@@ -64,16 +64,21 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   onPostChange(post: Post) {
     const formData = new FormData();
-    Object.entries(post).forEach(([key, value]) => {
-      if (value && value !== "") {
-        if (key === "featured_image_file") {
+    Object.entries(post).forEach(([key, value]: [string, any]) => {
+      if (key && value && value !== "") {
+        if (
+          typeof value === "object" &&
+          typeof value.name === "string" &&
+          value instanceof File
+        ) {
+          // Set without encoding as JSON if it's a File instance
           formData.set(key, value);
-        } else {
+        } else if (typeof value === "string" || typeof value === "object" || typeof value === "boolean") {
+          // Encoding it to JSON
           formData.set(key, JSON.stringify(value));
         }
       }
     });
-
     formData.set("user_id", JSON.stringify(this.auth.userId));
     this.createPost.submit(formData);
   }

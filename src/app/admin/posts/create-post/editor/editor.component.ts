@@ -234,7 +234,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       });
   }
 
-  savePost(status?: string) {
+  savePost(status?: "draft" | "published") {
     if (status) {
       this.f.status.setValue(status, { emitEvent: false });
     }

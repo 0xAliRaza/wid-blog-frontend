@@ -13,5 +13,5 @@ export interface Post {
   meta_title: string;
   meta_description: string;
   featured: boolean;
-  status: string;
+  status: "draft" | "published";
 }

@@ -76,6 +76,12 @@ export class EditorComponent implements OnInit, OnDestroy {
 
     if (this.isPostPublished() && this.postFormChangesSubscription) {
       this.postFormChangesSubscription.unsubscribe();
+    } else if (
+      !this.isPostPublished() &&
+      (!this.postFormChangesSubscription ||
+        this.postFormChangesSubscription.closed)
+    ) {
+      this.subscribeToPFChanges();
     }
     this.postForm.patchValue(this.post, { emitEvent: false });
   }
@@ -223,10 +229,13 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   handleEditorInit(e) {
     this.tinymceInst = e.editor;
-    if (this.isPostPublished()) {
-      return;
+    if (!this.isPostPublished()) {
+      this.subscribeToPFChanges();
     }
     // Submitting post to server when the form changes
+  }
+
+  private subscribeToPFChanges() {
     this.postFormChangesSubscription = this.postForm.valueChanges
       .pipe(debounceTime(2000))
       .subscribe(() => {

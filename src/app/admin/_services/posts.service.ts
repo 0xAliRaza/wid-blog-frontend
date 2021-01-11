@@ -1,5 +1,4 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { environment } from "@environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { first, map } from "rxjs/operators";
@@ -42,5 +41,15 @@ export class PostsService {
 
   create(postData): Observable<Post> {
     return this.http.post<Post>(`${environment.apiUrl}/post/create`, postData);
+  }
+
+  index(page: any, tableSize: any): Observable<any> {
+    // const params = new HttpParams();
+    // params.set("page", page);
+    // params.set("per_page", tableSize);
+    // debugger;
+    return this.http.get(`${environment.apiUrl}/post`, {
+      params: { page, per_page: tableSize },
+    });
   }
 }

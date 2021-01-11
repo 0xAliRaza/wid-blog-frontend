@@ -264,6 +264,8 @@ export class EditorComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   ngOnDestroy() {
-    this.postFormChangesSubscription.unsubscribe();
+    if (this.postFormChangesSubscription) {
+      this.postFormChangesSubscription.unsubscribe();
+    }
   }
 }

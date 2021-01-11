@@ -5,7 +5,6 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { PostsComponent } from "./posts/posts.component";
 import { AuthGuard } from "./_helpers";
 import { LoginComponent } from "./login/login.component";
-import { CreateComponent } from "./posts/create-post/create.component";
 
 const routes: Routes = [
   {

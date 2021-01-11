@@ -9,7 +9,8 @@ export default class CreatePostService {
   private _post: Post;
   public savedPost = new Subject<Post>();
   public errors = new Subject<string[]>();
-  constructor(private posts: PostsService) {}
+  constructor(private posts: PostsService) {
+  }
 
   get post(): Post {
     return this._post;
@@ -55,5 +56,9 @@ export default class CreatePostService {
       : [err.error.message];
     this.errors.next(errors);
     return throwError(err);
+  }
+
+  resetPost(): void {
+    this._post = undefined;
   }
 }

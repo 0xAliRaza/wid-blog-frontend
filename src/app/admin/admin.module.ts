@@ -17,6 +17,7 @@ import { SideNavItemComponent } from "./side-nav/side-nav-item/side-nav-item.com
 import { EditorModule, TINYMCE_SCRIPT_SRC } from "@tinymce/tinymce-angular";
 import { CreatePostModule } from "./posts/create-post/create-post.module";
 import { SharedModule } from "@app/shared-module";
+import { NgxPaginationModule } from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { SharedModule } from "@app/shared-module";
     FormsModule,
     HttpClientModule,
     CreatePostModule,
-    SharedModule
+    NgxPaginationModule,
+    SharedModule,
   ],
   providers: [
     AuthenticationService,

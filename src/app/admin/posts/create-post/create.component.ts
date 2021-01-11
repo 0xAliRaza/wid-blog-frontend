@@ -73,7 +73,11 @@ export class CreateComponent implements OnInit, OnDestroy {
         ) {
           // Set without encoding as JSON if it's a File instance
           formData.set(key, value);
-        } else if (typeof value === "string" || typeof value === "object" || typeof value === "boolean") {
+        } else if (
+          typeof value === "string" ||
+          typeof value === "object" ||
+          typeof value === "boolean"
+        ) {
           // Encoding it to JSON
           formData.set(key, JSON.stringify(value));
         }
@@ -107,5 +111,6 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.savedPostSubscription.unsubscribe();
     this.errorsSubscription.unsubscribe();
     this.routerSubscription.unsubscribe();
+    this.createPost.resetPost();
   }
 }

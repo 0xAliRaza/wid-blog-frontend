@@ -5,9 +5,10 @@ import { Tag } from "@app/admin/_models/tag";
 import { AuthenticationService, PostsService } from "@app/admin/_services";
 import { SlugifyPipe } from "@app/slugify.pipe";
 import { environment } from "@environments/environment";
-import { Subscription } from "rxjs";
-import { first, map, switchMap } from "rxjs/operators";
+import { Subscription, throwError } from "rxjs";
+import { catchError, first, map, switchMap } from "rxjs/operators";
 import CreatePostService from "@app/admin/posts/create-post/create-post.service";
+import { HttpErrorResponse } from "@angular/common/http";
 @Component({
   selector: "app-create",
   templateUrl: "./create.component.html",
@@ -20,6 +21,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   public allTags: Tag[];
   public savedPost: Post;
   public errors: string[];
+  public httpErrors: HttpErrorResponse;
   public userToken: string;
 
   constructor(
@@ -101,6 +103,23 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   clearErrors() {
     this.createPost.errors.next([]);
+    this.httpErrors = undefined;
+  }
+
+  onPostDelete(id: number) {
+    this.posts
+      .delete(id)
+      .pipe(
+        catchError((err) => {
+          this.httpErrors = err;
+          return throwError(err);
+        })
+      )
+      .subscribe((res: any) => {
+        if (res == true) {
+          this.router.navigate(["admin/posts"]);
+        }
+      });
   }
 
   ngOnInit() {}

@@ -14,10 +14,9 @@ import { ActivatedRoute } from "@angular/router";
   styleUrls: ["./posts.component.scss"],
 })
 export class PostsComponent implements OnInit, OnDestroy {
-  constructor(private posts: PostsService, private route: ActivatedRoute) {
-    console.log("construced posts");
-  }
-  errors: HttpErrorResponse;
+  constructor(private posts: PostsService, private route: ActivatedRoute) {}
+  httpErrors: HttpErrorResponse;
+  successMsgs: string[] = [];
   type = "all";
   POSTS: Post[];
   page = 1;
@@ -30,7 +29,7 @@ export class PostsComponent implements OnInit, OnDestroy {
       .index(this.page, this.tableSize, this.type)
       .pipe(
         catchError((err) => {
-          this.errors = err;
+          this.httpErrors = err;
           return throwError(err);
         })
       )
@@ -64,11 +63,24 @@ export class PostsComponent implements OnInit, OnDestroy {
       .delete(postId)
       .pipe(
         catchError((err) => {
-          this.errors = err;
+          this.httpErrors = err;
           return throwError(err);
         })
       )
-      .subscribe();
+      .subscribe((res: any) => {
+        if (res == true) {
+          this.successMsgs = ["Post was successfully deleted."];
+          this.fetchPosts();
+        }
+      });
+  }
+
+  clearErrors(): void {
+    this.httpErrors = undefined;
+  }
+
+  clearSuccessMsgs(): void {
+    this.successMsgs = [];
   }
 
   ngOnInit(): void {

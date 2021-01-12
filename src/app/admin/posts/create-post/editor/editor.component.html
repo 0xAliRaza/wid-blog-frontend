@@ -123,7 +123,7 @@
         </form>
     </div>
     <div class="sidebar__delete-post">
-        <button class="btn btn-outline-danger sidebar__delete-post-btn">
+        <button [disabled]="isEmpty()" (click)="onDelete(post?.id)" class="btn btn-outline-danger sidebar__delete-post-btn">
             <svg-icon icon="trash"></svg-icon>
             <span>Delete Post</span>
         </button>

@@ -18,21 +18,34 @@ export class PopupMsgComponent implements OnInit {
   }
 
   @Input() set httpErrors(err: HttpErrorResponse) {
-    const errors = err.error.errors
-      ? Object.keys(err.error.errors).map((key) => err.error.errors[key])
-      : [err.error.message];
-    this._errors = errors;
+    if (err) {
+      const errors = err.error.errors
+        ? Object.keys(err.error.errors).map((key) => err.error.errors[key])
+        : [err.error.message];
+      this._errors = errors;
+    }
   }
 
   @Input() successMessages: string[];
   @Output() noErrorsLeft: EventEmitter<any> = new EventEmitter();
+  @Output() noSuccessMessagesLeft: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 
-  delete(e, key) {
+  deleteError(e, key) {
     this.errors.splice(key, 1);
     if (!this.errors || this.errors.length === 0 || this.errors.length < 0) {
       this.noErrorsLeft.emit();
+    }
+  }
+  deleteSuccessMsg(e, key) {
+    this.successMessages.splice(key, 1);
+    if (
+      !this.successMessages ||
+      this.successMessages.length === 0 ||
+      this.successMessages.length < 0
+    ) {
+      this.noSuccessMessagesLeft.emit();
     }
   }
 

@@ -1,12 +1,12 @@
 <ng-container *ngIf="errors">
     <div class="alert alert-danger alert-dismissible" *ngFor="let item of errors | keyvalue">
-        <button class="close" (click)="delete($event, item.key)">&times;</button>
-      {{ item.value }}
+        <button class="close" (click)="deleteError($event, item.key)">&times;</button>
+        {{ item.value }}
     </div>
 </ng-container>
 <ng-container *ngIf="successMessages">
-    <div class="alert alert-success alert-dismissible" *ngFor="let key of successMessages">
-        <button class="close">&times;</button>
-        {{ key }}
+    <div class="alert alert-success alert-dismissible" *ngFor="let item of successMessages | keyvalue">
+        <button class="close" (click)="deleteSuccessMsg($event, item.key)">&times;</button>
+        {{ item.value }}
     </div>
 </ng-container>

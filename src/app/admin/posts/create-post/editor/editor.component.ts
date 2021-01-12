@@ -89,6 +89,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     return this._post;
   }
   @Output() postChange = new EventEmitter<Post>();
+  @Output() delete = new EventEmitter<number>();
   @Input() token: string;
   @Input() allTags: Tag[];
   @Input() ngSelectTagCreator: any;
@@ -259,6 +260,13 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   slugify(input: string): string {
     return this.slugifyPipe.transform(input);
+  }
+
+
+  onDelete(id: number) {
+    if (id) {
+      this.delete.emit(id);
+    }
   }
 
   ngOnInit() {}

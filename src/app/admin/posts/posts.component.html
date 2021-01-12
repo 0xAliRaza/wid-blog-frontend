@@ -46,7 +46,7 @@
                 }">
                 <th scope="row">{{post.id}}</th>
                 <td>{{post.title}}</td>
-                <td>{{post.featured}}</td>
+                <td>{{!!+post.featured}}</td>
                 <td>{{post.type?.tag}}</td>
                 <td>{{post.created_at | date}}</td>
                 <td>{{post.updated_at | date}}</td>
@@ -54,7 +54,7 @@
                     <a [routerLink]="'../editor/post/' + post.id" class="text-dark">
                         <svg-icon icon="edit"></svg-icon>
                     </a>
-                    <a routerLink="./" class="text-danger">
+                    <a (click)="onPostDelete(post.id)" class="text-danger">
                         <svg-icon icon="trash" class="ml-2 "></svg-icon>
                     </a>
                 </td>
@@ -68,6 +68,9 @@
         </pagination-controls>
     </div>
 
-    <popup-msg *ngIf="errors" [httpErrors]="errors"></popup-msg>
+    <popup-msg *ngIf="httpErrors || successMsgs.length > 0" (noErrorsLeft)="clearErrors()"
+        (noSuccessMessagesLeft)="clearSuccessMsgs()" [httpErrors]="httpErrors" [successMessages]="successMsgs">
+    </popup-msg>
+
 
 </div>

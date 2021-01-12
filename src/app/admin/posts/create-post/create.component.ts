@@ -17,7 +17,6 @@ export class CreateComponent implements OnInit, OnDestroy {
   private tagsSubscription: Subscription;
   private savedPostSubscription: Subscription;
   private errorsSubscription: Subscription;
-  private routerSubscription: Subscription;
   public allTags: Tag[];
   public savedPost: Post;
   public errors: string[];
@@ -55,7 +54,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.routerSubscription = this.route.params.subscribe((params: Params) => {
+    this.route.params.subscribe((params: Params) => {
       if (params.id && this.createPost.isEmpty()) {
         this.createPost.fetchPost(params.id);
       }
@@ -110,7 +109,6 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.tagsSubscription.unsubscribe();
     this.savedPostSubscription.unsubscribe();
     this.errorsSubscription.unsubscribe();
-    this.routerSubscription.unsubscribe();
     this.createPost.resetPost();
   }
 }

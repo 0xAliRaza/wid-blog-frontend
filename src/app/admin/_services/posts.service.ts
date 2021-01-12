@@ -43,13 +43,15 @@ export class PostsService {
     return this.http.post<Post>(`${environment.apiUrl}/post/create`, postData);
   }
 
-  index(page: any, tableSize: any): Observable<any> {
-    // const params = new HttpParams();
-    // params.set("page", page);
-    // params.set("per_page", tableSize);
-    // debugger;
+  index(page: any, tableSize: any, type: string): Observable<any> {
+    const params: any = {};
+    params.page = page;
+    params.per_page = tableSize;
+    if (type === "published" || type === "draft") {
+      params.type = type;
+    }
     return this.http.get(`${environment.apiUrl}/post`, {
-      params: { page, per_page: tableSize },
+      params,
     });
   }
 }

@@ -6,6 +6,7 @@ import { Subscription, throwError } from "rxjs";
 import { PostsService } from "../_services/posts.service";
 import { AuthenticationService } from "../_services";
 import { Post } from "../_models";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "admin-posts",
@@ -13,8 +14,11 @@ import { Post } from "../_models";
   styleUrls: ["./posts.component.scss"],
 })
 export class PostsComponent implements OnInit, OnDestroy {
-  constructor(private posts: PostsService) {}
+  constructor(private posts: PostsService, private route: ActivatedRoute) {
+    console.log("construced posts");
+  }
   errors: string[];
+  type = "all";
   POSTS: Post[];
   page = 1;
   count = 0;
@@ -23,7 +27,7 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   fetchPosts(): void {
     this.posts
-      .index(this.page, this.tableSize)
+      .index(this.page, this.tableSize, this.type)
       .pipe(
         first(),
         catchError((err) => this.handleError(err))
@@ -31,19 +35,24 @@ export class PostsComponent implements OnInit, OnDestroy {
 
       .subscribe((response) => {
         this.POSTS = response.data as Post[];
-        console.log("posts>>>>>>>>", this.POSTS);
-        this.count = Number(response.total);
-        this.page = Number(response.current_page);
+        this.count = response.total;
+        this.page = response.current_page;
       });
   }
 
-  onTableDataChange(event) {
+  onTableDataChange(event: number) {
     this.page = event;
     this.fetchPosts();
   }
 
   onTableSizeChange(event): void {
     this.tableSize = event.target.value;
+    this.page = 1;
+    this.fetchPosts();
+  }
+
+  onPostsTypeChange(event): void {
+    this.type = event.target.value;
     this.page = 1;
     this.fetchPosts();
   }
@@ -57,7 +66,14 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.fetchPosts();
+    this.route.queryParams.subscribe((params) => {
+      if (params.type === "draft" || params.type === "published") {
+        this.type = params.type;
+      } else {
+        this.type = "all";
+      }
+      this.fetchPosts();
+    });
   }
   ngOnDestroy() {}
 }

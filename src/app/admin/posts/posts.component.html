@@ -1,6 +1,6 @@
 <div class="container">
     <h3 class="text-center mt-5 mb-5">
-       All Posts
+        All Posts
     </h3>
 
     <div class="d-flex flex-row-reverse mb-2">
@@ -11,9 +11,22 @@
                 </option>
             </select>
         </div>
+        <div class="p-2">
+            <select (change)="onPostsTypeChange($event)" [value]="type" class="custom-select">
+                <option value="all" selected>
+                    All
+                </option>
+                <option value="published">
+                    Published
+                </option>
+                <option value="draft">
+                    Draft
+                </option>
+            </select>
+        </div>
     </div>
     <div class="table-responsive"></div>
-    <table class="table" >
+    <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -34,12 +47,16 @@
                 <th scope="row">{{post.id}}</th>
                 <td>{{post.title}}</td>
                 <td>{{post.featured}}</td>
-                <td>{{post.type.tag}}</td>
+                <td>{{post.type?.tag}}</td>
                 <td>{{post.created_at | date}}</td>
                 <td>{{post.updated_at | date}}</td>
                 <td class="text-center" [ngStyle]="{'font-size': '18px'}">
-                    <a [routerLink]="'../editor/post/' + post.id" class="text-dark"><svg-icon icon="edit" ></svg-icon></a>
-                    <a routerLink="./" class="text-danger"><svg-icon icon="trash" class="ml-2 "></svg-icon></a>
+                    <a [routerLink]="'../editor/post/' + post.id" class="text-dark">
+                        <svg-icon icon="edit"></svg-icon>
+                    </a>
+                    <a routerLink="./" class="text-danger">
+                        <svg-icon icon="trash" class="ml-2 "></svg-icon>
+                    </a>
                 </td>
             </tr>
         </tbody>

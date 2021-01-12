@@ -28,7 +28,6 @@ export default class CreatePostService {
   public fetchPost(id: number) {
     this.posts
       .get(id)
-      .pipe(first())
       .subscribe((res: Post) => {
         this.setPost(res as Post);
       });
@@ -41,7 +40,6 @@ export default class CreatePostService {
     this.posts
       .create(formData)
       .pipe(
-        first(),
         catchError((err) => this.handleError(err))
       )
       .subscribe((res: Post) => {

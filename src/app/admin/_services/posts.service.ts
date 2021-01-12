@@ -43,6 +43,10 @@ export class PostsService {
     return this.http.post<Post>(`${environment.apiUrl}/post/create`, postData);
   }
 
+  delete(pk: number): Observable<boolean> {
+    return this.http.delete<boolean>(`${environment.apiUrl}/post/${pk}`);
+  }
+
   index(page: any, tableSize: any, type: string): Observable<any> {
     const params: any = {};
     params.page = page;

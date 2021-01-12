@@ -68,6 +68,6 @@
         </pagination-controls>
     </div>
 
-    <popup-msg [errors]="errors"></popup-msg>
+    <popup-msg *ngIf="errors" [httpErrors]="errors"></popup-msg>
 
 </div>

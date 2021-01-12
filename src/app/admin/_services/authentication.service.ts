@@ -62,7 +62,6 @@ export class AuthenticationService {
 
   updateUserData(): User {
     this.me
-      .pipe(first())
       .pipe(
         map((user: User) => {
           user.token = this.userToken;

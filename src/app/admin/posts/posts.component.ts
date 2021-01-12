@@ -17,7 +17,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   constructor(private posts: PostsService, private route: ActivatedRoute) {
     console.log("construced posts");
   }
-  errors: string[];
+  errors: HttpErrorResponse;
   type = "all";
   POSTS: Post[];
   page = 1;
@@ -29,8 +29,10 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.posts
       .index(this.page, this.tableSize, this.type)
       .pipe(
-        first(),
-        catchError((err) => this.handleError(err))
+        catchError((err) => {
+          this.errors = err;
+          return throwError(err);
+        })
       )
 
       .subscribe((response) => {
@@ -57,12 +59,16 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.fetchPosts();
   }
 
-  handleError(err: HttpErrorResponse) {
-    const errors = err.error.errors
-      ? Object.keys(err.error.errors).map((key) => err.error.errors[key])
-      : [err.error.message];
-    this.errors = errors;
-    return throwError(err);
+  onPostDelete(postId: number) {
+    this.posts
+      .delete(postId)
+      .pipe(
+        catchError((err) => {
+          this.errors = err;
+          return throwError(err);
+        })
+      )
+      .subscribe();
   }
 
   ngOnInit(): void {

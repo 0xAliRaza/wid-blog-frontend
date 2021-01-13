@@ -31,12 +31,7 @@ export class Post {
     return !!this.id;
   }
 
-
   setProps(data: object) {
-    Object.keys(data).forEach((key) => {
-      if (Object.hasOwnProperty.call(this, key)) {
-        this[key] = data[key];
-      }
-    });
+    Object.assign(this, data);
   }
 }

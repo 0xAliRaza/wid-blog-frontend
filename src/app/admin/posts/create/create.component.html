@@ -1,1 +1,2 @@
-<p>create works!</p>
+<admin-post-editor *ngIf="user && tags.length > 0" [user]="user" [tags]="tags" [postStatus]="postStatus"
+    (createTag)="onCreateTag($event)" (formChange)="onFormChange($event)"></admin-post-editor>

@@ -19,6 +19,8 @@ import { SharedModule } from "@app/shared-module";
 import { NgxPaginationModule } from "ngx-pagination";
 import { CreateComponent } from './posts/create/create.component';
 import { EditComponent } from './posts/edit/edit.component';
+import { EditorComponent } from "./posts/editor/editor.component";
+import { NgSelectModule } from "@ng-select/ng-select";
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { EditComponent } from './posts/edit/edit.component';
     SideNavItemComponent,
     CreateComponent,
     EditComponent,
+    EditorComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +45,7 @@ import { EditComponent } from './posts/edit/edit.component';
     NgxPaginationModule,
     SharedModule,
     EditorModule,
+    NgSelectModule
   ],
   providers: [
     AuthenticationService,

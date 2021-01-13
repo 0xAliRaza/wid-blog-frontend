@@ -6,6 +6,8 @@ import { Post } from "../_models";
 import { Tag } from "../_models/tag";
 export class PostsService {
   tags: BehaviorSubject<Tag[]>;
+  newlyCreatedPost: Post;
+
   constructor(private http: HttpClient) {
     this.tags = new BehaviorSubject([] as Tag[]);
     this.updateTags();
@@ -26,25 +28,34 @@ export class PostsService {
   }
 
   updateTags(): Tag[] {
-    this.getTagsObservable()
-      .pipe(first())
-      .subscribe((tags: Tag[]) => {
-        this.tags.next(tags);
-      });
+    this.getTagsObservable().subscribe((tags: Tag[]) => {
+      this.tags.next(tags);
+    });
 
     return this.tags.value;
   }
 
+  pushTag(val: Tag) {
+    const tags = this.tags.value;
+    const tag = Object.assign(new Tag(), val);
+    tags.push(tag);
+    this.tags.next(tags);
+  }
+
   get(id: number): Observable<Post> {
-    return this.http.get<Post>(`${environment.apiUrl}/post/${id}`);
+    return this.http
+      .get<Post>(`${environment.apiUrl}/post/${id}`)
+      .pipe(map((res) => new Post(res)));
   }
 
-  create(postData): Observable<Post> {
-    return this.http.post<Post>(`${environment.apiUrl}/post/create`, postData);
+  create(data: object): Observable<Post> {
+    return this.http
+      .post<Post>(`${environment.apiUrl}/post/create`, data)
+      .pipe(map((res) => new Post(res)));
   }
 
-  delete(pk: number): Observable<boolean> {
-    return this.http.delete<boolean>(`${environment.apiUrl}/post/${pk}`);
+  delete(id: number): Observable<boolean> {
+    return this.http.delete<boolean>(`${environment.apiUrl}/post/${id}`);
   }
 
   index(page: any, tableSize: any, type: string): Observable<any> {

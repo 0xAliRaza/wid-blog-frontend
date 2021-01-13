@@ -10,7 +10,7 @@ import {
   ViewChild,
 } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Post } from "@app/admin/_models";
+import { Post, User } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
 import { SlugifyPipe } from "@app/slugify.pipe";
 import { environment } from "@environments/environment";
@@ -53,14 +53,22 @@ export class EditorComponent implements OnInit, OnDestroy {
   public tinymceConfig: any;
   public storageDir: string = environment.storageDir;
 
-  @Output() postChange = new EventEmitter<object>();
+  @Output() formChange = new EventEmitter<object>();
   @Output() delete = new EventEmitter<void>();
   @Output() createTag = new EventEmitter<Tag>();
-  @Input() token: string;
-  @Input() allTags: Tag[];
+  @Input() tags: Tag[];
   @Input() postStatus: string;
 
-  private _post: Post;
+  private _user: User;
+  @Input() set user(user: User) {
+    this.f.user_id.setValue(user.id, { emitEvent: false });
+    this._user = user;
+  }
+  get user(): User {
+    return this._user;
+  }
+
+  private _post: Post = new Post();
   @Input() set post(post: Post) {
     if (post.exists) {
       this._post = post;
@@ -100,6 +108,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   postForm = new FormGroup({
     id: new FormControl(null),
+    user_id: new FormControl(null),
     title: new FormControl(""),
     html: new FormControl(""),
     slug: new FormControl(""),
@@ -108,8 +117,8 @@ export class EditorComponent implements OnInit, OnDestroy {
     meta_title: new FormControl(""),
     meta_description: new FormControl(""),
     featured: new FormControl(false),
-    featured_image_file: new FormControl(null),
     featured_image: new FormControl(""),
+    featured_image_file: new FormControl(null),
     published: new FormControl(false),
   });
 
@@ -122,7 +131,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = false;
     xhr.open("POST", environment.postImageUploadUrl);
-    xhr.setRequestHeader("Authorization", `Bearer ${this.token}`);
+    xhr.setRequestHeader("Authorization", `Bearer ${this.user.token}`);
     // xhr.setRequestHeader("Content-Type", `multipart/form-data`);
     xhr.setRequestHeader("Accept", "application/json");
     xhr.upload.onprogress = (e) => {
@@ -212,7 +221,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.postFormSubscription = this.postForm.valueChanges
       .pipe(debounceTime(4000))
       .subscribe(() => {
-        this.submit();
+        this.onSubmit();
       });
   }
 
@@ -222,14 +231,13 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  submit() {
+  onSubmit() {
     this.setDefaults();
-    this.postChange.emit(this.postForm.value);
+    this.formChange.emit(this.postForm.value);
   }
 
-  publish() {
-    this.f.published.setValue(true, { emitEvent: false });
-    this.submit();
+  onTypeChange(type: boolean) {
+    this.f.published.setValue(type, { emitEvent: false });
   }
 
   toggleSideNav() {

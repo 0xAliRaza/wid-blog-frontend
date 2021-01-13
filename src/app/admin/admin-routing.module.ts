@@ -30,12 +30,12 @@ const routes: Routes = [
     ],
   },
   {
-    path: "editor/post",
+    path: "admin/editor/post",
     component: CreateComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: "editor/post/:id",
+    path: "admin/editor/post/:id",
     component: EditComponent,
     canActivate: [AuthGuard],
   },

@@ -27,9 +27,8 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   onFormChange(data: object) {
-    this.postStatus = "Saving new post...";
+    this.postStatus = "Creating new post...";
     this.posts.create(data).subscribe((post: Post) => {
-      debugger;
       if (post.exists) {
         this.posts.newlyCreatedPost = post;
         this.router.navigate([`admin/editor/post/${post.id}`]);

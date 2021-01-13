@@ -78,6 +78,9 @@ export class EditorComponent implements OnInit, OnDestroy {
         this.resetFeaturedImage();
       }
       this.post.published ? this.unsubscribeChanges() : this.subscribeChanges();
+      if (this.post.html && this.tinymceInst) {
+        this.tinymceInst.setContent(this.post.html);
+      }
       this.postForm.patchValue(this.post, { emitEvent: false });
     }
   }
@@ -102,7 +105,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       file_picker_types: "image",
       block_unsupported_drop: false,
       images_upload_url: environment.postImageUploadUrl,
-      images_upload_handler: this.tinymceImageUploadHandler.bind(this),
+      images_upload_handler: this.onTinymceImageUpload.bind(this),
     };
   }
 
@@ -126,7 +129,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     return this.postForm.controls;
   }
 
-  tinymceImageUploadHandler(blobInfo, success, failure, progress) {
+  onTinymceImageUpload(blobInfo, success, failure, progress) {
     let formData;
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = false;
@@ -183,6 +186,10 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
   }
 
+  onTinymceChange(e: any) {
+    this.f.html.setValue(e.editor.getContent());
+  }
+
   onFeaturedImageChange(event) {
     if (event.target.files.length === 0) {
       return;
@@ -217,18 +224,29 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.f.featured_image.reset();
   }
 
-  private subscribeChanges() {
+  private subscribeChanges(): void {
+    if (this.postFormSubscription && !this.postFormSubscription.closed) {
+      return;
+    }
     this.postFormSubscription = this.postForm.valueChanges
       .pipe(debounceTime(4000))
       .subscribe(() => {
-        this.onSubmit();
+        if (this.isFormDirty()) {
+          this.onSubmit();
+        }
       });
   }
 
-  private unsubscribeChanges() {
+  private unsubscribeChanges(): void {
     if (this.postFormSubscription) {
       this.postFormSubscription.unsubscribe();
     }
+  }
+
+  private isFormDirty(): boolean {
+    return (
+      this.postForm.dirty || (this.tinymceInst && this.tinymceInst.isDirty())
+    );
   }
 
   onSubmit() {
@@ -254,14 +272,15 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  onEditorInit(e) {
+  onTinymceInit(e) {
     this.tinymceInst = e.editor;
+  }
+
+  ngOnInit() {
     if (!this.post.published) {
       this.subscribeChanges();
     }
   }
-
-  ngOnInit() {}
 
   ngOnDestroy() {
     if (this.postFormSubscription) {

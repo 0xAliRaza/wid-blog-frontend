@@ -61,8 +61,8 @@
                         <input placeholder="Post Title" class="post__title-input" formControlName="title">
                     </div>
                     <div class="post__text">
-                        <editor formControlName="html" (onInit)="onEditorInit($event)" [init]="tinymceConfig"
-                            id="tinymce-editor"></editor>
+                        <editor (onChange)="onTinymceChange($event)" (onInit)="onTinymceInit($event)"
+                            [init]="tinymceConfig" id="tinymce-editor"></editor>
                     </div>
 
                 </form>

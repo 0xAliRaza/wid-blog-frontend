@@ -46,53 +46,38 @@ import { debounceTime } from "rxjs/operators";
   ],
 })
 export class EditorComponent implements OnInit, OnDestroy {
-  private postFormChangesSubscription: Subscription;
+  private postFormSubscription: Subscription;
   private tinymceInst: any;
   public isSideNavOpen = false;
-  public featuredImageUrl: any;
+  public featuredImageUrl: string;
   public tinymceConfig: any;
   public storageDir: string = environment.storageDir;
-  public postStatus = "New Post";
 
-  @ViewChild("featuredImage", { static: false }) featuredImageEl: ElementRef;
+  @Output() postChange = new EventEmitter<object>();
+  @Output() delete = new EventEmitter<void>();
+  @Output() createTag = new EventEmitter<Tag>();
+  @Input() token: string;
+  @Input() allTags: Tag[];
+  @Input() postStatus: string;
 
-  private _post: Post = {} as Post;
+  private _post: Post;
   @Input() set post(post: Post) {
-    if (!post || !post.id) {
-      return;
+    if (post.exists) {
+      this._post = post;
+      if (this.post.featured_image) {
+        this.featuredImageUrl =
+          this.storageDir + "/" + this.post.featured_image;
+        this.resetFeaturedImage();
+      }
+      this.post.published ? this.unsubscribeChanges() : this.subscribeChanges();
+      this.postForm.patchValue(this.post, { emitEvent: false });
     }
-
-    this._post = post;
-    if (
-      this.post.hasOwnProperty("featured_image") &&
-      this.post.featured_image
-    ) {
-      this.featuredImageUrl =
-        environment.storageDir + "/" + this.post.featured_image;
-      this.resetFeaturedImage();
-    }
-
-    this.postStatus = this.post.status;
-
-    if (this.isPostPublished() && this.postFormChangesSubscription) {
-      this.postFormChangesSubscription.unsubscribe();
-    } else if (
-      !this.isPostPublished() &&
-      (!this.postFormChangesSubscription ||
-        this.postFormChangesSubscription.closed)
-    ) {
-      this.subscribeToPFChanges();
-    }
-    this.postForm.patchValue(this.post, { emitEvent: false });
   }
   get post(): Post {
     return this._post;
   }
-  @Output() postChange = new EventEmitter<Post>();
-  @Output() delete = new EventEmitter<number>();
-  @Input() token: string;
-  @Input() allTags: Tag[];
-  @Input() ngSelectTagCreator: any;
+
+  @ViewChild("featuredImage", { static: false }) featuredImageInput: ElementRef;
 
   constructor(private slugifyPipe: SlugifyPipe) {
     /* Initialize tinymce  */
@@ -114,6 +99,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   postForm = new FormGroup({
+    id: new FormControl(null),
     title: new FormControl(""),
     html: new FormControl(""),
     slug: new FormControl(""),
@@ -122,20 +108,13 @@ export class EditorComponent implements OnInit, OnDestroy {
     meta_title: new FormControl(""),
     meta_description: new FormControl(""),
     featured: new FormControl(false),
-    featured_image_file: new FormControl(""),
-    status: new FormControl(""),
+    featured_image_file: new FormControl(null),
+    featured_image: new FormControl(""),
+    published: new FormControl(false),
   });
 
   get f() {
     return this.postForm.controls;
-  }
-
-  isPostPublished() {
-    return this.post.status === "published";
-  }
-
-  isEmpty() {
-    return !this.post.id;
   }
 
   tinymceImageUploadHandler(blobInfo, success, failure, progress) {
@@ -176,8 +155,16 @@ export class EditorComponent implements OnInit, OnDestroy {
     xhr.send(formData);
   }
 
+  ngSelectTagCreator(input): Tag {
+    const tag = new Tag();
+    tag.name = input;
+    tag.slug = this.slugify(input);
+    this.createTag.emit(tag);
+    return tag;
+  }
+
   private setDefaults() {
-    if (this.f.title.value === "") {
+    if (!this.f.title.dirty) {
       this.f.title.setValue("(Untitled)", { emitEvent: false });
     }
     if (!this.f.slug.dirty) {
@@ -185,14 +172,8 @@ export class EditorComponent implements OnInit, OnDestroy {
         emitEvent: false,
       });
     }
-
-    if (
-      this.f.status.value !== "published" &&
-      this.f.status.value !== "draft"
-    ) {
-      this.f.status.setValue("draft", { emitEvent: false });
-    }
   }
+
   onFeaturedImageChange(event) {
     if (event.target.files.length === 0) {
       return;
@@ -209,49 +190,46 @@ export class EditorComponent implements OnInit, OnDestroy {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (_event) => {
-      this.featuredImageUrl = reader.result;
+      this.featuredImageUrl = reader.result as string;
       this.f.featured_image_file.setValue(file);
     };
   }
 
-  resetFeaturedImage() {
-    this.f.featured_image_file.setValue("", { emitEvent: false });
-    this.featuredImageEl
-      ? (this.featuredImageEl.nativeElement.value = "")
-      : null;
+  private resetFeaturedImage() {
+    this.f.featured_image_file.reset({ emitEvent: false });
+    if (this.featuredImageInput) {
+      this.featuredImageInput.nativeElement.value = "";
+    }
   }
 
   removeFeaturedImage() {
     this.resetFeaturedImage();
-    delete this.post.featured_image;
     this.featuredImageUrl = undefined;
-    this.postForm.patchValue(this.post);
+    this.f.featured_image.reset();
   }
 
-  handleEditorInit(e) {
-    this.tinymceInst = e.editor;
-    if (!this.isPostPublished()) {
-      this.subscribeToPFChanges();
-    }
-    // Submitting post to server when the form changes
-  }
-
-  private subscribeToPFChanges() {
-    this.postFormChangesSubscription = this.postForm.valueChanges
-      .pipe(debounceTime(2000))
+  private subscribeChanges() {
+    this.postFormSubscription = this.postForm.valueChanges
+      .pipe(debounceTime(4000))
       .subscribe(() => {
-        this.savePost();
+        this.submit();
       });
   }
 
-  savePost(status?: "draft" | "published") {
-    if (status) {
-      this.f.status.setValue(status, { emitEvent: false });
+  private unsubscribeChanges() {
+    if (this.postFormSubscription) {
+      this.postFormSubscription.unsubscribe();
     }
+  }
+
+  submit() {
     this.setDefaults();
-    Object.assign(this.post, this.postForm.value);
-    this.postChange.emit(this.post);
-    this.postStatus = "Saving...";
+    this.postChange.emit(this.postForm.value);
+  }
+
+  publish() {
+    this.f.published.setValue(true, { emitEvent: false });
+    this.submit();
   }
 
   toggleSideNav() {
@@ -262,18 +240,24 @@ export class EditorComponent implements OnInit, OnDestroy {
     return this.slugifyPipe.transform(input);
   }
 
+  onDelete() {
+    if (this.post.exists) {
+      this.delete.emit();
+    }
+  }
 
-  onDelete(id: number) {
-    if (id) {
-      this.delete.emit(id);
+  onEditorInit(e) {
+    this.tinymceInst = e.editor;
+    if (!this.post.published) {
+      this.subscribeChanges();
     }
   }
 
   ngOnInit() {}
 
   ngOnDestroy() {
-    if (this.postFormChangesSubscription) {
-      this.postFormChangesSubscription.unsubscribe();
+    if (this.postFormSubscription) {
+      this.postFormSubscription.unsubscribe();
     }
   }
 }

@@ -5,6 +5,8 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { PostsComponent } from "./posts/posts.component";
 import { AuthGuard } from "./_helpers";
 import { LoginComponent } from "./login/login.component";
+import { CreateComponent } from "./posts/create/create.component";
+import { EditComponent } from "./posts/edit/edit.component";
 
 const routes: Routes = [
   {
@@ -26,6 +28,16 @@ const routes: Routes = [
         pathMatch: "full",
       },
     ],
+  },
+  {
+    path: "editor/post",
+    component: CreateComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "editor/post/:id",
+    component: EditComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: "admin/login",

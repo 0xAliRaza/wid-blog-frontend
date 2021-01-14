@@ -107,6 +107,10 @@ export class EditorComponent implements OnInit, OnDestroy {
       images_upload_url: environment.postImageUploadUrl,
       images_upload_handler: this.onTinymceImageUpload.bind(this),
     };
+
+    if (!this.post.published) {
+      this.subscribeChanges();
+    }
   }
 
   postForm = new FormGroup({
@@ -120,7 +124,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     meta_title: new FormControl(""),
     meta_description: new FormControl(""),
     featured: new FormControl(false),
-    featured_image: new FormControl(""),
+    featured_image: new FormControl(null),
     featured_image_file: new FormControl(null),
     published: new FormControl(false),
   });
@@ -224,16 +228,15 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.f.featured_image.reset();
   }
 
-  private subscribeChanges(): void {
+  subscribeChanges() {
     if (this.postFormSubscription && !this.postFormSubscription.closed) {
       return;
     }
+
     this.postFormSubscription = this.postForm.valueChanges
       .pipe(debounceTime(4000))
       .subscribe(() => {
-        if (this.isFormDirty()) {
           this.onSubmit();
-        }
       });
   }
 
@@ -276,11 +279,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.tinymceInst = e.editor;
   }
 
-  ngOnInit() {
-    if (!this.post.published) {
-      this.subscribeChanges();
-    }
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
     if (this.postFormSubscription) {

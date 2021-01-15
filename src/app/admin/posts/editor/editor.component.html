@@ -13,25 +13,24 @@
         </li>
     </ul>
     <ul class="navbar-nav">
-        <li *ngIf="!isEmpty() && !isPostPublished();elsePublishEl" class="nav-item">
-            <button [disabled]="postForm.invalid" (click)="savePost('published')" class="btn nav-link">Publish</button>
-        </li>
-        <li #elsePublishEl *ngIf="isPostPublished()" class="nav-item update-toggle">
-            <button appToggler #toggler="appToggler" [disabled]="postForm.invalid"
-                class="btn nav-link update-toggle__btn">Update <svg-icon icon="chevron-down" class="ml-1"></svg-icon>
-                </button>
-            <div *ngIf="toggler.toggled" class="shadow update-toggle__content">
-                <p class="font-weight-bold mx-2">Update post status</p>
+
+        <li class="nav-item submit-toggle">
+            <button appToggler #toggler="appToggler"
+                class="btn nav-link submit-toggle__btn">Submit <svg-icon icon="chevron-down" class="ml-1"></svg-icon>
+            </button>
+            <div *ngIf="toggler.toggled" class="shadow submit-toggle__content">
+                <p class="font-weight-bold mx-2">Post status</p>
                 <div class="mt-4 mb-3 px-2">
                     <div class="form-check mb-2">
-                        <input class="form-check-input" type="radio" id="published" value="published" checked
-                            [formControl]="f.status">
+                        <input class="form-check-input" type="radio" id="published" [checked]="f.published.value"
+                            (input)="onTypeChange(true)">
                         <label class="form-check-label" for="published">
                             Published
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" id="draft" value="draft" [formControl]="f.status">
+                        <input class="form-check-input" type="radio" id="draft" [checked]="!f.published.value"
+                            (input)="onTypeChange(false)">
                         <label class="form-check-label" for="draft">
                             Draft
                         </label>
@@ -39,7 +38,7 @@
                 </div>
                 <div class="mb-1 d-flex justify-content-center">
                     <button class="btn btn-sm btn-light my-2 mr-2" (click)="toggler.toggle()">Cancel</button>
-                    <button class="btn btn-sm btn-success my-2" (click)="toggler.toggle();savePost()">Update</button>
+                    <button class="btn btn-sm btn-success my-2" (click)="toggler.toggle();onSubmit()">Submit</button>
                 </div>
 
             </div>
@@ -62,8 +61,8 @@
                         <input placeholder="Post Title" class="post__title-input" formControlName="title">
                     </div>
                     <div class="post__text">
-                        <editor formControlName="html" (onInit)="handleEditorInit($event)" [init]="tinymceConfig"
-                            id="tinymce-editor"></editor>
+                        <editor (onChange)="onTinymceChange($event)" (onInit)="onTinymceInit($event)"
+                            [init]="tinymceConfig" id="tinymce-editor"></editor>
                     </div>
 
                 </form>
@@ -88,17 +87,18 @@
                 <div class="featured-image-thumb" *ngIf="featuredImageUrl">
                     <img [src]="featuredImageUrl" alt="" class="img-fluid img-thumbnail my-1">
                     <button (click)="removeFeaturedImage($event)"
-                        class="btn btn-sm btn-danger float-right">Remove</button>
+                        class="btn btn-sm btn-danger">Delete</button>
                 </div>
             </div>
             <div class="form-group">
                 <label for="post-url">URL</label>
-                <input type="text" id="post-url" class="form-control" formControlName="slug" [value]="f.slug.value | slugify">
+                <input type="text" id="post-url" class="form-control" formControlName="slug"
+                    [value]="f.slug.value | slugify">
             </div>
             <div class="form-group">
                 <label for="post-tags">Tags</label>
-                <ng-select *ngIf="ngSelectTagCreator" placeholder="Select or create tags..." [items]="allTags"
-                    [multiple]="true" [addTag]="ngSelectTagCreator" bindLabel="name" formControlName="tags">
+                <ng-select *ngIf="ngSelectTagCreator" placeholder="Select or create tags..." [items]="tags"
+                    [multiple]="true" [addTag]="ngSelectTagCreator.bind(this)" bindLabel="name" formControlName="tags">
                 </ng-select>
 
             </div>
@@ -116,14 +116,14 @@
                 <textarea rows="3" type="text" id="post-meta-description" class="form-control"
                     formControlName="meta_description"></textarea>
             </div>
-            <div class="form-check">
-                <input type="checkbox" id="post-featured" class="form-check-input" formControlName="featured">
-                <label for="post-featured" class="form-check-label">Feature this post</label>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" id="post-featured" class="custom-control-input" formControlName="featured">
+                <label for="post-featured" class="custom-control-label">Featured</label>
             </div>
         </form>
     </div>
     <div class="sidebar__delete-post">
-        <button [disabled]="isEmpty()" (click)="onDelete(post?.id)" class="btn btn-outline-danger sidebar__delete-post-btn">
+        <button [disabled]="!post.exists" (click)="onDelete()" class="btn btn-outline-danger sidebar__delete-post-btn">
             <svg-icon icon="trash"></svg-icon>
             <span>Delete Post</span>
         </button>

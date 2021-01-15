@@ -1,5 +1,0 @@
-<admin-post-editor *ngIf="userToken" [post]="savedPost" (postChange)="onPostChange($event)" [token]="userToken"
-    [allTags]="allTags" [ngSelectTagCreator]="getNgSelectTagCreator()" (delete)="onPostDelete($event)">
-</admin-post-editor>
-<popup-msg *ngIf="errors || httpErrors" [errors]="errors" [httpErrors]="httpErrors" (noErrorsLeft)="clearErrors()">
-</popup-msg>

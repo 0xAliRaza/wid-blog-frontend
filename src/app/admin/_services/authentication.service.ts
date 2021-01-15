@@ -48,7 +48,7 @@ export class AuthenticationService {
   }
 
   // store jwt token in local storage to keep user logged in between page refreshes
-  storeUserData(user: User) {
+  private storeUserData(user: User) {
     localStorage.setItem("currentUser", JSON.stringify(user));
     this.currentUserSubject.next(user);
   }
@@ -62,13 +62,13 @@ export class AuthenticationService {
 
   updateUserData(): User {
     this.me
+      .pipe(map((res) => Object.assign(new User(), res)))
       .pipe(
         map((user: User) => {
           user.token = this.userToken;
           return user;
         })
       )
-      .pipe(map((res) => Object.assign(new User(), res)))
       .subscribe((res) => this.storeUserData(res));
     return this.currentUserValue;
   }

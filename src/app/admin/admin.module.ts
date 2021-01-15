@@ -15,9 +15,12 @@ import { TopNavItemComponent } from "./top-nav/top-nav-item/top-nav-item.compone
 import { SideNavComponent } from "./side-nav/side-nav.component";
 import { SideNavItemComponent } from "./side-nav/side-nav-item/side-nav-item.component";
 import { EditorModule, TINYMCE_SCRIPT_SRC } from "@tinymce/tinymce-angular";
-import { CreatePostModule } from "./posts/create-post/create-post.module";
 import { SharedModule } from "@app/shared-module";
 import { NgxPaginationModule } from "ngx-pagination";
+import { CreateComponent } from './posts/create/create.component';
+import { EditComponent } from './posts/edit/edit.component';
+import { EditorComponent } from "./posts/editor/editor.component";
+import { NgSelectModule } from "@ng-select/ng-select";
 
 @NgModule({
   declarations: [
@@ -29,6 +32,9 @@ import { NgxPaginationModule } from "ngx-pagination";
     TopNavItemComponent,
     SideNavComponent,
     SideNavItemComponent,
+    CreateComponent,
+    EditComponent,
+    EditorComponent
   ],
   imports: [
     CommonModule,
@@ -36,9 +42,10 @@ import { NgxPaginationModule } from "ngx-pagination";
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    CreatePostModule,
     NgxPaginationModule,
     SharedModule,
+    EditorModule,
+    NgSelectModule
   ],
   providers: [
     AuthenticationService,

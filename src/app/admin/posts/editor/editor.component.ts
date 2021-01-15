@@ -124,8 +124,8 @@ export class EditorComponent implements OnInit, OnDestroy {
     meta_title: new FormControl(""),
     meta_description: new FormControl(""),
     featured: new FormControl(false),
-    featured_image: new FormControl(null),
-    featured_image_file: new FormControl(null),
+    featured_image: new FormControl(""),
+    featured_image_file: new FormControl(""),
     published: new FormControl(false),
   });
 
@@ -180,10 +180,10 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   private setDefaults() {
-    if (!this.f.title.dirty) {
+    if (this.f.title.value === "") {
       this.f.title.setValue("(Untitled)", { emitEvent: false });
     }
-    if (!this.f.slug.dirty) {
+    if (this.f.slug.value === "") {
       this.f.slug.setValue(this.slugify(this.f.title.value), {
         emitEvent: false,
       });
@@ -210,13 +210,13 @@ export class EditorComponent implements OnInit, OnDestroy {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (_event) => {
-      this.featuredImageUrl = reader.result as string;
+      this.featuredImageUrl = reader.result.toString();
       this.f.featured_image_file.setValue(file);
     };
   }
 
   private resetFeaturedImage() {
-    this.f.featured_image_file.reset({ emitEvent: false });
+    this.f.featured_image_file.setValue("", { emitEvent: false });
     if (this.featuredImageInput) {
       this.featuredImageInput.nativeElement.value = "";
     }
@@ -225,7 +225,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   removeFeaturedImage() {
     this.resetFeaturedImage();
     this.featuredImageUrl = undefined;
-    this.f.featured_image.reset();
+    this.f.featured_image.setValue("");
   }
 
   subscribeChanges() {
@@ -234,9 +234,9 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
 
     this.postFormSubscription = this.postForm.valueChanges
-      .pipe(debounceTime(4000))
+      .pipe(debounceTime(2500))
       .subscribe(() => {
-          this.onSubmit();
+        this.onSubmit();
       });
   }
 
@@ -254,7 +254,17 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.setDefaults();
-    this.formChange.emit(this.postForm.value);
+
+    const formData = new FormData();
+    Object.entries(this.postForm.value).forEach(([key, value]: any[]) => {
+      if (value === "") {
+        value = null;
+      }
+      const newValue = value instanceof File ? value : JSON.stringify(value);
+      formData.set(key, newValue);
+    });
+
+    this.formChange.emit(formData);
   }
 
   onTypeChange(type: boolean) {
@@ -277,6 +287,10 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   onTinymceInit(e) {
     this.tinymceInst = e.editor;
+    if (this.post && this.post.html) {
+      this.tinymceInst.setContent(this.post.html);
+      this.postForm.patchValue({ html: this.post.html }, { emitEvent: false });
+    }
   }
 
   ngOnInit() {}

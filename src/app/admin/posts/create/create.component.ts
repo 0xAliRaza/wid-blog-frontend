@@ -3,7 +3,8 @@ import { Router } from "@angular/router";
 import { Post, User } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
 import { AuthenticationService, PostsService } from "@app/admin/_services";
-import { Subscription } from "rxjs";
+import { Subject, Subscription } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: "app-create",
@@ -11,6 +12,7 @@ import { Subscription } from "rxjs";
   styleUrls: ["./create.component.scss"],
 })
 export class CreateComponent implements OnInit, OnDestroy {
+  destroyed$: Subject<boolean> = new Subject();
   user: User;
   postStatus = "New Post";
   tags: Tag[];
@@ -21,9 +23,11 @@ export class CreateComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.user = this.auth.currentUserValue;
-    this.tagsSubscription = this.posts.tags.subscribe((tags: Tag[]) => {
-      this.tags = tags;
-    });
+    this.posts.tags
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((tags: Tag[]) => {
+        this.tags = tags;
+      });
   }
 
   onFormChange(data: object) {
@@ -43,6 +47,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   ngOnDestroy() {
-    this.tagsSubscription.unsubscribe();
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 }

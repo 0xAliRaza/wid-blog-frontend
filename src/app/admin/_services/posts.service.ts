@@ -45,13 +45,28 @@ export class PostsService {
   get(id: number): Observable<Post> {
     return this.http
       .get<Post>(`${environment.apiUrl}/post/${id}`)
-      .pipe(map((res) => new Post(res)));
+      .pipe(map((res) => this.transformPostResponse(res)));
   }
 
   create(data: object): Observable<Post> {
     return this.http
       .post<Post>(`${environment.apiUrl}/post/create`, data)
-      .pipe(map((res) => new Post(res)));
+      .pipe(map((res) => this.transformPostResponse(res)));
+  }
+
+  update(data: object): Observable<Post> {
+    return this.http
+      .post<Post>(`${environment.apiUrl}/post/update`, data)
+      .pipe(map((res) => this.transformPostResponse(res)));
+  }
+
+  private transformPostResponse(res: object) {
+    for (const key in res) {
+      if (res[key] === null) {
+        res[key] = "";
+      }
+    }
+    return new Post(res);
   }
 
   delete(id: number): Observable<boolean> {

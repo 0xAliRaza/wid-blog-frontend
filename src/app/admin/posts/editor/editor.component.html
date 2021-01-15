@@ -15,7 +15,7 @@
     <ul class="navbar-nav">
 
         <li class="nav-item submit-toggle">
-            <button appToggler #toggler="appToggler" [disabled]="postForm.invalid"
+            <button appToggler #toggler="appToggler"
                 class="btn nav-link submit-toggle__btn">Submit <svg-icon icon="chevron-down" class="ml-1"></svg-icon>
             </button>
             <div *ngIf="toggler.toggled" class="shadow submit-toggle__content">
@@ -87,7 +87,7 @@
                 <div class="featured-image-thumb" *ngIf="featuredImageUrl">
                     <img [src]="featuredImageUrl" alt="" class="img-fluid img-thumbnail my-1">
                     <button (click)="removeFeaturedImage($event)"
-                        class="btn btn-sm btn-danger float-right">Remove</button>
+                        class="btn btn-sm btn-danger">Delete</button>
                 </div>
             </div>
             <div class="form-group">
@@ -116,9 +116,9 @@
                 <textarea rows="3" type="text" id="post-meta-description" class="form-control"
                     formControlName="meta_description"></textarea>
             </div>
-            <div class="form-check">
-                <input type="checkbox" id="post-featured" class="form-check-input" formControlName="featured">
-                <label for="post-featured" class="form-check-label">Feature this post</label>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" id="post-featured" class="custom-control-input" formControlName="featured">
+                <label for="post-featured" class="custom-control-label">Featured</label>
             </div>
         </form>
     </div>

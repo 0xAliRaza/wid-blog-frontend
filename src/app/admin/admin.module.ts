@@ -10,10 +10,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { JwtInterceptor, ErrorInterceptor } from "./_helpers";
 import { AuthenticationService, PostsService } from "./_services";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { TopNavComponent } from "./top-nav/top-nav.component";
-import { TopNavItemComponent } from "./top-nav/top-nav-item/top-nav-item.component";
-import { SideNavComponent } from "./side-nav/side-nav.component";
-import { SideNavItemComponent } from "./side-nav/side-nav-item/side-nav-item.component";
 import { EditorModule, TINYMCE_SCRIPT_SRC } from "@tinymce/tinymce-angular";
 import { SharedModule } from "@app/shared-module";
 import { NgxPaginationModule } from "ngx-pagination";
@@ -28,10 +24,6 @@ import { NgSelectModule } from "@ng-select/ng-select";
     LoginComponent,
     DashboardComponent,
     PostsComponent,
-    TopNavComponent,
-    TopNavItemComponent,
-    SideNavComponent,
-    SideNavItemComponent,
     CreateComponent,
     EditComponent,
     EditorComponent

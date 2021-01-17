@@ -25,7 +25,7 @@
             </select>
         </div>
     </div>
-    <div class="table-responsive"></div>
+    <div class="table-responsive">
     <table class="table">
         <thead>
             <tr>
@@ -55,13 +55,13 @@
                         <svg-icon icon="edit"></svg-icon>
                     </a>
                     <a (click)="onPostDelete(post.id)" class="text-danger">
-                        <svg-icon icon="trash" class="ml-2 "></svg-icon>
+                        <svg-icon icon="trash" class="ml-2"></svg-icon>
                     </a>
                 </td>
             </tr>
         </tbody>
     </table>
-
+</div>
     <div class="d-flex justify-content-center">
         <pagination-controls responsive="true" previousLabel="Prev" nextLabel="Next"
             (pageChange)="onTableDataChange($event)">

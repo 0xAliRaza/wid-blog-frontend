@@ -3,10 +3,9 @@
 :host {
   background-color: $body-bg;
   max-width: pxToRem(2000);
-  min-height: 100vh;
   display: block;
   margin: 0 auto;
-  box-shadow: 0 0 pxToRem(20) $color-grey-dark-3;
+  height: 100%;
 }
 
 .header {
@@ -14,8 +13,287 @@
 
 .main {
   display: flex;
+  height: 100%;
+
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 0 0 pxToRem(250);
+    background-color: $color-grey-dark-3;
+    z-index: 1030;
+
+    &--floating {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: pxToRem(250);
+      height: 100%;
+    }
+  }
 
   &__content {
+    overflow: auto;
     flex: 1;
+    position: relative;
+  }
+
+  &__sidebar-toggler {
+    position: fixed;
+    top: pxToRem(16);
+    left: pxToRem(16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    outline: none;
+    border: none;
+    padding: pxToRem(8);
+    margin: none;
+    font-size: pxToRem(20);
+    color: $color-grey-dark-3;
+  }
+}
+
+.sidebar-top-btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: pxToRem(10);
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    outline: none;
+    border: none;
+    padding: pxToRem(8);
+    margin: none;
+    font-size: pxToRem(18);
+    color: $color-text-white;
+  }
+}
+
+.sidebar-user {
+  font-size: pxToRem(16);
+  color: $color-grey-light-2;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto pxToRem(5) pxToRem(24);
+  padding: pxToRem(8) pxToRem(12);
+  border-radius: pxToRem(5);
+
+  cursor: pointer;
+  @include hover-focus-active {
+    background-color: rgba($color-grey-dark-2, 0.5);
+    outline: none;
+  }
+
+  &--active {
+    outline: none;
+    background-color: rgba($color-grey-dark-2, 0.5);
+  }
+
+  &__img-wrapper {
+    overflow: hidden;
+    margin-right: pxToRem(8);
+  }
+  &__img {
+    border-radius: 100%;
+    height: pxToRem(40);
+    width: pxToRem(40);
+  }
+
+  &__meta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+  }
+
+  &__name {
+    font-size: pxToRem(14);
+    margin: 0;
+    font-weight: 500;
+  }
+  &__role {
+    color: $color-grey-light-3;
+    font-size: pxToRem(12);
+  }
+
+  &__dropdown {
+    background-color: $body-bg;
+    border: 1px solid $color-grey-light-2;
+    border-radius: pxToRem(5);
+    margin: 0;
+    padding: pxToRem(5) 0;
+    min-width: pxToRem(250);
+    position: absolute;
+    bottom: pxToRem(55);
+    left: pxToRem(12);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    &-item {
+      margin: 0;
+      padding: 0;
+    }
+    &-link {
+      display: flex;
+      align-items: center;
+      color: $color-grey-dark-2;
+      margin: pxToRem(2) pxToRem(5);
+      padding: pxToRem(6) pxToRem(32);
+      border-radius: pxToRem(5);
+      @include hover-focus-active {
+        outline: none;
+        background-color: $color-grey-light-2;
+        color: $color-grey-dark-3;
+      }
+
+      // display: flex;
+      // align-items: center;
+      // color: $color-grey-dark-2;
+      // margin: pxToRem(2) pxToRem(5);
+      // padding: pxToRem(6) pxToRem(32);
+      // border-radius: pxToRem(5);
+      // transition: all 0.2s ease-in-out;
+      // @include hover-focus-active {
+      //   background-color: $color-grey-light-2;
+      //   padding-left: pxToRem(12);
+      //   color: $color-grey-dark-3;
+      // }
+      // svg-icon {
+      //   margin-right: pxToRem(5);
+      // }
+    }
+  }
+}
+
+.sidebar-nav {
+  &__list-toggler {
+    display: flex;
+    margin: 0;
+    padding: 0 0 0 pxToRem(9);
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    color: $color-grey-light-3;
+    font-size: pxToRem(14);
+    position: absolute;
+    top: pxToRem(13);
+    left: pxToRem(11);
+
+    @include hover-focus-active {
+      outline: none;
+      color: $color-grey-light-2;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: pxToRem(32) 0 0;
+    padding: 0;
+    font-size: pxToRem(16);
+
+    &--inner {
+      margin: 0;
+    }
+  }
+
+  &__item {
+    padding: 0;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  &__list-heading {
+    text-transform: uppercase;
+    padding: pxToRem(10) pxToRem(20);
+    margin: 0;
+    color: $color-text-white;
+    font-weight: 500;
+    font-size: pxToRem(13);
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    color: $color-grey-light-2;
+    margin: pxToRem(2) pxToRem(5);
+    padding: pxToRem(6) pxToRem(32);
+    border-radius: pxToRem(5);
+    @include hover-focus-active {
+      outline: none;
+      background-color: rgba($color-grey-dark-2, 0.5);
+    }
+    &--active {
+      font-weight: 500;
+      @include plain-hover-focus {
+        background-color: $color-grey-dark-2;
+      }
+    }
+
+    &--icon-right {
+      position: relative;
+      .icon-right {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: pxToRem(10);
+        // opacity: 0;
+        // transition: opacity 0.2s ease;
+      }
+      // &:hover .icon-right {
+      //   opacity: 1;
+      // }
+    }
+  }
+
+  &__list--inner &__link {
+    @include hover-focus-active {
+      outline: none;
+      background-color: rgba($color-grey-dark-2, 0.9);
+    }
+    padding: pxToRem(6) pxToRem(10) pxToRem(6) pxToRem(56);
+  }
+
+  &__link-new-post {
+    font-size: pxToRem(22);
+    color: $color-grey-light-3;
+    padding: pxToRem(5);
+    position: absolute;
+    top: 0;
+    right: pxToRem(8);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+
+    @include hover-focus-active {
+      outline: none;
+      color: $color-grey-light-2;
+    }
+
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: pxToRem(28);
+      width: pxToRem(28);
+      border-radius: 100px;
+    }
+
+    &:hover span {
+      background-color: $color-grey-dark-2;
+    }
+  }
+
+  &__item:hover &__link-new-post {
+    opacity: 1;
   }
 }

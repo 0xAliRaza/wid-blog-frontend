@@ -1,17 +1,18 @@
-@import "admin/sass/index";
-:host {
-  @include media-breakpoint-up(md) {
-    flex-basis: pxToRem(200px);
-  }
-}
+ @import "admin/sass/index";
+// :host {
+//   @include media-breakpoint-up(md) {
+  // flex-basis: pxToRem(200px);
+//   }
+// }
 aside {
   z-index: 1030;
   background-color: $color-grey-dark-3;
-  position: absolute;
-  top: $navbar-top-height;
+  position: flex;
+  top: 0;
   left: 0;
   display: flex;
-  height: calc(100vh - #{$navbar-top-height});
+  height: 100vh;
+  min-width: pxToRem(200px);
   overflow: auto;
 
   nav {
@@ -22,7 +23,8 @@ aside {
     display: flex;
     flex-direction: column;
     list-style: none;
-    margin: pxToRem(16) 0;
-    padding: pxToRem(10);
+    margin: pxToRem(32) 0 0;
+    padding: 0;
+    font-size: pxToRem(14);
   }
 }

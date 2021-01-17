@@ -25,6 +25,7 @@ import {
           opacity: "1",
           visibility: "visible",
           transform: "translateX(0)",
+          position: "initial",
         })
       ),
       state(
@@ -41,7 +42,7 @@ import {
           opacity: "1",
           visibility: "visible",
           transform: "translateX(0)",
-          position: "initial",
+          position: "fixed",
         })
       ),
       transition("in <=> out", animate(".2s ease-in-out")),
@@ -60,10 +61,8 @@ export class SideNavComponent implements OnInit, AfterViewInit {
   onResize(event) {
     this.innerWidth = window.innerWidth;
   }
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {}
   ngOnInit() {
     this.innerWidth = window.innerWidth;
-  
   }
 }

@@ -1,11 +1,120 @@
-<admin-top-nav (toggleSideNav)="toggleSideNav()"></admin-top-nav>
+<!-- <admin-top-nav (toggleSideNav)="toggleSideNav()"></admin-top-nav> -->
 
 
 <div class="main">
-    <admin-side-nav [sideNavVisible]="sideNavVisible"></admin-side-nav>
+    <aside *ngIf="sideNavVisible" [@fadeInOut] class="main__sidebar "
+        [ngClass]="{'main__sidebar--floating': sideNavFloating}" [@slideInOutFromLeft]>
+
+        <div class="sidebar-top-btns">
+            <button (click)="toggleSideNav()" type="button" title="toggle sidebar">
+                <svg-icon icon="menu-open"></svg-icon>
+            </button>
+            <button type="button" title="search something">
+                <svg-icon icon="search"></svg-icon>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul class="sidebar-nav__list">
+                <li class="sidebar-nav__item">
+                    <a href="#" class="sidebar-nav__link sidebar-nav__link--icon-right">
+                        <svg-icon icon="home" class="mr-2"></svg-icon>
+                        Visit Site
+                        <svg-icon icon="external-link" class="icon-right"></svg-icon>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="sidebar-nav__list">
+                <li class="sidebar-nav__list-heading">Manage</li>
+                <li class="sidebar-nav__item">
+                    <button appToggler #postMenu="appToggler" class="sidebar-nav__list-toggler">
+                        <svg-icon [icon]="postMenu.toggled ? 'chevron-down': 'chevron-right'" class="mr-2"></svg-icon>
+                    </button>
+                    <a class="sidebar-nav__link" routerLinkActive="sidebar-nav__link--active" routerLink="posts"
+                        [routerLinkActiveOptions]="{exact: true}">
+                        <svg-icon icon="files" class="mr-2"></svg-icon>
+                        Posts
+                    </a>
+                    <ul [@slideInOut] *ngIf="postMenu.toggled" class="sidebar-nav__list sidebar-nav__list--inner">
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link" routerLink="posts"
+                                [queryParams]="{type: 'published'}">
+                                <svg-icon class="mr-2" icon="file"></svg-icon>
+                                Published
+                            </a>
+                        </li>
+                        <li class="sidebar-nav__item">
+                            <a href="#" class="sidebar-nav__link" routerLink="posts" [queryParams]="{type: 'draft'}"
+                                routerLink="posts" [queryParams]="{type: 'draft'}">
+                                <svg-icon class="mr-2" icon="edit"></svg-icon>
+                                Drafts
+                            </a>
+                        </li>
+                    </ul>
+                    <a href="#" class="sidebar-nav__link-new-post">
+                        <span>
+                            <svg-icon icon="plus"></svg-icon>
+                        </span>
+                    </a>
+                </li>
+                <li class="sidebar-nav__item">
+                    <a class="sidebar-nav__link" href="#">Posts</a>
+                </li>
+                <li class="sidebar-nav__item">
+                    <a class="sidebar-nav__link" href="#">Tags</a>
+                </li>
+                <li class="sidebar-nav__item">
+                    <a class="sidebar-nav__link" href="#">Settings</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-user" appToggler #sidebarUserMenu="appToggler"
+            [ngClass]="{'sidebar-user--active': sidebarUserMenu.toggled}">
+            <div class="sidebar-user__img-wrapper">
+                <img src="assets/img/developer.jpg" alt="John Doe" class="img-fluid shadow-sm sidebar-user__img">
+            </div>
+            <div class="sidebar-user__meta">
+                <p class="sidebar-user__name">John Doe</p>
+                <span class="sidebar-user__role">Admin</span>
+            </div>
+            <div class="sidebar-user__toggler">
+                <svg-icon icon="chevron-down"></svg-icon>
+            </div>
+
+            <ul *ngIf="sidebarUserMenu.toggled" [@fadeInOut] class="sidebar-user__dropdown shadow-lg">
+                <li class="sidebar-user__dropdown-item">
+                    <a href="#" class="sidebar-user__dropdown-link">
+                        <svg-icon class="mr-2" icon="user"></svg-icon>
+                        Profile
+                    </a>
+
+                </li>
+                <li class="sidebar-user__dropdown-item">
+                    <a href="#" class="sidebar-user__dropdown-link">
+                        <svg-icon class="mr-2" icon="settings"></svg-icon>
+                        Settings
+                    </a>
+                </li>
+                <li class="sidebar-user__dropdown-item">
+                    <a href="#" class="sidebar-user__dropdown-link">
+                        <svg-icon class="mr-2" icon="log-out"></svg-icon>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </aside>
+
+
 
     <section class="main__content">
         <div class="container">
+            <button *ngIf="sideNavVisible === false" [@fadeInOut] (click)="toggleSideNav()" type="button" class="main__sidebar-toggler">
+                <svg-icon icon="menu"></svg-icon>
+            </button>
             <router-outlet></router-outlet>
         </div>
     </section>

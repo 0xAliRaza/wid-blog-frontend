@@ -12,7 +12,7 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(
-      JSON.parse(localStorage.getItem("currentUser"))
+      Object.assign(new User(), JSON.parse(localStorage.getItem("currentUser")))
     );
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -89,6 +89,7 @@ export class AuthenticationService {
           }),
         }
       )
+      .pipe(map((res) => Object.assign(new User(), res)))
       .pipe(tap((res: User) => this.storeUserData(res)));
   }
 

@@ -7,8 +7,6 @@ import {
 } from "@angular/router";
 
 import { AuthenticationService } from "@admin/_services";
-import { map } from "rxjs/operators";
-import { User } from "../_models";
 
 export class AuthGuard implements CanActivate {
   constructor(
@@ -17,8 +15,19 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.currentUser && this.currentUser.token) {
-      // logged in so return true
+    const currentUser = this.authenticationService.currentUserValue;
+    if (currentUser && currentUser.token) {
+      // check if route is restricted by role
+      if (
+        route.data.roles &&
+        route.data.roles.indexOf(currentUser.role) === -1
+      ) {
+        // role not authorized so redirect to dashboard
+        this.router.navigate(["/admin/dashboard"]);
+        return false;
+      }
+
+      // logged in and authorized so return true
       return true;
     }
 
@@ -28,9 +37,5 @@ export class AuthGuard implements CanActivate {
       queryParams: { returnUrl: state.url },
     });
     return false;
-  }
-
-  get currentUser() {
-    return this.authenticationService.currentUserValue;
   }
 }

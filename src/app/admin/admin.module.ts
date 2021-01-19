@@ -17,6 +17,7 @@ import { CreateComponent } from './posts/create/create.component';
 import { EditComponent } from './posts/edit/edit.component';
 import { EditorComponent } from "./posts/editor/editor.component";
 import { NgSelectModule } from "@ng-select/ng-select";
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { NgSelectModule } from "@ng-select/ng-select";
     PostsComponent,
     CreateComponent,
     EditComponent,
-    EditorComponent
+    EditorComponent,
+    UsersComponent
   ],
   imports: [
     CommonModule,

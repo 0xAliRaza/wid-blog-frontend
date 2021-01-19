@@ -10,7 +10,7 @@ import {
 import { Observable, throwError } from "rxjs";
 
 import { AuthenticationService } from "@admin/_services";
-
+import { environment } from "@environments/environment";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -23,24 +23,20 @@ export class JwtInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    const currentUser = this.authenticationService.currentUserValue;
+    const isLoggedIn = currentUser && currentUser.token;
+    const isApiUrl = request.url.startsWith(environment.apiUrl);
+
     // add authorization header with jwt token if available
-    if (!!this.currentUser && this.currentUser.token) {
-      request = this.cloneRequest(request);
+    if (isLoggedIn && isApiUrl) {
+      request = request.clone({
+        setHeaders: {
+          Accept: `application/json`,
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      });
     }
 
     return next.handle(request);
-  }
-
-  private cloneRequest(request: HttpRequest<any>) {
-    return request.clone({
-      setHeaders: {
-        Accept: `application/json`,
-        Authorization: `Bearer ${this.currentUser.token}`,
-      },
-    });
-  }
-
-  private get currentUser() {
-    return this.authenticationService.currentUserValue;
   }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, HostListener } from "@angular/core";
 import { User } from "./_models";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "./_services";
-import { Subscription } from "rxjs";
+import { Subject, Subscription } from "rxjs";
 import {
   animate,
   stagger,
@@ -11,6 +11,7 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: "app-admin",
@@ -52,19 +53,29 @@ import {
   ],
 })
 export class AdminComponent implements OnInit, OnDestroy {
+  destroyed$: Subject<boolean> = new Subject();
   innerWidth: any;
   sideNavVisible: boolean;
   sideNavFloating = false;
   currentUser: User;
-  private authSubscription: Subscription;
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private authenticationService: AuthenticationService
   ) {
-    this.authSubscription = this.authenticationService.currentUser.subscribe(
-      (x) => (this.currentUser = x)
-    );
+    this.authenticationService.currentUser
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((x) => (this.currentUser = x));
+    // this.route.quer
+    //   .pipe(takeUntil(this.destroyed$))
+    //   .subscribe(params => {
+    //     console.log(params);
+    //     if (params['type']) {
+    //       debugger;
+
+    //     }
+    //   })
   }
 
   @HostListener("window:resize", ["$event"])
@@ -99,7 +110,9 @@ export class AdminComponent implements OnInit, OnDestroy {
     }
   }
 
+
   ngOnDestroy() {
-    this.authSubscription.unsubscribe();
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 }

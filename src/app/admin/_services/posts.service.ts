@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { environment } from "@environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
-import { first, map } from "rxjs/operators";
-import { Post } from "../_models";
-import { Tag } from "../_models/tag";
+import {  map } from "rxjs/operators";
+import { Post } from "@app/admin/_models";
+import { Tag } from "@app/admin/_models/tag";
 export class PostsService {
   tags: BehaviorSubject<Tag[]>;
   newlyCreatedPost: Post;

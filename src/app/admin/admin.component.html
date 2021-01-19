@@ -34,7 +34,7 @@
                     </button>
 
                     <a class="sidebar-nav__link" routerLinkActive="sidebar-nav__link--active" routerLink="posts"
-                        [routerLinkActiveOptions]="{exact: true}">
+                        >
 
                         <svg-icon icon="files" class="mr-2"></svg-icon>
                         Posts
@@ -42,14 +42,13 @@
                     </a>
                     <ul [@slideInOut] *ngIf="postMenu.toggled" class="sidebar-nav__list sidebar-nav__list--inner">
                         <li class="sidebar-nav__item">
-                            <a href="#" class="sidebar-nav__link" routerLink="posts"
-                                [queryParams]="{type: 'published'}">
+                            <a class="sidebar-nav__link" routerLink="posts" [queryParams]="{type: 'published'}">
                                 <svg-icon class="mr-2" icon="file"></svg-icon>
                                 Published
                             </a>
                         </li>
                         <li class="sidebar-nav__item">
-                            <a href="#" class="sidebar-nav__link" routerLink="posts" [queryParams]="{type: 'draft'}"
+                            <a class="sidebar-nav__link" routerLink="posts" [queryParams]="{type: 'draft'}"
                                 routerLink="posts" [queryParams]="{type: 'draft'}">
                                 <svg-icon class="mr-2" icon="edit"></svg-icon>
                                 Drafts
@@ -63,10 +62,11 @@
                     </a>
                 </li>
                 <li class="sidebar-nav__item">
-                    <a class="sidebar-nav__link" href="#">Posts</a>
-                </li>
-                <li class="sidebar-nav__item">
                     <a class="sidebar-nav__link" href="#">Tags</a>
+                </li>
+                <li *ngIf="currentUser.isSuperAdmin() || currentUser.isAdmin()" class="sidebar-nav__item">
+                    <a class="sidebar-nav__link" routerLink="users" routerLinkActive="sidebar-nav__link--active"
+                        [routerLinkActiveOptions]="{exact: true}">Users</a>
                 </li>
                 <li class="sidebar-nav__item">
                     <a class="sidebar-nav__link" href="#">Settings</a>
@@ -116,7 +116,8 @@
 
     <section class="main__content">
         <div class="container">
-            <button *ngIf="sideNavVisible === false" [@fadeInOut] (click)="toggleSideNav()" type="button" class="main__sidebar-toggler">
+            <button *ngIf="sideNavVisible === false" [@fadeInOut] (click)="toggleSideNav()" type="button"
+                class="main__sidebar-toggler">
                 <svg-icon icon="menu"></svg-icon>
             </button>
             <router-outlet></router-outlet>

@@ -7,6 +7,8 @@ import { AuthGuard } from "./_helpers";
 import { LoginComponent } from "./login/login.component";
 import { CreateComponent } from "./posts/create/create.component";
 import { EditComponent } from "./posts/edit/edit.component";
+import { Role } from "./_models";
+import { UsersComponent } from "./users/users.component";
 
 const routes: Routes = [
   {
@@ -16,11 +18,19 @@ const routes: Routes = [
     children: [
       {
         path: "dashboard",
+        canActivate: [AuthGuard],
         component: DashboardComponent,
       },
       {
         path: "posts",
         component: PostsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "users",
+        component: UsersComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.SuperAdmin, Role.Admin] },
       },
       {
         path: "",

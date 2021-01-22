@@ -1,1 +1,32 @@
-<p>users works!</p>
+<div class="row">
+    <div class="col-sm-12">
+        <h3 class="text-center my-5">
+            Users
+        </h3>
+        <div class="table-responsive shadow-sm">
+            <table class="table table-hover m-0" >
+
+                <thead class="">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let user of users$ | async" title="Click to editor or remove {{ user.name }}"
+                        [ngStyle]="{cursor: 'pointer'}" [routerLink]="'/admin/user/' + user.id">
+                        <th role="row">{{user.id}}</th>
+                        <td>{{user.name}}</td>
+                        <td>{{user.email}}</td>
+                        <td><span class="badge badge-pill"
+                                [ngClass]="{'badge-success': user.isSuperAdmin(), 'badge-info': user.isAdmin(), 'badge-dark': user.isWriter()}">
+                                {{user.role | lowercase}}</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

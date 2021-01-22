@@ -25,44 +25,55 @@
             </select>
         </div>
     </div>
-    <div class="table-responsive">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Featured</th>
-                <th>Type</th>
-                <th>Created at</th>
-                <th>Updated at</th>
-                <th>Options</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let post of POSTS | paginate : {
+    <div class="table-responsive shadow-sm">
+        <table class="table table-hover m-0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Created</th>
+                    <th>Updated</th>
+                    <th>Featured</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let post of POSTS | paginate : {
                   itemsPerPage: tableSize,
                   currentPage: page,
                   totalItems: count
-                }">
-                <th scope="row">{{post.id}}</th>
-                <td>{{post.title}}</td>
-                <td>{{!!+post.featured}}</td>
-                <td>{{post.published ? "Published" : "Draft"}}</td>
-                <td>{{post.created_at | date}}</td>
-                <td>{{post.updated_at | date}}</td>
-                <td class="text-center" [ngStyle]="{'font-size': '18px'}">
-                    <a [routerLink]="'../editor/post/' + post.id" class="text-dark">
-                        <svg-icon icon="edit"></svg-icon>
-                    </a>
-                    <a (click)="onPostDelete(post.id)" class="text-danger">
-                        <svg-icon icon="trash" class="ml-2"></svg-icon>
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-    <div class="d-flex justify-content-center">
+                }" [routerLink]="'/admin/editor/post/' + post.id" [ngStyle]="{cursor: 'pointer'}"
+                    title="Click to edit {{post.title}}">
+                    <th class="align-middle" scope="row">{{post.id}}</th>
+                    <td class="align-middle" class="align-middle">
+                        <div class="text-dark">{{post.title}}</div>
+                        <span class="text-secondary" [ngStyle]="{fontSize: '13px'}">By <b>{{post.user.name}}</b>
+                            <ng-container *ngIf="post.first_tag"> in
+                                <b>{{post.first_tag.name}}</b>
+                            </ng-container>
+                        </span>
+
+                    </td>
+
+                    <td class="align-middle" [title]="post.created_at | date:'full'">{{post.created_at | date}}</td>
+                    <td class="align-middle" [title]="post.updated_at | date:'full'">{{post.updated_at | date}}</td>
+                    <td class="align-middle">
+                        <div class="custom-control custom-checkbox ">
+                            <input [ngStyle]="{pointerEvents: 'none'}" type="checkbox"
+                                class="custom-control-input position-static" [checked]="!!+post.featured"
+                                id="post-featured-checkbox">
+                            <label [ngStyle]="{pointerEvents: 'none'}" (click)="false" for="post-featured-checkbox"
+                                class="custom-control-label"></label>
+                        </div>
+                    </td>
+                    <td class="align-middle"><span class="badge"
+                            [ngClass]="{'badge-success': post.published, 'badge-info': !post.published}">
+                            {{post.published ? "Published" : "Draft"}}</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-center mt-4 align-items-center">
         <pagination-controls responsive="true" previousLabel="Prev" nextLabel="Next"
             (pageChange)="onTableDataChange($event)">
         </pagination-controls>

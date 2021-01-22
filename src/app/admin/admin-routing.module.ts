@@ -22,15 +22,23 @@ const routes: Routes = [
         component: DashboardComponent,
       },
       {
-        path: "posts",
+        path: "post",
         component: PostsComponent,
         canActivate: [AuthGuard],
       },
       {
-        path: "users",
+        path: "user",
         component: UsersComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.SuperAdmin, Role.Admin] },
+        children: [
+          {
+            path: ":id",
+            component: UsersComponent,
+            canActivate: [AuthGuard],
+            data: { roles: [Role.SuperAdmin, Role.Admin] },
+          },
+        ],
       },
       {
         path: "",

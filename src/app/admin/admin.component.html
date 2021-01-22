@@ -33,7 +33,7 @@
                         <svg-icon [icon]="postMenu.toggled ? 'chevron-down': 'chevron-right'" class="mr-2"></svg-icon>
                     </button>
 
-                    <a class="sidebar-nav__link" routerLinkActive="sidebar-nav__link--active" routerLink="posts"
+                    <a class="sidebar-nav__link" routerLinkActive="sidebar-nav__link--active" routerLink="post"
                         >
 
                         <svg-icon icon="files" class="mr-2"></svg-icon>
@@ -42,14 +42,14 @@
                     </a>
                     <ul [@slideInOut] *ngIf="postMenu.toggled" class="sidebar-nav__list sidebar-nav__list--inner">
                         <li class="sidebar-nav__item">
-                            <a class="sidebar-nav__link" routerLink="posts" [queryParams]="{type: 'published'}">
+                            <a class="sidebar-nav__link" routerLink="post" [queryParams]="{type: 'published'}">
                                 <svg-icon class="mr-2" icon="file"></svg-icon>
                                 Published
                             </a>
                         </li>
                         <li class="sidebar-nav__item">
-                            <a class="sidebar-nav__link" routerLink="posts" [queryParams]="{type: 'draft'}"
-                                routerLink="posts" [queryParams]="{type: 'draft'}">
+                            <a class="sidebar-nav__link" routerLink="post" [queryParams]="{type: 'draft'}"
+                                routerLink="post" [queryParams]="{type: 'draft'}">
                                 <svg-icon class="mr-2" icon="edit"></svg-icon>
                                 Drafts
                             </a>
@@ -65,7 +65,7 @@
                     <a class="sidebar-nav__link" href="#">Tags</a>
                 </li>
                 <li *ngIf="currentUser.isSuperAdmin() || currentUser.isAdmin()" class="sidebar-nav__item">
-                    <a class="sidebar-nav__link" routerLink="users" routerLinkActive="sidebar-nav__link--active"
+                    <a class="sidebar-nav__link" routerLink="user" routerLinkActive="sidebar-nav__link--active"
                         [routerLinkActiveOptions]="{exact: true}">Users</a>
                 </li>
                 <li class="sidebar-nav__item">

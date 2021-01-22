@@ -18,6 +18,7 @@ import { EditComponent } from './posts/edit/edit.component';
 import { EditorComponent } from "./posts/editor/editor.component";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { UsersComponent } from './users/users.component';
+import { UsersService } from "./_services/users.service";
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { UsersComponent } from './users/users.component';
   providers: [
     AuthenticationService,
     PostsService,
+    UsersService,
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

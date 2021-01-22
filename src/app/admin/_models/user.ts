@@ -28,4 +28,8 @@ export class User {
   isWriter(): boolean {
     return this.role === Role.Writer;
   }
+
+  get exists(): boolean {
+    return !!this.id;
+  }
 }

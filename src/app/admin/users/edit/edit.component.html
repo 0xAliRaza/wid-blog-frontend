@@ -1,0 +1,3 @@
+<h3 class="text-center my-5">{{user?.name + "'s" | titlecase}} profile</h3>
+<admin-user-form *ngIf="user && roles" [user]="user" [roles]="roles" (formChange)="onSubmit($event)"
+    (delete)="onDelete()"></admin-user-form>

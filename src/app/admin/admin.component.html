@@ -33,8 +33,7 @@
                         <svg-icon [icon]="postMenu.toggled ? 'chevron-down': 'chevron-right'" class="mr-2"></svg-icon>
                     </button>
 
-                    <a class="sidebar-nav__link" routerLinkActive="sidebar-nav__link--active" routerLink="post"
-                        >
+                    <a class="sidebar-nav__link" routerLinkActive="sidebar-nav__link--active" routerLink="post">
 
                         <svg-icon icon="files" class="mr-2"></svg-icon>
                         Posts
@@ -89,7 +88,7 @@
 
             <ul *ngIf="sidebarUserMenu.toggled" [@fadeInOut] class="sidebar-user__dropdown shadow-lg">
                 <li class="sidebar-user__dropdown-item">
-                    <a href="#" class="sidebar-user__dropdown-link">
+                    <a [routerLink]="'/admin/user/' + currentUser.id" class="sidebar-user__dropdown-link">
                         <svg-icon class="mr-2" icon="user"></svg-icon>
                         Profile
                     </a>
@@ -102,7 +101,7 @@
                     </a>
                 </li>
                 <li class="sidebar-user__dropdown-item">
-                    <a href="#" class="sidebar-user__dropdown-link">
+                    <a (click)="logout()" class="sidebar-user__dropdown-link">
                         <svg-icon class="mr-2" icon="log-out"></svg-icon>
                         Logout
                     </a>

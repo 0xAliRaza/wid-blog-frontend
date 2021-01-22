@@ -7,6 +7,7 @@ import { AuthGuard } from "./_helpers";
 import { LoginComponent } from "./login/login.component";
 import { CreateComponent } from "./posts/create/create.component";
 import { EditComponent } from "./posts/edit/edit.component";
+import { EditComponent as UsersEditComponent } from "./users/edit/edit.component";
 import { Role } from "./_models";
 import { UsersComponent } from "./users/users.component";
 
@@ -31,14 +32,12 @@ const routes: Routes = [
         component: UsersComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.SuperAdmin, Role.Admin] },
-        children: [
-          {
-            path: ":id",
-            component: UsersComponent,
-            canActivate: [AuthGuard],
-            data: { roles: [Role.SuperAdmin, Role.Admin] },
-          },
-        ],
+      },
+      {
+        path: "user/:id",
+        component: UsersEditComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.SuperAdmin, Role.Admin, Role.Writer] },
       },
       {
         path: "",

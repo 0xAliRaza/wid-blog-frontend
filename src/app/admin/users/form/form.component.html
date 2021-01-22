@@ -1,0 +1,62 @@
+<div class="row justify-content-center">
+    <div class="col-sm-12 col-md-8 col-lg-6">
+        <form (ngSubmit)="onSubmit()" [formGroup]="form" novalidate>
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" [formControl]="this.f.name" id="fullname"
+                    [ngClass]="{
+                            'form-control': true, 'is-invalid': !f.name.valid && f.name.touched,'is-valid': f.name.valid && f.name.touched}">
+                <div class="invalid-feedback" *ngIf="f.name.hasError('required') && f.name.touched">User name is
+                    required.</div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" [formControl]="this.f.email" id="email" [ngClass]="{
+                        'form-control': true, 'is-invalid': !f.email.valid && f.email.touched, 'is-valid': f.email.valid && f.email.touched
+                    }">
+                <div class="invalid-feedback" *ngIf="f.email.hasError('required') && f.email.touched">User email is
+                    required.</div>
+                <div class="invalid-feedback" *ngIf="f.email.hasError('email') && f.email.touched">Input must be a
+                    valid email address.</div>
+            </div>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <ng-select *ngIf="roles" labelForId="role" [items]="roles" bindLabel="name" bindValue="tag"
+                    [formControl]="this.f.role" placeholder="Select user role">
+                </ng-select>
+                <div class="invalid-feedback" *ngIf="!this.f.role.valid && this.f.role.touched"
+                    [ngStyle]="{display: 'block'}">Please select a user
+                    role.</div>
+            </div>
+            <div class="form-group">
+                <label for="password">New password (optional)</label>
+                <input type="password" [formControl]="this.f.password" id="password" [ngClass]="{
+                    'form-control': true, 'is-invalid': !f.password.valid && f.password.touched, 'is-valid': f.password.valid && f.password.touched && f.password.value === !!f.password.value
+                }">
+                <div class="invalid-feedback" *ngIf="f.email.hasError('minLength') && f.email.touched">Input must be a
+                    valid email address.</div>
+            </div>
+
+            <div class="my-1 py-4 d-flex align-items-center justify-content-end">
+
+                <button (click)="onDelete()" class="btn btn-outline-danger mr-2" type="button">Delete
+                </button>
+
+                <button *ngIf="success; else elseBtn" class="btn btn-success" type="submit" (click)="false"
+                    [ngStyle]="{pointerEvents: 'none'}">
+                    <svg-icon icon="cloud-check" class="mr-1"></svg-icon>Success
+                </button>
+                <ng-template #elseBtn>
+                    <button class="btn btn-primary" type="submit" [disabled]="!form.valid || form.pristine || loading">
+                        Submit
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status"
+                            aria-hidden="true"></span>
+                    </button>
+                </ng-template>
+            </div>
+
+
+        </form>
+
+    </div>
+</div>

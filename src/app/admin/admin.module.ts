@@ -13,12 +13,14 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { EditorModule, TINYMCE_SCRIPT_SRC } from "@tinymce/tinymce-angular";
 import { SharedModule } from "@app/shared-module";
 import { NgxPaginationModule } from "ngx-pagination";
-import { CreateComponent } from './posts/create/create.component';
-import { EditComponent } from './posts/edit/edit.component';
+import { CreateComponent } from "./posts/create/create.component";
+import { EditComponent } from "./posts/edit/edit.component";
 import { EditorComponent } from "./posts/editor/editor.component";
 import { NgSelectModule } from "@ng-select/ng-select";
-import { UsersComponent } from './users/users.component';
+import { UsersComponent } from "./users/users.component";
+import { EditComponent as UsersEditComponent } from "./users/edit/edit.component";
 import { UsersService } from "./_services/users.service";
+import { FormComponent } from "./users/form/form.component";
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { UsersService } from "./_services/users.service";
     CreateComponent,
     EditComponent,
     EditorComponent,
-    UsersComponent
+    UsersComponent,
+    UsersEditComponent,
+    FormComponent,
   ],
   imports: [
     CommonModule,
@@ -40,7 +44,7 @@ import { UsersService } from "./_services/users.service";
     NgxPaginationModule,
     SharedModule,
     EditorModule,
-    NgSelectModule
+    NgSelectModule,
   ],
   providers: [
     AuthenticationService,

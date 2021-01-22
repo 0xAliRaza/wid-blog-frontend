@@ -62,9 +62,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private authenticationService: AuthenticationService
+    private auth: AuthenticationService
   ) {
-    this.authenticationService.currentUser
+    this.auth.currentUser
       .pipe(takeUntil(this.destroyed$))
       .subscribe((x) => (this.currentUser = x));
     // this.route.quer
@@ -95,7 +95,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.authenticationService.logout();
+    this.auth.logoutServer();
     this.router.navigate(["/admin/login"]);
   }
 

@@ -1,11 +1,18 @@
 import { HttpClient } from "@angular/common/http";
 import { environment } from "@environments/environment";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { BehaviorSubject, Observable } from "rxjs";
+import { map, tap } from "rxjs/operators";
 import { User } from "../_models";
 
 export class UsersService {
-  constructor(private http: HttpClient) {}
+  users: BehaviorSubject<User[]> = new BehaviorSubject([]);
+  constructor(private http: HttpClient) {
+    // this.updateUsers();
+  }
+
+  updateUsers() {
+    this.index().subscribe((users) => this.users.next(users));
+  }
 
   index(): Observable<User[]> {
     return this.http.get<User[]>(`${environment.apiUrl}/user`).pipe(
@@ -15,6 +22,9 @@ export class UsersService {
           userModels.push(new User(val));
         });
         return userModels;
+      }),
+      tap((users) => {
+        this.users.next(users);
       })
     );
   }

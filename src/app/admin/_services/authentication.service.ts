@@ -93,6 +93,13 @@ export class AuthenticationService {
       .pipe(tap((res: User) => this.storeUserData(res)));
   }
 
+  logoutServer() {
+    this.http
+      .post(`${environment.apiUrl}/auth/logout`, {})
+      .pipe(first())
+      .subscribe();
+    this.logout();
+  }
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem("currentUser");

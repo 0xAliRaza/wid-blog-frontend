@@ -52,6 +52,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   public featuredImageUrl: string;
   public tinymceConfig: any;
   public storageDir: string = environment.storageDir;
+  public wordCount: { words: string; characters: string };
 
   @Output() formChange = new EventEmitter<object>();
   @Output() delete = new EventEmitter<void>();
@@ -97,7 +98,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       toolbar: false,
       placeholder: "Write it all down...",
       plugins:
-        "autoresize quickbars image media hr codesample code autolink image",
+        "autoresize quickbars image media hr codesample code autolink image wordcount",
       quickbars_selection_toolbar: "bold italic link | h2 h3 | blockquote",
       quickbars_insert_toolbar: "image media hr codesample code",
       statusbar: false,
@@ -105,7 +106,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       file_picker_types: "image",
       block_unsupported_drop: false,
       images_upload_url: environment.postImageUploadUrl,
-      images_upload_handler: this.onTinymceImageUpload.bind(this),
+      images_upload_handler: this.onTinymceImageUpload.bind(this)
     };
 
     if (!this.post.published) {
@@ -190,8 +191,14 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  onTinymceChange(e: any) {
-    this.f.html.setValue(e.editor.getContent());
+  onTinymceChange() {
+    if (!this.tinymceInst || this.tinymceInst.isNotDirty) {
+      return;
+    }
+    const editor = this.tinymceInst;
+    if (editor.getContent() !== "") {
+      this.f.html.setValue(editor.getContent());
+    }
   }
 
   onFeaturedImageChange(event) {
@@ -263,7 +270,6 @@ export class EditorComponent implements OnInit, OnDestroy {
       const newValue = value instanceof File ? value : JSON.stringify(value);
       formData.set(key, newValue);
     });
-
     this.formChange.emit(formData);
   }
 
@@ -285,12 +291,21 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
   }
 
+  onWordCountChange(wordcount) {
+    this.wordCount = wordcount;
+  }
+
   onTinymceInit(e) {
     this.tinymceInst = e.editor;
     if (this.post && this.post.html) {
       this.tinymceInst.setContent(this.post.html);
       this.postForm.patchValue({ html: this.post.html }, { emitEvent: false });
+      this.tinymceInst.isNotDirty = true;
     }
+    e.editor.on("WordCountUpdate", (e) => {
+      const wordCount = e.wordCount;
+      this.onWordCountChange(wordCount);
+    });
   }
 
   ngOnInit() {}

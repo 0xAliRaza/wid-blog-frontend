@@ -21,15 +21,7 @@ export class Post {
   featured: boolean;
   user: User;
   first_tag?: Tag;
-
-  private _published: boolean;
-  get published(): boolean {
-    return !!this._published;
-  }
-
-  set published(val: boolean) {
-    this._published = val;
-  }
+  published: boolean;
 
   get exists(): boolean {
     return !!this.id;

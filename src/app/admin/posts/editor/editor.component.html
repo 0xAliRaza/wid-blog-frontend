@@ -28,24 +28,24 @@
             </button>
             <div *ngIf="toggler.toggled" class="shadow submit-toggle__content">
                 <p class="font-weight-bold mx-2">Post status</p>
-                <div class="mt-4 mb-3 px-2">
-                    <div class="form-check mb-2">
-                        <input class="form-check-input" type="radio" id="published" [checked]="f.published.value"
-                            (input)="onTypeChange(true)">
-                        <label class="form-check-label" for="published">
+                <div class="my-3 px-2">
+                    <div class="custom-control custom-checkbox mb-2">
+                        <input id="published" (input)="onTypeChange(true)" class="custom-control-input" type="checkbox"
+                            [checked]="f.published.value">
+                        <label class="custom-control-label" for="published">
                             Published
                         </label>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" id="draft" [checked]="!f.published.value"
-                            (input)="onTypeChange(false)">
-                        <label class="form-check-label" for="draft">
+                    <div class="custom-control custom-checkbox">
+                        <input id="draft" (input)="onTypeChange(false)" class="custom-control-input" type="checkbox"
+                            [checked]="!f.published.value">
+                        <label class="custom-control-label" for="draft">
                             Draft
                         </label>
                     </div>
                 </div>
                 <div class="mb-1 d-flex justify-content-center">
-                    <button class="btn btn-sm btn-light my-2 mr-2" (click)="toggler.toggle()">Cancel</button>
+                    <button class="btn btn-sm btn-outline-danger my-2 mr-2" (click)="toggler.toggle()">Cancel</button>
                     <button class="btn btn-sm btn-success my-2" (click)="toggler.toggle();onSubmit()">Submit</button>
                 </div>
 

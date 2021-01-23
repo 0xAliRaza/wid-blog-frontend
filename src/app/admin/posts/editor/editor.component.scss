@@ -62,11 +62,11 @@ nav#editor-top-nav {
       top: pxToRem(42);
       right: 0;
       transform: translateX(pxToRem(8));
-      padding: pxToRem(16) pxToRem(8);
+      padding: pxToRem(16);
       border: 1px solid $color-grey-light-2;
       border-radius: pxToRem(4);
       overflow: hidden;
-      min-width: pxToRem(180);
+      min-width: pxToRem(190);
     }
   }
 

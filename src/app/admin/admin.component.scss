@@ -98,7 +98,7 @@
 
   &__img-wrapper {
     overflow: hidden;
-    margin-right: pxToRem(8);
+    margin-right: pxToRem(10);
   }
   &__img {
     border-radius: 100%;
@@ -118,7 +118,7 @@
     margin: 0;
     font-weight: 500;
   }
-  &__role {
+  &__email {
     color: $color-grey-light-3;
     font-size: pxToRem(12);
   }

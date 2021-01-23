@@ -3,6 +3,10 @@
         <h3 class="text-center my-5">
             Users
         </h3>
+        <div class="d-flex align-items-center justify-content-end my-4">
+            <button title="Add new user" routerLink="/admin/user/new" class="btn btn-outline-primary d-inline-flex align-items-center mr-2">Create
+                User</button>
+        </div>
         <div class="table-responsive shadow-sm">
             <table class="table table-hover m-0">
 
@@ -16,8 +20,10 @@
                 </thead>
 
                 <tbody>
-                    <tr *ngFor="let user of users$ | async" title="Click to editor or remove {{ user.name }}"
-                        [ngStyle]="{cursor: 'pointer'}" [routerLink]="'/admin/user/' + user.id">
+                    <tr *ngFor="let user of users$ | async"
+                        title="{{ isRouteAllowed(user) ? 'Click to edit ' + user.name: '' }}"
+                        [ngStyle]="{cursor: isRouteAllowed(user) ? 'pointer' : 'auto', 'hover:background-color': ''}"
+                        [routerLink]="isRouteAllowed(user) ? ['/admin/user/' + user.id] : []">
                         <th role="row">{{user.id}}</th>
                         <td>{{user.name}} <span class="text-secondary" *ngIf="user.id
                                 === currentUser.id">(you)</span> </td>

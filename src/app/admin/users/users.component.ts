@@ -20,5 +20,19 @@ export class UsersComponent implements OnInit {
     this.currentUser = this.auth.currentUserValue;
   }
 
+  isRouteAllowed(model: User): boolean {
+    if (this.auth.currentUserValue.isSuperAdmin()) {
+      return true;
+    } else if (this.auth.currentUserValue.isAdmin() && !model.isSuperAdmin()) {
+      return true;
+    } else if (
+      this.auth.currentUserValue.isWriter() &&
+      this.auth.currentUserValue.id === model.id
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   ngOnInit() {}
 }

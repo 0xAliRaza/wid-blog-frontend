@@ -76,11 +76,13 @@
         <div class="sidebar-user" appToggler #sidebarUserMenu="appToggler"
             [ngClass]="{'sidebar-user--active': sidebarUserMenu.toggled}">
             <div class="sidebar-user__img-wrapper">
-                <img src="assets/img/developer.jpg" alt="John Doe" class="img-fluid shadow-sm sidebar-user__img">
+                <img src="assets/img/user.png" alt="{{currentUser.name}}" class="img-fluid shadow-sm sidebar-user__img">
             </div>
             <div class="sidebar-user__meta">
-                <p class="sidebar-user__name">John Doe</p>
-                <span class="sidebar-user__role">Admin</span>
+                <p class="sidebar-user__name">{{currentUser.name | titlecase}}
+                </p>
+                <span class="sidebar-user__email" [ngStyle]="{'font-size': '13px'}">{{currentUser.email |
+                    lowercase}}</span>
             </div>
             <div class="sidebar-user__toggler">
                 <svg-icon icon="chevron-down"></svg-icon>

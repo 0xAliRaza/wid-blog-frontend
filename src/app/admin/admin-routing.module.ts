@@ -5,11 +5,13 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { PostsComponent } from "./posts/posts.component";
 import { AuthGuard } from "./_helpers";
 import { LoginComponent } from "./login/login.component";
-import { CreateComponent } from "./posts/create/create.component";
-import { EditComponent } from "./posts/edit/edit.component";
-import { EditComponent as UsersEditComponent } from "./users/edit/edit.component";
+import { CreateComponent, EditComponent } from "./posts";
+import {
+  UsersComponent,
+  EditComponent as UsersEditComponent,
+  CreateComponent as UsersCreateComponent,
+} from "./users";
 import { Role } from "./_models";
-import { UsersComponent } from "./users/users.component";
 
 const routes: Routes = [
   {
@@ -30,6 +32,12 @@ const routes: Routes = [
       {
         path: "user",
         component: UsersComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.SuperAdmin, Role.Admin] },
+      },
+      {
+        path: "user/new",
+        component: UsersCreateComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.SuperAdmin, Role.Admin] },
       },

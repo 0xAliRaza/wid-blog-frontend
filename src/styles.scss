@@ -26,6 +26,12 @@ a {
   }
 }
 
+table tbody tr {
+  &:hover, &:active, &:focus {
+    outline: none;
+  }
+}
+
 ul, ol {
   list-style: none;
 }

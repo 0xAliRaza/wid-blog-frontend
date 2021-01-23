@@ -37,6 +37,9 @@ export class EditComponent implements OnInit, OnDestroy {
 
   onSubmit(value) {
     this.users.update(this.user.id, value).subscribe((user) => {
+      if (this.auth.currentUserValue.id === user.id) {
+        this.auth.updateUserData();
+      }
       this.user = user;
     });
   }
@@ -63,11 +66,20 @@ export class EditComponent implements OnInit, OnDestroy {
           ) {
             this.router.navigate(["admin"]);
           }
-          this.users.get(params.id).subscribe((user: User) => {
-            if (user.exists) {
-              this.user = user;
-            }
-          });
+
+          if (
+            this.users.newlyCreatedUser &&
+            this.users.newlyCreatedUser.id === Number(params.id)
+          ) {
+            this.user = this.users.newlyCreatedUser;
+            this.users.newlyCreatedUser = undefined;
+          } else {
+            this.users.get(params.id).subscribe((user: User) => {
+              if (user.exists) {
+                this.user = user;
+              }
+            });
+          }
         }
       });
   }

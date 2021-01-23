@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { AdminComponent } from "./admin.component";
-import { PostsComponent } from "./posts/posts.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { AdminRoutingModule } from "./admin-routing.module";
 import { AuthGuard } from "./_helpers/auth.guard";
@@ -13,14 +12,21 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { EditorModule, TINYMCE_SCRIPT_SRC } from "@tinymce/tinymce-angular";
 import { SharedModule } from "@app/shared-module";
 import { NgxPaginationModule } from "ngx-pagination";
-import { CreateComponent } from "./posts/create/create.component";
-import { EditComponent } from "./posts/edit/edit.component";
-import { EditorComponent } from "./posts/editor/editor.component";
 import { NgSelectModule } from "@ng-select/ng-select";
-import { UsersComponent } from "./users/users.component";
-import { EditComponent as UsersEditComponent } from "./users/edit/edit.component";
 import { UsersService } from "./_services/users.service";
-import { FormComponent } from "./users/form/form.component";
+
+import {
+  PostsComponent,
+  CreateComponent as PostsCreateComponent,
+  EditComponent as PostsEditComponent,
+  EditorComponent as PostsEditorComponent,
+} from "./posts";
+import {
+  UsersComponent,
+  EditComponent as UsersEditComponent,
+  CreateComponent as UsersCreateComponent,
+  FormComponent as UsersFormComponent,
+} from "./users";
 
 @NgModule({
   declarations: [
@@ -28,12 +34,13 @@ import { FormComponent } from "./users/form/form.component";
     LoginComponent,
     DashboardComponent,
     PostsComponent,
-    CreateComponent,
-    EditComponent,
-    EditorComponent,
+    PostsCreateComponent,
+    PostsEditComponent,
+    PostsEditorComponent,
     UsersComponent,
     UsersEditComponent,
-    FormComponent,
+    UsersCreateComponent,
+    UsersFormComponent,
   ],
   imports: [
     CommonModule,

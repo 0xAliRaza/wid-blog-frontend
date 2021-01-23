@@ -39,7 +39,8 @@
 
             <div class="my-1 py-4 d-flex align-items-center justify-content-end">
 
-                <button (click)="onDelete()" class="btn btn-outline-danger mr-2" type="button">Delete
+                <button *ngIf="user?.exists" (click)="onDelete()" class="btn btn-outline-danger mr-2"
+                    type="button">Delete
                 </button>
 
                 <button *ngIf="success; else elseBtn" class="btn btn-success" type="submit" (click)="false"

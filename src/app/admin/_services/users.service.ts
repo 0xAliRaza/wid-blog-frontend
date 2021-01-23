@@ -6,6 +6,9 @@ import { User } from "../_models";
 
 export class UsersService {
   users: BehaviorSubject<User[]> = new BehaviorSubject([]);
+
+  newlyCreatedUser: User;
+
   constructor(private http: HttpClient) {
     // this.updateUsers();
   }

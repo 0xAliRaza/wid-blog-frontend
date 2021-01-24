@@ -26,7 +26,7 @@
             </ul>
 
             <ul class="sidebar-nav__list">
-                <li class="sidebar-nav__list-heading">Manage</li>
+                <li class="sidebar-nav__list-heading">General</li>
                 <li class="sidebar-nav__item">
 
                     <button [autoToggle]="false" appToggler #postMenu="appToggler" class="sidebar-nav__list-toggler">
@@ -63,12 +63,15 @@
                 <li class="sidebar-nav__item">
                     <a class="sidebar-nav__link" href="#">Tags</a>
                 </li>
-                <li *ngIf="currentUser.isSuperAdmin() || currentUser.isAdmin()" class="sidebar-nav__item">
-                    <a class="sidebar-nav__link" routerLink="user" routerLinkActive="sidebar-nav__link--active"
-                        [routerLinkActiveOptions]="{exact: true}">Users</a>
-                </li>
+            </ul>
+            <ul *ngIf="currentUser.isSuperAdmin() || currentUser.isAdmin()" class="sidebar-nav__list">
+                <li class="sidebar-nav__list-heading">Advanced</li>
                 <li class="sidebar-nav__item">
                     <a class="sidebar-nav__link" href="#">Settings</a>
+                </li>
+                <li class="sidebar-nav__item">
+                    <a class="sidebar-nav__link" routerLink="user" routerLinkActive="sidebar-nav__link--active"
+                        [routerLinkActiveOptions]="{exact: true}">Users</a>
                 </li>
             </ul>
         </nav>

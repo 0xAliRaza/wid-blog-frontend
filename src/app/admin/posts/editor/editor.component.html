@@ -26,7 +26,7 @@
             <button appToggler #toggler="appToggler" class="btn nav-link submit-toggle__btn">Submit <svg-icon
                     icon="chevron-down" class="ml-1"></svg-icon>
             </button>
-            <div *ngIf="toggler.toggled" class="shadow submit-toggle__content">
+            <div *ngIf="toggler.visible" class="shadow submit-toggle__content">
                 <p class="font-weight-bold mx-2">Post status</p>
                 <div class="my-3 px-2">
                     <div class="custom-control custom-checkbox mb-2">

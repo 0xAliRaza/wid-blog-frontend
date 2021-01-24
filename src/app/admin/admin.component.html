@@ -30,7 +30,7 @@
                 <li class="sidebar-nav__item">
 
                     <button appToggler #postMenu="appToggler" class="sidebar-nav__list-toggler">
-                        <svg-icon [icon]="postMenu.toggled ? 'chevron-down': 'chevron-right'" class="mr-2"></svg-icon>
+                        <svg-icon [icon]="postMenu.visible ? 'chevron-down': 'chevron-right'" class="mr-2"></svg-icon>
                     </button>
 
                     <a class="sidebar-nav__link" routerLinkActive="sidebar-nav__link--active" routerLink="post">
@@ -39,7 +39,7 @@
                         Posts
 
                     </a>
-                    <ul [@slideInOut] *ngIf="postMenu.toggled" class="sidebar-nav__list sidebar-nav__list--inner">
+                    <ul [@slideInOut] *ngIf="postMenu.visible" class="sidebar-nav__list sidebar-nav__list--inner">
                         <li class="sidebar-nav__item">
                             <a class="sidebar-nav__link" routerLink="post" [queryParams]="{type: 'published'}">
                                 <svg-icon class="mr-2" icon="file"></svg-icon>
@@ -74,7 +74,7 @@
         </nav>
 
         <div class="sidebar-user" appToggler #sidebarUserMenu="appToggler"
-            [ngClass]="{'sidebar-user--active': sidebarUserMenu.toggled}">
+            [ngClass]="{'sidebar-user--active': sidebarUserMenu.visible}">
             <div class="sidebar-user__img-wrapper">
                 <img src="assets/img/user.png" alt="{{currentUser.name}}" class="img-fluid shadow-sm sidebar-user__img">
             </div>
@@ -88,7 +88,7 @@
                 <svg-icon icon="chevron-down"></svg-icon>
             </div>
 
-            <ul *ngIf="sidebarUserMenu.toggled" [@fadeInOut] class="sidebar-user__dropdown shadow-lg">
+            <ul *ngIf="sidebarUserMenu.visible" [@fadeInOut] class="sidebar-user__dropdown shadow-lg">
                 <li class="sidebar-user__dropdown-item">
                     <a [routerLink]="'/admin/user/' + currentUser.id" class="sidebar-user__dropdown-link">
                         <svg-icon class="mr-2" icon="user"></svg-icon>

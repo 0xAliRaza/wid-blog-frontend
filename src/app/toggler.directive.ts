@@ -5,7 +5,7 @@ import { Directive, ElementRef, HostListener } from "@angular/core";
   exportAs: "appToggler",
 })
 export class TogglerDirective {
-  public toggled = false;
+  public visible = false;
 
   constructor() {}
 
@@ -15,6 +15,6 @@ export class TogglerDirective {
   }
 
   toggle() {
-    this.toggled = !this.toggled;
+    this.visible = !this.visible;
   }
 }

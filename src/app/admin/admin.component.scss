@@ -39,6 +39,7 @@
   }
 
   &__sidebar-toggler {
+    z-index: 1030;
     position: fixed;
     top: pxToRem(16);
     left: pxToRem(16);
@@ -49,7 +50,7 @@
     outline: none;
     border: none;
     padding: pxToRem(8);
-    margin: none;
+    margin: 0;
     font-size: pxToRem(20);
     color: $color-grey-dark-3;
   }

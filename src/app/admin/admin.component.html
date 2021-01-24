@@ -29,7 +29,7 @@
                 <li class="sidebar-nav__list-heading">Manage</li>
                 <li class="sidebar-nav__item">
 
-                    <button appToggler #postMenu="appToggler" class="sidebar-nav__list-toggler">
+                    <button [autoToggle]="false" appToggler #postMenu="appToggler" class="sidebar-nav__list-toggler">
                         <svg-icon [icon]="postMenu.visible ? 'chevron-down': 'chevron-right'" class="mr-2"></svg-icon>
                     </button>
 

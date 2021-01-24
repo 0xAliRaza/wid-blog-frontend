@@ -22,7 +22,10 @@ export class CreateComponent implements OnInit, OnDestroy {
     private posts: PostsService,
     private router: Router
   ) {
-    this.user = this.auth.currentUserValue;
+    this.auth.currentUser
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((user) => (this.user = user));
+    console.log(this.user);
     this.posts.tags
       .pipe(takeUntil(this.destroyed$))
       .subscribe((tags: Tag[]) => {

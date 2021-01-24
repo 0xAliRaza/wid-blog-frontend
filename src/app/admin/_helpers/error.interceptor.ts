@@ -21,14 +21,8 @@ export class ErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((err) => {
-        let errorMessage = "Unknown error occurred.";
-        if (err.error instanceof ErrorEvent) {
-          // client-side error
-          errorMessage = err.error.message || err.statusText;
-        } else {
-          // server-side error
-          errorMessage = `Error Code: ${err.status}\nMessage: ${err.message}`;
-        }
+        const errorMessage = err.error.message || err.statusText;
+        console.log(errorMessage);
         // Check if unauthorized error was thrown
         if (err.status === 401) {
           if (errorMessage === "Token has expired") {

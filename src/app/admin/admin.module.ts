@@ -27,6 +27,7 @@ import {
   CreateComponent as UsersCreateComponent,
   FormComponent as UsersFormComponent,
 } from "./users";
+import { SettingComponent } from './setting/setting.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import {
     UsersEditComponent,
     UsersCreateComponent,
     UsersFormComponent,
+    SettingComponent,
   ],
   imports: [
     CommonModule,

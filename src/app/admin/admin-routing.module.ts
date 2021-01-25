@@ -12,6 +12,7 @@ import {
   CreateComponent as UsersCreateComponent,
 } from "./users";
 import { Role } from "./_models";
+import { SettingComponent } from "./setting/setting.component";
 
 const routes: Routes = [
   {
@@ -21,31 +22,31 @@ const routes: Routes = [
     children: [
       {
         path: "dashboard",
-        canActivate: [AuthGuard],
         component: DashboardComponent,
       },
       {
         path: "post",
         component: PostsComponent,
-        canActivate: [AuthGuard],
       },
       {
         path: "user",
         component: UsersComponent,
-        canActivate: [AuthGuard],
         data: { roles: [Role.SuperAdmin, Role.Admin] },
       },
       {
         path: "user/new",
         component: UsersCreateComponent,
-        canActivate: [AuthGuard],
         data: { roles: [Role.SuperAdmin, Role.Admin] },
       },
       {
         path: "user/:id",
         component: UsersEditComponent,
-        canActivate: [AuthGuard],
         data: { roles: [Role.SuperAdmin, Role.Admin, Role.Writer] },
+      },
+      {
+        path: "settings",
+        component: SettingComponent,
+        data: { roles: [Role.SuperAdmin, Role.Admin] },
       },
       {
         path: "",

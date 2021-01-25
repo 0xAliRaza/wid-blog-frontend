@@ -33,8 +33,8 @@
                 <input type="password" [formControl]="this.f.password" id="password" [ngClass]="{
                     'form-control': true, 'is-invalid': !f.password.valid && f.password.touched, 'is-valid': f.password.valid && f.password.touched && f.password.value === !!f.password.value
                 }">
-                <div class="invalid-feedback" *ngIf="f.email.hasError('minLength') && f.email.touched">Input must be a
-                    valid email address.</div>
+                <div class="invalid-feedback" *ngIf="f.password.hasError('minLength') && f.password.touched">Password
+                    must be longer than 8 characters.</div>
             </div>
 
             <div class="my-1 py-4 d-flex align-items-center justify-content-end">

@@ -67,7 +67,8 @@
             <ul *ngIf="currentUser.isSuperAdmin() || currentUser.isAdmin()" class="sidebar-nav__list">
                 <li class="sidebar-nav__list-heading">Advanced</li>
                 <li class="sidebar-nav__item">
-                    <a class="sidebar-nav__link" href="#">Settings</a>
+                    <a class="sidebar-nav__link" routerLink="settings"
+                        routerLinkActive="sidebar-nav__link--active">Settings</a>
                 </li>
                 <li class="sidebar-nav__item">
                     <a class="sidebar-nav__link" routerLink="user" routerLinkActive="sidebar-nav__link--active"
@@ -98,12 +99,6 @@
                         Profile
                     </a>
 
-                </li>
-                <li class="sidebar-user__dropdown-item">
-                    <a href="#" class="sidebar-user__dropdown-link">
-                        <svg-icon class="mr-2" icon="settings"></svg-icon>
-                        Settings
-                    </a>
                 </li>
                 <li class="sidebar-user__dropdown-item">
                     <a (click)="logout()" class="sidebar-user__dropdown-link">

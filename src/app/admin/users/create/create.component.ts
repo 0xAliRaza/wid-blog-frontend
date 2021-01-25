@@ -21,7 +21,6 @@ export class CreateComponent implements OnInit, OnDestroy {
   destroyed$ = new Subject<boolean>();
   constructor(
     private auth: AuthenticationService,
-    private http: HttpClient,
     private users: UsersService,
     private router: Router
   ) {

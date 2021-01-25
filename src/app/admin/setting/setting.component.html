@@ -1,0 +1,60 @@
+<h3 class="text-center my-5">Blog Settings</h3>
+<div class="row justify-content-center">
+    <div class="col-sm-12 col-md-8 col-lg-6">
+        <form (ngSubmit)="onSubmit()" [formGroup]="form" novalidate>
+            <div class="form-group">
+                <label for="title">Site title</label>
+                <input type="text" [formControl]="this.f.title" id="title" [ngClass]="{
+                        'form-control': true, 'is-invalid': !f.title.valid && f.title.touched, 'is-valid': f.title.valid && f.title.touched
+                    }">
+                <div class="invalid-feedback" *ngIf="f.title.hasError('required') && f.title.touched">Site title is
+                    required.</div>
+                <div class="invalid-feedback" *ngIf="f.title.hasError('maxLength') && f.title.touched">Site title must
+                    not be longer than 60 characters.</div>
+            </div>
+            <div class="form-group">
+                <label for="meta_title">Meta title</label>
+                <input type="text" [formControl]="this.f.meta_title" id="meta_title" [ngClass]="{
+                    'form-control': true, 'is-invalid': !f.meta_title.valid && f.meta_title.touched, 'is-valid': f.meta_title.valid && f.meta_title.touched
+                }">
+                <div class="invalid-feedback" *ngIf="f.meta_title.hasError('required') && f.meta_title.touched">Meta
+                    title is
+                    required.</div>
+                <div class="invalid-feedback" *ngIf="f.meta_title.hasError('maxLength') && f.meta_title.touched">Meta
+                    title must
+                    not be longer than 60 characters.</div>
+            </div>
+            <div class="form-group">
+                <label for="meta_description">Meta description</label>
+                <input type="text" [formControl]="this.f.meta_description" id="meta_description" [ngClass]="{
+                                'form-control': true, 'is-invalid': !f.meta_description.valid && f.meta_description.touched, 'is-valid': f.meta_description.valid && f.meta_description.touched
+                            }">
+                <div class="invalid-feedback" *ngIf="f.meta_description.invalid && f.meta_description.touched">Meta
+                    description must
+                    not be longer than 160 characters.</div>
+            </div>
+
+            <div class="my-1 py-4 d-flex align-items-center justify-content-end">
+
+                <button *ngIf="setting.exists" (click)="onDelete()" class="btn btn-outline-danger mr-2"
+                    type="button">Delete
+                </button>
+
+                <button *ngIf="success; else elseBtn" class="btn btn-success" type="submit" (click)="false"
+                    [ngStyle]="{pointerEvents: 'none'}">
+                    <svg-icon icon="cloud-check" class="mr-1"></svg-icon>Success
+                </button>
+                <ng-template #elseBtn>
+                    <button class="btn btn-primary" type="submit" [disabled]="!form.valid || form.pristine || loading">
+                        Submit
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status"
+                            aria-hidden="true"></span>
+                    </button>
+                </ng-template>
+            </div>
+
+
+        </form>
+
+    </div>
+</div>

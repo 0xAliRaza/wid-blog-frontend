@@ -27,7 +27,9 @@ import {
   CreateComponent as UsersCreateComponent,
   FormComponent as UsersFormComponent,
 } from "./users";
-import { SettingComponent } from './setting/setting.component';
+import { SettingComponent } from "./setting/setting.component";
+import { TagsComponent } from "./tags/tags.component";
+import { TagsService } from "./_services/tags.service";
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { SettingComponent } from './setting/setting.component';
     UsersCreateComponent,
     UsersFormComponent,
     SettingComponent,
+    TagsComponent,
   ],
   imports: [
     CommonModule,
@@ -59,6 +62,7 @@ import { SettingComponent } from './setting/setting.component';
     AuthenticationService,
     PostsService,
     UsersService,
+    TagsService,
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

@@ -13,6 +13,7 @@ import {
 } from "./users";
 import { Role } from "./_models";
 import { SettingComponent } from "./setting/setting.component";
+import { TagsComponent } from "./tags/tags.component";
 
 const routes: Routes = [
   {
@@ -27,6 +28,11 @@ const routes: Routes = [
       {
         path: "post",
         component: PostsComponent,
+      },
+      {
+        path: "tag",
+        component: TagsComponent,
+        data: { roles: [Role.SuperAdmin, Role.Admin] },
       },
       {
         path: "user",

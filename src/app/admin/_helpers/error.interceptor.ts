@@ -22,7 +22,6 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((err) => {
         const errorMessage = err.error.message || err.statusText;
-        console.log(errorMessage);
         // Check if unauthorized error was thrown
         if (err.status === 401) {
           if (errorMessage === "Token has expired") {

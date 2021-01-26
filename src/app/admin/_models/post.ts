@@ -1,14 +1,12 @@
+import { Model } from "./model";
 import { Tag } from "./tag";
 import { User } from "./user";
 
-export class Post {
+export class Post extends Model {
   constructor(data?: any) {
-    if (data) {
-      this.setProps(data);
-    }
+    super(data);
   }
 
-  id: number;
   user_id?: number;
   title: string;
   html?: string;
@@ -22,12 +20,4 @@ export class Post {
   user: User;
   first_tag?: Tag;
   published: boolean;
-
-  get exists(): boolean {
-    return !!this.id;
-  }
-
-  setProps(data: object) {
-    Object.assign(this, data);
-  }
 }

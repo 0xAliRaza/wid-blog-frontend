@@ -1,8 +1,10 @@
-export class Tag {
-  id: number;
+import { Model } from "./model";
+
+export class Tag extends Model {
+  constructor(data?: any) {
+    super(data);
+  }
   name: string;
   slug: string;
   description: string;
-  created_at: Date;
-  updated_at: Date;
 }

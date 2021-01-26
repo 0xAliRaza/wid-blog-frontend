@@ -60,7 +60,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="sidebar-nav__item">
+                <li *ngIf="currentUser.isSuperAdmin() || currentUser.isAdmin()" class="sidebar-nav__item">
                     <a class="sidebar-nav__link" routerLink="tag" routerLinkActive="sidebar-nav__link--active">Tags</a>
                 </li>
             </ul>

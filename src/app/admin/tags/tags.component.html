@@ -15,7 +15,7 @@
                 <input type="text" class="form-control mr-1 mb-1" id="create-tag-description" placeholder="Description"
                     [formControl]="f.description">
                 <button title="Create Tag" type="button" class="btn btn-link text-danger mr-2"
-                    (click)="createTag = false">Cancel</button>
+                    (click)="createTag = false;form.reset()">Cancel</button>
                 <button title="Create Tag" type="submit" class="btn btn-primary mr-2" (click)="create()"
                     [disabled]="form.pristine || !form.valid">Submit</button>
 
@@ -80,7 +80,8 @@
                         <td [style.width]="'17%'">
                             <ng-container *ngIf="editTag && editTag.id === tag.id;else generalActions">
 
-                                <button (click)="editTag = undefined;" class="btn btn-sm btn-link text-danger mr-1">
+                                <button (click)="editTag = undefined;form.reset()"
+                                    class="btn btn-sm btn-link text-danger mr-1">
                                     Cancel
                                 </button>
                                 <button class="btn btn-sm btn-success" (click)="update(i)"

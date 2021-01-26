@@ -39,6 +39,8 @@ export class TagsComponent implements OnInit, OnDestroy {
   });
 
   edit(tag: Tag) {
+    this.createTag = false;
+    this.form.reset();
     this.form.patchValue(tag);
     this.editTag = tag;
   }

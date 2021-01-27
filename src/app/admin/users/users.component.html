@@ -21,9 +21,9 @@
 
                 <tbody>
                     <tr *ngFor="let user of users$ | async"
-                        title="{{ isRouteAllowed(user) ? 'Click to edit ' + user.name: '' }}"
-                        [ngStyle]="{cursor: isRouteAllowed(user) ? 'pointer' : 'auto', 'hover:background-color': ''}"
-                        [routerLink]="isRouteAllowed(user) ? ['/admin/user/' + user.id] : []">
+                        title="{{ canUserEdit(user) ? 'Click to edit ' + user.name: '' }}"
+                        [ngStyle]="{cursor: canUserEdit(user) ? 'pointer' : 'not-allowed'}"
+                        [routerLink]="canUserEdit(user) ? ['/admin/user/' + user.id] : []">
                         <th role="row">{{user.id}}</th>
                         <td>{{user.name}} <span class="text-secondary" *ngIf="user.id
                                 === currentUser.id">(you)</span> </td>

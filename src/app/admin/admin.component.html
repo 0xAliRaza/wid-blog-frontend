@@ -63,16 +63,16 @@
                 <li *ngIf="currentUser.isSuperAdmin() || currentUser.isAdmin()" class="sidebar-nav__item">
                     <a class="sidebar-nav__link" routerLink="tag" routerLinkActive="sidebar-nav__link--active">Tags</a>
                 </li>
+                <li class="sidebar-nav__item">
+                    <a class="sidebar-nav__link" routerLink="user" routerLinkActive="sidebar-nav__link--active"
+                        [routerLinkActiveOptions]="{exact: true}">Users</a>
+                </li>
             </ul>
             <ul *ngIf="currentUser.isSuperAdmin() || currentUser.isAdmin()" class="sidebar-nav__list">
                 <li class="sidebar-nav__list-heading">Advanced</li>
                 <li class="sidebar-nav__item">
                     <a class="sidebar-nav__link" routerLink="settings"
                         routerLinkActive="sidebar-nav__link--active">Settings</a>
-                </li>
-                <li class="sidebar-nav__item">
-                    <a class="sidebar-nav__link" routerLink="user" routerLinkActive="sidebar-nav__link--active"
-                        [routerLinkActiveOptions]="{exact: true}">Users</a>
                 </li>
             </ul>
         </nav>

@@ -75,8 +75,8 @@
                                 {{tag.description}}
                             </ng-template>
                         </td>
-                        <td>{{tag.created_at | date}}</td>
-                        <td>{{tag.updated_at | date}}</td>
+                        <td title="{{tag.created_at | date:'full'}}">{{tag.created_at | date}}</td>
+                        <td title="{{tag.updated_at | date:'full'}}">{{tag.updated_at | date}}</td>
                         <td [style.width]="'17%'">
                             <ng-container *ngIf="editTag && editTag.id === tag.id;else generalActions">
 

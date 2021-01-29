@@ -58,6 +58,8 @@ export class TagsComponent implements OnInit, OnDestroy {
   }
 
   addCreateTagForm() {
+    let test = new Test();
+    return;
     this.editTag = undefined;
     this.form.reset();
     this.createTag = true;

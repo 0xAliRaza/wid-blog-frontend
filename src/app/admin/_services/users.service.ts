@@ -10,11 +10,11 @@ export class UsersService {
   newlyCreatedUser: User;
 
   constructor(private http: HttpClient) {
-    // this.updateUsers();
+    this.pullUsers();
   }
 
-  updateUsers() {
-    this.index().subscribe((users) => this.users.next(users));
+  pullUsers() {
+    this.index().subscribe();
   }
 
   index(): Observable<User[]> {
@@ -45,12 +45,46 @@ export class UsersService {
   }
 
   update(id: number, data: any): Observable<User> {
-    return this.http
-      .put<User>(`${environment.apiUrl}/user/${id}`, data)
-      .pipe(map((res) => new User(res)));
+    return this.http.put<User>(`${environment.apiUrl}/user/${id}`, data).pipe(
+      map((res) => new User(res)),
+      tap((user: User) => this.pushModel(user))
+    );
   }
 
   delete(id): Observable<boolean> {
     return this.http.delete<boolean>(`${environment.apiUrl}/user/${id}`);
+  }
+
+  getModel(id: number): User | null {
+    if (this.users.value.length == 0) {
+      return;
+    }
+    let filtered = null;
+    this.users.value.forEach((user: User) => {
+      filtered = user;
+    });
+    return filtered;
+  }
+
+  pushModel(user: User, i?: number) {
+    if (this.users.value.length == 0) {
+      return;
+    }
+    const users = this.users.value;
+    if (i) {
+      users[i] = user;
+    } else {
+      users.push(user);
+    }
+    this.users.next(users);
+  }
+
+  deleteModel(i: number) {
+    if (this.users.value.length == 0) {
+      return;
+    }
+    const users = this.users.value;
+    users.splice(i, 1);
+    this.users.next(users);
   }
 }

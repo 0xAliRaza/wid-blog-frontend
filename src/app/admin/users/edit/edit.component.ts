@@ -74,11 +74,16 @@ export class EditComponent implements OnInit, OnDestroy {
             this.user = this.users.newlyCreatedUser;
             this.users.newlyCreatedUser = undefined;
           } else {
-            this.users.get(params.id).subscribe((user: User) => {
-              if (user.exists) {
-                this.user = user;
-              }
-            });
+            const userModel = this.users.getModel(params.id);
+            if (userModel && userModel.exists) {
+              this.user = userModel;
+            } else {
+              this.users.get(params.id).subscribe((user: User) => {
+                if (user.exists) {
+                  this.user = user;
+                }
+              });
+            }
           }
         }
       });

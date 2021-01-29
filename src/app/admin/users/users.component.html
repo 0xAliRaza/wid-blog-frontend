@@ -4,7 +4,8 @@
             Users
         </h3>
         <div class="d-flex align-items-center justify-content-end my-4">
-            <button title="Add new user" routerLink="/admin/user/new" class="btn btn-outline-primary d-inline-flex align-items-center mr-2">Create
+            <button title="Add new user" routerLink="/admin/user/new"
+                class="btn btn-outline-primary d-inline-flex align-items-center mr-2">Create
                 User</button>
         </div>
         <div class="table-responsive shadow-sm">
@@ -20,8 +21,7 @@
                 </thead>
 
                 <tbody>
-                    <tr *ngFor="let user of users$ | async"
-                        title="{{ canUserEdit(user) ? 'Click to edit ' + user.name: '' }}"
+                    <tr *ngFor="let user of users" title="{{ canUserEdit(user) ? 'Click to edit ' + user.name: '' }}"
                         [ngStyle]="{cursor: canUserEdit(user) ? 'pointer' : 'not-allowed'}"
                         [routerLink]="canUserEdit(user) ? ['/admin/user/' + user.id] : []">
                         <th role="row">{{user.id}}</th>

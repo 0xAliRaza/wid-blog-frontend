@@ -1,5 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-import { Observable } from "rxjs";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { User } from "../_models";
 import { AuthenticationService } from "../_services";
 import { UsersService } from "../_services/users.service";
@@ -9,14 +10,19 @@ import { UsersService } from "../_services/users.service";
   templateUrl: "./users.component.html",
   styleUrls: ["./users.component.scss"],
 })
-export class UsersComponent implements OnInit {
-  users$: Observable<User[]>;
+export class UsersComponent implements OnInit, OnDestroy {
+  users: User[];
   currentUser: User;
+  destroyed$ = new Subject<boolean>();
   constructor(
-    private users: UsersService,
+    private usersService: UsersService,
     private auth: AuthenticationService
   ) {
-    this.users$ = this.users.index();
+    this.usersService.users
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((users: User[]) => {
+        this.users = users;
+      });
     this.currentUser = this.auth.currentUserValue;
   }
 
@@ -34,5 +40,9 @@ export class UsersComponent implements OnInit {
     return false;
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
+  }
 }

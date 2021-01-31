@@ -11,5 +11,6 @@ export class UsersService extends CRUD<User> {
 
   constructor(private httpClient: HttpClient) {
     super(`${environment.apiUrl}/user`, httpClient, User);
+    this.pull();
   }
 }

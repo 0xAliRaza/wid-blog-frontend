@@ -26,7 +26,7 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   fetchPosts(): void {
     this.posts
-      .index(this.page, this.tableSize, this.type)
+      .indexPaginated(this.page, this.tableSize, this.type)
       .pipe(
         catchError((err) => {
           this.httpErrors = err;

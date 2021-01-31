@@ -35,7 +35,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
   onFormChange(data: object) {
     this.postStatus = "Saving...";
-    this.posts.update(data).subscribe((post: Post) => {
+    this.posts.update(null, data).subscribe((post: Post) => {
       if (post.exists) {
         this.post = post;
         this.updatePostStatus();

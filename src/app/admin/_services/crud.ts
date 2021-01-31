@@ -10,7 +10,6 @@ export abstract class CRUD<T> {
 
 
     constructor(private apiUrl: string, private http: HttpClient, private typeClass) {
-        this.pull();
     }
 
     pull() {

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Post, User } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
-import { AuthenticationService, PostsService } from "@app/admin/_services";
+import { AuthenticationService, PostsService, TagsService } from "@app/admin/_services";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 @Component({
@@ -19,13 +19,14 @@ export class EditComponent implements OnInit, OnDestroy {
   constructor(
     private auth: AuthenticationService,
     private posts: PostsService,
+    private tagsService: TagsService,
     private route: ActivatedRoute,
     private router: Router
   ) {
     this.auth.currentUser
       .pipe(takeUntil(this.destroyed$))
       .subscribe((user) => (this.user = user));
-    this.posts.tags
+    this.tagsService.tags
       .pipe(takeUntil(this.destroyed$))
       .subscribe((tags: Tag[]) => {
         this.tags = tags;
@@ -43,7 +44,7 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   onCreateTag(tag: Tag) {
-    this.posts.pushTag(tag);
+    this.tagsService.pushModel(tag);
   }
 
   onDelete() {

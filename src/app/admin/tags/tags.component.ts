@@ -21,7 +21,7 @@ export class TagsComponent implements OnInit, OnDestroy {
     private auth: AuthenticationService,
     private fb: FormBuilder
   ) {
-    this.tagsService.tags
+    this.tagsService.models$
       .pipe(takeUntil(this.destroyed$))
       .subscribe((tags: Tag[]) => {
         this.tags = tags;

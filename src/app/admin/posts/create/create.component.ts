@@ -25,7 +25,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.auth.currentUser
       .pipe(takeUntil(this.destroyed$))
       .subscribe((user) => (this.user = user));
-    this.tagsService.tags
+    this.tagsService.models$
       .pipe(takeUntil(this.destroyed$))
       .subscribe((tags: Tag[]) => {
         this.tags = tags;

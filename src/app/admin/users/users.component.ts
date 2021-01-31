@@ -39,7 +39,9 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
     return false;
   }
-
+  onRefresh() {
+    this.usersService.pull();
+  }
   ngOnInit() { }
   ngOnDestroy() {
     this.destroyed$.next(true);

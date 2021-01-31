@@ -78,6 +78,10 @@ export class TagsComponent implements OnInit, OnDestroy {
     });
   }
 
+  onRefresh() {
+    this.tagsService.pull();
+  }
+
   ngOnInit() {}
   ngOnDestroy() {
     this.destroyed$.next(true);

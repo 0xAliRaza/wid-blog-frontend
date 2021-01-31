@@ -27,13 +27,6 @@ export class PostsComponent implements OnInit, OnDestroy {
   fetchPosts(): void {
     this.posts
       .indexPaginated(this.page, this.tableSize, this.type)
-      .pipe(
-        catchError((err) => {
-          this.httpErrors = err;
-          return throwError(err);
-        })
-      )
-
       .subscribe((response) => {
         this.POSTS = response.data as Post[];
         this.count = response.total;
@@ -81,6 +74,11 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   clearSuccessMsgs(): void {
     this.successMsgs = [];
+  }
+
+
+  onRefresh() {
+    this.fetchPosts();
   }
 
   ngOnInit(): void {

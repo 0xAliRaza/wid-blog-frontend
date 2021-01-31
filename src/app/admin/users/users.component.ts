@@ -18,7 +18,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     private usersService: UsersService,
     private auth: AuthenticationService
   ) {
-    this.usersService.users
+    this.usersService.models$
       .pipe(takeUntil(this.destroyed$))
       .subscribe((users: User[]) => {
         this.users = users;

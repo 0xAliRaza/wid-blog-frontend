@@ -64,27 +64,14 @@ export class EditComponent implements OnInit, OnDestroy {
             this.auth.currentUserValue.isWriter() &&
             +params.id !== this.auth.currentUserValue.id
           ) {
-            this.router.navigate(["admin"]);
+            this.router.navigate(["admin/user"]);
           }
 
-          if (
-            this.users.newlyCreatedUser &&
-            this.users.newlyCreatedUser.id === Number(params.id)
-          ) {
-            this.user = this.users.newlyCreatedUser;
-            this.users.newlyCreatedUser = undefined;
-          } else {
-            const userModel = this.users.getModel(params.id);
-            if (userModel && userModel.exists) {
-              this.user = userModel;
-            } else {
-              this.users.get(params.id).subscribe((user: User) => {
-                if (user.exists) {
-                  this.user = user;
-                }
-              });
-            }
-          }
+          this.users.find(params.id).then((val: User) => {
+            this.user = val;
+          }, () => {
+            this.router.navigate(["admin/user"]);
+          });
         }
       });
   }

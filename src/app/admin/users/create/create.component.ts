@@ -34,7 +34,7 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   onSubmit(value) {
     this.users.create(value).subscribe((user) => {
-      this.users.newlyCreatedUser = user;
+      this.users.pushModel(user);
       this.router.navigate([`admin/user/${user.id}`]);
     });
   }

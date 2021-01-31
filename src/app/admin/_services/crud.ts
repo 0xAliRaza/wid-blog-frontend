@@ -40,7 +40,7 @@ export abstract class CRUD<T> {
 
     create(data): Observable<T> {
         return this.http
-            .post<T>(`${this.apiUrl}/create`, data)
+            .post<T>(`${this.apiUrl}`, data)
             .pipe(map((res) => new this.typeClass(res)));
     }
 

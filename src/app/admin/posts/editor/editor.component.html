@@ -22,8 +22,8 @@
     </ul>
     <ul class="navbar-nav">
 
-        <li class="nav-item submit-toggle">
-            <button appToggler #toggler="appToggler" class="btn nav-link submit-toggle__btn">Submit <svg-icon
+        <li class="nav-item submit-toggle" #submitMenu>
+            <button appToggler #toggler="appToggler" [excluded]="submitMenu" class="btn nav-link submit-toggle__btn">Submit <svg-icon
                     icon="chevron-down" class="ml-1"></svg-icon>
             </button>
             <div *ngIf="toggler.visible" class="shadow submit-toggle__content">

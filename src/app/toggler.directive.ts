@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener } from "@angular/core";
+import { Directive, ElementRef, HostListener, Input } from "@angular/core";
 
 @Directive({
   selector: "[appToggler]",
@@ -7,12 +7,30 @@ import { Directive, ElementRef, HostListener } from "@angular/core";
 export class TogglerDirective {
   public visible = false;
 
-  constructor(private element: ElementRef) {}
+  constructor(private elementRef: ElementRef) { }
 
-  @HostListener("click", ['$event'])
-  onClick(e) {
-    if (this.element.nativeElement.contains(e.target)) {
+  @Input() autoToggle = true;
+  @Input() excluded: HTMLElement;
+
+  @HostListener("document:click", ["$event"])
+  onDocumentClick(e) {
+    const clickedEl = e ? e.target as HTMLElement : false;
+    const directiveEl = this.elementRef ? this.elementRef.nativeElement : false;
+    if (!clickedEl || !directiveEl) {
+      return;
+    }
+    if (
+      directiveEl.contains(clickedEl)
+    ) {
       this.toggle();
+    } else if (this.autoToggle) {
+      if (this.excluded) {
+        if (!this.excluded.contains(clickedEl)) {
+          this.visible = false;
+        }
+      } else {
+        this.visible = false;
+      }
     }
   }
 

@@ -14,24 +14,32 @@ import {
   exportAs: "appToggler",
 })
 export class TogglerDirective {
-  public el: ElementRef;
   public visible = false;
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef) { }
 
   @Input() autoToggle = true;
+  @Input() excluded: HTMLElement;
 
   @HostListener("document:click", ["$event"])
   onDocumentClick(e) {
-    const targetElement = e.target as HTMLElement;
+    const clickedEl = e ? e.target as HTMLElement : false;
+    const directiveEl = this.elementRef ? this.elementRef.nativeElement : false;
+    if (!clickedEl || !directiveEl) {
+      return;
+    }
     if (
-      targetElement &&
-      this.elementRef.nativeElement &&
-      this.elementRef.nativeElement.contains(targetElement)
+      directiveEl.contains(clickedEl)
     ) {
       this.toggle();
     } else if (this.autoToggle) {
-      this.visible = false;
+      if (this.excluded) {
+        if (!this.excluded.contains(clickedEl)) {
+          this.visible = false;
+        }
+      } else {
+        this.visible = false;
+      }
     }
   }
 

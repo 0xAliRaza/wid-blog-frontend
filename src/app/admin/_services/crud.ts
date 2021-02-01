@@ -54,9 +54,8 @@ export abstract class CRUD<T> {
     }
 
     find(id: number): Promise<T> {
-        let promise = new Promise<T>((resolve, reject) => {
+        return new Promise<T>((resolve, reject) => {
             const existingModel = this.getModel(id);
-            console.log('existsing', existingModel);
             if (!existingModel) {
                 this.get(id).pipe(catchError(err => {
                     reject(); return throwError(err)
@@ -70,8 +69,7 @@ export abstract class CRUD<T> {
             } else {
                 resolve(existingModel);
             }
-        })
-        return promise;
+        });
     }
     getModel(id: number): T | null {
         if (this.currentModels.length == 0) {

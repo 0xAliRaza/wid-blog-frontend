@@ -104,7 +104,21 @@
             </div>
             <div class="form-group" *ngIf="post.exists">
                 <label for="post-published-at">Published at</label>
-                <input  type="datetime-local" class="form-control" id="post-published-at" (input)="onPublishedAtChange($event)" [value]="f.published_at.value | date:'yyyy-MM-ddTHH:mm'">
+                <input type="datetime-local" class="form-control" id="post-published-at"
+                    (input)="onPublishedAtChange($event)" [value]="f.published_at.value | date:'yyyy-MM-ddTHH:mm'">
+            </div>
+            <div *ngIf="allUsers" class="form-group">
+                <label for="post-author">Author</label>
+                <ng-select *ngIf="user.isAdmin() || user.isSuperAdmin(); else writerAuthorEl"
+                    placeholder="Select post author..." labelForId="post-author" [items]="allUsers" bindLabel="name"
+                    bindValue="id" [clearable]="false" formControlName="author" [virtualScroll]="true">
+                </ng-select>
+                <ng-template #writerAuthorEl>
+                    <ng-select placeholder="Select post author..." labelForId="post-author" [clearable]="false"
+                        [searchable]="false" formControlName="author">
+                        <ng-option [value]="user.id">{{user.name}}</ng-option>
+                    </ng-select>
+                </ng-template>
             </div>
             <div class="form-group">
                 <label for="post-tags">Tags</label>
@@ -112,9 +126,8 @@
                     [items]="tags" [multiple]="true" [addTag]="ngSelectTagCreator.bind(this)" bindLabel="name"
                     formControlName="tags" [virtualScroll]="true">
                 </ng-select>
-
             </div>
-            
+
             <div class="form-group">
                 <label for="post-excerpt">Custom excerpt</label>
                 <textarea rows="3" type="text" id="post-excerpt" class="form-control"

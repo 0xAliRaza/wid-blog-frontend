@@ -7,6 +7,8 @@ export class Post extends Model {
     super(data);
   }
 
+  published_at?: Date;
+  author: number;
   user_id?: number;
   title: string;
   html?: string;

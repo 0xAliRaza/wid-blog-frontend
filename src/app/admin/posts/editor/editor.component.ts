@@ -59,11 +59,12 @@ export class EditorComponent implements OnInit, OnDestroy {
   @Output() createTag = new EventEmitter<Tag>();
   @Input() tags: Tag[];
   @Input() postStatus: string;
+  @Input() allUsers: User[];
 
   private _user: User;
   @Input() set user(user: User) {
-    this.f.user_id.setValue(user.id, { emitEvent: false });
     this._user = user;
+    this.f.author.setValue(this.user.id, { emitEvent: false });
   }
   get user(): User {
     return this._user;
@@ -116,7 +117,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   postForm = new FormGroup({
     id: new FormControl(null),
-    user_id: new FormControl(null),
+    author: new FormControl(""),
     title: new FormControl(""),
     html: new FormControl(""),
     slug: new FormControl(""),

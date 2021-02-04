@@ -23,8 +23,8 @@
     <ul class="navbar-nav">
 
         <li class="nav-item submit-toggle" #submitMenu>
-            <button appToggler #toggler="appToggler" [excluded]="submitMenu" class="btn nav-link submit-toggle__btn">Submit <svg-icon
-                    icon="chevron-down" class="ml-1"></svg-icon>
+            <button appToggler #toggler="appToggler" [excluded]="submitMenu"
+                class="btn nav-link submit-toggle__btn">Submit <svg-icon icon="chevron-down" class="ml-1"></svg-icon>
             </button>
             <div *ngIf="toggler.visible" class="shadow submit-toggle__content">
                 <p class="font-weight-bold mx-2">Post status</p>
@@ -81,7 +81,7 @@
 
 <aside class="sidebar" @slideInOut *ngIf="isSideNavOpen">
     <div class="sidebar__top-intro">
-        <h4 class="sidebar__top-intro-heading">Post Settings</h4>
+        <h4 class="sidebar__top-intro-heading">Post settings</h4>
         <button class="sidebar__close-button btn" (click)="toggleSideNav()">
             <svg-icon icon="close"></svg-icon>
         </button>
@@ -102,6 +102,10 @@
                 <input type="text" id="post-url" class="form-control" formControlName="slug"
                     [value]="f.slug.value | slugify">
             </div>
+            <div class="form-group" *ngIf="post.exists">
+                <label for="post-published-at">Published at</label>
+                <input  type="datetime-local" class="form-control" id="post-published-at" (input)="onPublishedAtChange($event)" [value]="f.published_at.value | date:'yyyy-MM-ddTHH:mm'">
+            </div>
             <div class="form-group">
                 <label for="post-tags">Tags</label>
                 <ng-select *ngIf="ngSelectTagCreator" placeholder="Select or create tags..." labelForId="post-tags"
@@ -110,8 +114,9 @@
                 </ng-select>
 
             </div>
+            
             <div class="form-group">
-                <label for="post-excerpt">Custom Excerpt</label>
+                <label for="post-excerpt">Custom excerpt</label>
                 <textarea rows="3" type="text" id="post-excerpt" class="form-control"
                     formControlName="custom_excerpt"></textarea>
             </div>
@@ -120,7 +125,7 @@
                 <input type="text" id="post-meta-title" class="form-control" formControlName="meta_title">
             </div>
             <div class="form-group">
-                <label for="post-meta-description">Meta Description</label>
+                <label for="post-meta-description">Meta description</label>
                 <textarea rows="3" type="text" id="post-meta-description" class="form-control"
                     formControlName="meta_description"></textarea>
             </div>

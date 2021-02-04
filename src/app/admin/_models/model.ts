@@ -6,6 +6,7 @@ export abstract class Model {
     if (data) {
       data.created_at ? (data.created_at = new Date(data.created_at)) : null;
       data.updated_at ? (data.updated_at = new Date(data.updated_at)) : null;
+      data.published_at ? (data.published_at = new Date(data.published_at)) : null;
       Object.assign(this, data);
     }
   }

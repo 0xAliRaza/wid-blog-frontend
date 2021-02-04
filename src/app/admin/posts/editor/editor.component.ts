@@ -121,6 +121,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     html: new FormControl(""),
     slug: new FormControl(""),
     tags: new FormControl(""),
+    published_at: new FormControl(""),
     custom_excerpt: new FormControl(""),
     meta_title: new FormControl(""),
     meta_description: new FormControl(""),
@@ -276,6 +277,10 @@ export class EditorComponent implements OnInit, OnDestroy {
   onTypeChange(type: boolean) {
     this.f.published.setValue(type, { emitEvent: false });
   }
+  onPublishedAtChange(e: any) {
+    const date: Date = new Date(e.target.value);
+    this.f.published_at.setValue(date.toISOString(), { emitEvent: false });
+  }
 
   toggleSideNav() {
     this.isSideNavOpen = !this.isSideNavOpen;
@@ -308,7 +313,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngOnDestroy() {
     if (this.postFormSubscription) {

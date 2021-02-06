@@ -17,7 +17,7 @@ import { TagsComponent } from "./tags/tags.component";
 
 const routes: Routes = [
   {
-    path: "admin",
+    path: "",
     component: AdminComponent,
     canActivate: [AuthGuard],
     children: [
@@ -62,17 +62,17 @@ const routes: Routes = [
     ],
   },
   {
-    path: "admin/editor/post",
+    path: "editor/post",
     component: CreateComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: "admin/editor/post/:id",
+    path: "editor/post/:id",
     component: EditComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: "admin/login",
+    path: "login",
     component: LoginComponent,
   },
 ];

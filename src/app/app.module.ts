@@ -9,6 +9,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { SharedModule } from "./shared-module";
+import { HomeModule } from "./home/home.module";
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -17,6 +18,7 @@ import { SharedModule } from "./shared-module";
     ReactiveFormsModule,
     HttpClientModule,
     AdminModule,
+    HomeModule,
     BrowserAnimationsModule,
     NgSelectModule,
     SharedModule,

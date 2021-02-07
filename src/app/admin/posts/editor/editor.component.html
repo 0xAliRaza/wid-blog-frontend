@@ -11,7 +11,7 @@
                 {{this.postStatus | titlecase}}
             </span>
         </li>
-        <li *ngIf="wordCount && +wordCount.characters > 0" class="nav-item">
+        <li *ngIf="!!wordCount && +wordCount.characters > 0" class="nav-item">
             <span class="navbar-text text-secondary">
                 characters: {{wordCount.characters}}
             </span>

@@ -45,6 +45,7 @@ import { debounceTime } from "rxjs/operators";
     ]),
   ],
 })
+
 export class EditorComponent implements OnInit, OnDestroy {
   private postFormSubscription: Subscription;
   private tinymceInst: any;
@@ -52,7 +53,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   public featuredImageUrl: string;
   public tinymceConfig: any;
   public storageDir: string = environment.storageDir;
-  public wordCount: { words: string; characters: string };
+  public wordCount: any;
 
   @Output() formChange = new EventEmitter<object>();
   @Output() delete = new EventEmitter<void>();
@@ -192,6 +193,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       });
     }
   }
+
 
   onTinymceChange() {
     if (!this.tinymceInst || this.tinymceInst.isNotDirty) {

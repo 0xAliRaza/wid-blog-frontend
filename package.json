@@ -21,12 +21,12 @@
     "@angular/router": "~8.0.0",
     "@ng-select/ng-select": "^3.7.3",
     "@tinymce/tinymce-angular": "^3.6.1",
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^4.6.0",
     "jwt-decode": "^2.2.0",
     "ngx-pagination": "^5.0.0",
     "rxjs": "~6.4.0",
-    "tinymce": "^5.5.1",
-    "tslib": "^1.9.0",
+    "tinymce": "~5.5.1",
+    "tslib": "~1.9.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
@@ -37,18 +37,18 @@
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
-    "codelyzer": "^5.0.0",
+    "codelyzer": "^5.2.2",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~2.0.1",
-    "karma-jasmine-html-reporter": "^1.4.0",
+    "karma-jasmine-html-reporter": "^1.5.4",
     "node-sass": "^4.14.1",
     "protractor": "~7.0.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.4.3"
+    "typescript": "^3.4.5"
   }
 }

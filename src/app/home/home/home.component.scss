@@ -1,0 +1,91 @@
+@import "sass/index";
+
+:host {
+  display: block;
+  min-height: 1000vh;
+  background-color: $color-grey-light-1;
+}
+
+.header-top {
+  background-color: $color-white;
+  box-shadow: 0 pxToRem(4) pxToRem(12) rgba(0, 0, 0, 0.04);
+}
+
+.top-nav {
+  display: flex;
+  align-items: center;
+  padding: pxToRem(24) pxToRem(24) 0;
+
+  &__brand {
+    color: $color-primary;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: pxToRem(24);
+    font-size: pxToRem(28);
+    font-weight: 300;
+    transition: color 0.2s ease;
+    @include hover-focus-active {
+      color: $color-primary-dark;
+    }
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+  }
+
+  &__item {
+  }
+
+  &__link {
+    font-weight: 500;
+    font-size: pxToRem(16);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-primary-light;
+    padding: pxToRem(8) pxToRem(16);
+    transition: color 0.2s ease;
+    @include hover-focus-active {
+      color: $color-primary-dark;
+      text-decoration: underline;
+    }
+  }
+}
+
+.top-tags {
+  padding: pxToRem(20) pxToRem(24) pxToRem(4);
+  &__list {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    overflow-x: scroll;
+
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+      display: none; /* Safari and Chrome */
+    }
+    /* Optional: show position indicator in red */
+    // ::-webkit-scrollbar-thumb {
+    //   background: #ff0000;
+    // }
+  }
+
+  &__link {
+    white-space: nowrap;
+    font-weight: 500;
+    font-size: pxToRem(15);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-grey-dark-1;
+    padding: pxToRem(8) pxToRem(16);
+    transition: color 0.2s ease;
+    @include hover-focus-active {
+      color: $color-grey-dark-3;
+    }
+  }
+}

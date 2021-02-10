@@ -33,6 +33,14 @@
       padding: 0;
       margin: 0 0 pxToRem(32);
     }
+    blockquote {
+      font-size: pxToRem(20);
+      font-family: "Lora", serif;
+      line-height: 1.6;
+      margin: 0 0 pxToRem(30);
+      padding: 0 pxToRem(30);
+      border-left: pxToRem(3) solid $color-primary;
+    }
     img {
       max-width: 100%;
       height: auto;
@@ -124,8 +132,8 @@
   }
 
   .resp-sharing-button__icon svg {
-    width: .98em;
-    height: .98em;
+    width: 0.98em;
+    height: 0.98em;
     margin-right: 0.4em;
     vertical-align: top;
   }

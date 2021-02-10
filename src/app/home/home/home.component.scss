@@ -2,7 +2,7 @@
 
 :host {
   display: block;
-  min-height: 1000vh;
+  min-height: 100vh;
   background-color: $color-grey-light-1;
 }
 
@@ -15,6 +15,7 @@
   display: flex;
   align-items: center;
   padding: pxToRem(24) pxToRem(24) 0;
+  flex-wrap: wrap;
 
   &__brand {
     color: $color-primary;
@@ -49,7 +50,6 @@
     transition: color 0.2s ease;
     @include hover-focus-active {
       color: $color-primary-dark;
-      text-decoration: underline;
     }
   }
 }
@@ -68,10 +68,6 @@
     &::-webkit-scrollbar {
       display: none; /* Safari and Chrome */
     }
-    /* Optional: show position indicator in red */
-    // ::-webkit-scrollbar-thumb {
-    //   background: #ff0000;
-    // }
   }
 
   &__link {
@@ -82,10 +78,84 @@
     justify-content: center;
     align-items: center;
     color: $color-grey-dark-1;
-    padding: pxToRem(8) pxToRem(16);
+    padding: pxToRem(8) 0;
+    &:not(:last-child) {
+      margin-right: pxToRem(32);
+    }
     transition: color 0.2s ease;
     @include hover-focus-active {
       color: $color-grey-dark-3;
     }
+  }
+}
+
+
+
+// .sidebar-widget {
+//   margin-bottom: pxToRem(32);
+//   &__titlebar {
+//     h3 {
+//       font-size: 12px;
+//       text-transform: uppercase;
+//       color: $color-grey-dark-3;
+//       padding-bottom: pxToRem(8);
+//       margin: 0;
+//     }
+//     border-bottom: pxToRem(0.5) solid rgba($color-grey-light-2, 1);
+//     margin-bottom: 24px;
+//   }
+// }
+
+// .featured-post {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   padding: pxToRem(24);
+//   margin: 0 0 pxToRem(24);
+//   color: $color-grey-dark-3;
+//   background-color: $color-white;
+//   border: pxToRem(0.5) solid rgba($color-grey-light-2, 0.5);
+//   @include hover-focus {
+//     text-decoration: underline;
+//   }
+//   &__title {
+//     padding: 0;
+//     margin: 0;
+//     font-size: pxToRem(16);
+//   }
+//   &__image {
+//     margin-left: pxToRem(8);
+//     img {
+//       height: pxToRem(52);
+//       width: pxToRem(68);
+//       object-fit: cover;
+//       border-radius: pxToRem(2);
+//     }
+//   }
+// }
+
+.footer {
+  background-color: $color-grey-dark-4;
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // margin: pxToRem(50) 0 0;
+    padding: pxToRem(40) 0 pxToRem(8);
+    color: $color-grey-light-3;
+  }
+  a {
+    color: $color-primary;
+    @include hover-focus {
+      color: $color-primary;
+      text-decoration: underline;
+    }
+  }
+  &__cp-message {
+    padding: 0;
+    margin: 0;
+  }
+  &__credits {
+    
   }
 }

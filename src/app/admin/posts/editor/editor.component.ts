@@ -108,7 +108,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       file_picker_types: "image",
       block_unsupported_drop: false,
       images_upload_url: environment.postImageUploadUrl,
-      images_upload_handler: this.onTinymceImageUpload.bind(this)
+      images_upload_handler: this.onTinymceImageUpload.bind(this),
     };
 
     if (!this.post.published) {

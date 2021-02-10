@@ -1,0 +1,71 @@
+@import "sass/index.scss";
+.post-card {
+  display: flex;
+  // align-items: center;
+  margin-top: pxToRem(22);
+  background-color: $color-white;
+  border: 0.2px solid rgba($color-grey-light-2, 0.5);
+
+  &__image-link {
+    display: flex;
+    flex: 0 0 pxToRem(250);
+    max-height: pxToRem(250);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    padding: pxToRem(16);
+  }
+
+  &__content-link {
+    @include plain-hover-focus {
+      color: $color-grey-dark-3;
+    }
+  }
+
+  &__tag {
+    text-transform: uppercase;
+    color: $color-primary;
+    font-size: pxToRem(12);
+    font-weight: 500;
+    margin-bottom: pxToRem(4);
+  }
+
+  &__title {
+    font-size: pxToRem(28);
+  }
+
+  &__excerpt {
+    color: $color-grey-dark-1;
+  }
+
+  &__meta {
+    display: flex;
+    // text-transform: uppercase;
+
+    span {
+      display: flex;
+    }
+    a {
+      color: $color-grey-dark-3;
+      font-size: pxToRem(12);
+      font-weight: 500;
+      @include hover-focus-active {
+        text-decoration: underline;
+      }
+    }
+    time {
+      font-size: pxToRem(12);
+      color: $color-grey-dark-2;
+      font-weight: 400;
+    }
+  }
+  &__author-image {
+    max-width: pxToRem(34px);
+    margin-right: pxToRem(8);
+    a {
+      display: inline-flex;
+    }
+  }
+}

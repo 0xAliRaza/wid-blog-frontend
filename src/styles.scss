@@ -5,25 +5,24 @@ $input-btn-focus-width: 0.1rem;
 
 @import "~bootstrap/scss/bootstrap";
 @import "~@ng-select/ng-select/themes/default.theme.css";
-
+@import "app/sass/index.scss";
 html,
 body {
   height: 100%;
 }
 
-
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 
-  overflow: hidden;
+  // overflow: hidden;
 }
 
-ul, ol {
+ul,
+ol {
   margin: 0;
   padding: 0;
 }
-
 
 a {
   &:hover {

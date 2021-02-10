@@ -1,0 +1,123 @@
+@import "sass/index";
+.post {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &__header {
+    padding: 0 pxToRem(10);
+    max-width: pxToRem(700);
+    width: 100%;
+    padding: pxToRem(70) 0 pxToRem(50);
+  }
+  &__featured-image {
+    overflow: hidden;
+    border-radius: pxToRem(2);
+    margin: pxToRem(25) 0 pxToRem(50);
+  }
+  &__content {
+    padding: 0 pxToRem(10);
+    max-width: pxToRem(700);
+  }
+  &__inner-content-box {
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    padding: pxToRem(24) 0;
+  }
+  &__inner-content-box ::ng-deep {
+    color: $color-grey-dark-4;
+    p {
+      font-size: pxToRem(20);
+      font-family: "Lora", serif;
+      line-height: 1.6;
+      padding: 0;
+      margin: 0 0 pxToRem(32);
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      margin: pxToRem(42) 0;
+    }
+
+    h2 {
+      line-height: 1.25;
+      color: $color-grey-dark-4;
+      font-size: pxToRem(32);
+      padding: 0;
+      margin: pxToRem(25.6) 0 pxToRem(12.8);
+    }
+    h3 {
+      line-height: 1.25;
+
+      color: $color-grey-dark-4;
+      font-size: pxToRem(25);
+      padding: 0;
+      margin: pxToRem(12.5) 0 pxToRem(5);
+    }
+  }
+  &__primary-title {
+    font-size: pxToRem(48);
+    margin-bottom: pxToRem(16);
+  }
+  &__excerpt {
+    font-family: "Lora", serif;
+    font-size: pxToRem(22);
+    margin: pxToRem(14) 0 0;
+    color: $color-grey-dark-1;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    padding: pxToRem(14) 0 0;
+    margin: pxToRem(24) 0 0;
+    text-transform: uppercase;
+    border-top: pxToRem(1) solid $color-grey-light-2;
+  }
+  &__meta-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &__author-image {
+    display: inline-flex;
+    max-width: pxToRem(38px);
+    margin-right: pxToRem(8);
+  }
+
+  &__author-name {
+    color: $color-grey-dark-3;
+    font-size: pxToRem(13);
+    font-weight: 500;
+    @include hover-focus {
+      text-decoration: underline;
+    }
+  }
+  &__publish-date {
+    display: inline-flex;
+    font-size: pxToRem(12);
+    color: $color-grey-dark-2;
+    font-weight: 400;
+  }
+
+  &__tags {
+    display: flex;
+    width: 100%;
+    max-width: pxToRem(700);
+    padding: 0 pxToRem(10);
+    margin: pxToRem(16) 0;
+    a {
+      background-color: $color-white;
+      display: inline-flex;
+      align-items: center;
+      color: $color-primary-dark;
+      border: pxToRem(0.5) solid $color-grey-light-2;
+      border-radius: pxToRem(3);
+      padding: pxToRem(8) pxToRem(24);
+      font-size: pxToRem(15);
+      &:not(:last-of-type) {
+        margin: 0 pxToRem(16) 0 0;
+      }
+    }
+  }
+}

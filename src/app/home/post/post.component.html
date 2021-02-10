@@ -1,1 +1,37 @@
-<p>post works!</p>
+<div class="container-xl">
+    <div class="row">
+        <div class="col-12">
+            <main class="py-5">
+                <article *ngIf="post$ | async as post" class="post">
+                    <header class="post__header">
+                        <h1 class="post__primary-title">
+                            {{post.title}}
+                        </h1>
+                        <p class="post__excerpt">
+                            {{post.custom_excerpt}}
+                        </p>
+                        <div class="post__meta">
+                            <a href="#" class="post__author-image">
+                                <img [ngStyle]="{'opacity': '.5'}" src="assets/img/user.png" alt="" class="img-fluid ">
+                            </a>
+                            <div class="post__meta-content">
+                                <a href="#" class="post__author-name">{{post.author.name}}</a>
+                                <time [dateTime]="post.published_at" class="post__publish-date">{{post.published_at |
+                                    date}}</time>
+                            </div>
+                        </div>
+                    </header>
+                    <figure class="post__featured-image">
+                        <img src="{{ApiUrl + '/' + post.featured_image}}" alt="" class="img-fluid">
+                    </figure>
+                    <section class="post__content">
+                        <div class="post__inner-content-box" [innerHTML]="post.html"></div>
+                    </section>
+                    <section class="post__tags">
+                        <a href="#" *ngFor="let tag of post.tags">{{tag.name}}</a>
+                    </section>
+                </article>
+            </main>
+        </div>
+    </div>
+</div>

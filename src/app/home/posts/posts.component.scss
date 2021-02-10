@@ -1,21 +1,26 @@
 @import "sass/index.scss";
 .post-card {
   display: flex;
-  // align-items: center;
   margin-top: pxToRem(22);
   background-color: $color-white;
   border: 0.2px solid rgba($color-grey-light-2, 0.5);
+  border-radius: pxToRem(2);
+  overflow: hidden;
 
   &__image-link {
     display: flex;
     flex: 0 0 pxToRem(250);
-    max-height: pxToRem(250);
+    
+    img {
+      max-height: pxToRem(220);
+    }
   }
 
   &__content {
     display: flex;
     flex-direction: column;
     padding: pxToRem(16);
+    flex: 1;
   }
 
   &__content-link {

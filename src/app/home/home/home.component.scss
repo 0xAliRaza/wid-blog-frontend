@@ -89,8 +89,6 @@
   }
 }
 
-
-
 // .sidebar-widget {
 //   margin-bottom: pxToRem(32);
 //   &__titlebar {
@@ -135,19 +133,18 @@
 // }
 
 .footer {
-  background-color: $color-grey-dark-4;
+  background-color: $color-grey-dark-5;
   &__content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    // margin: pxToRem(50) 0 0;
-    padding: pxToRem(40) 0 pxToRem(8);
+    padding: pxToRem(20) 0 pxToRem(60);
     color: $color-grey-light-3;
   }
   a {
-    color: $color-primary;
+    color: $color-grey-light-3;
     @include hover-focus {
-      color: $color-primary;
+      color: $color-grey-light-1;
       text-decoration: underline;
     }
   }
@@ -156,6 +153,5 @@
     margin: 0;
   }
   &__credits {
-    
   }
 }

@@ -7,9 +7,7 @@
             currentPage: page,
             totalItems: count
           }" class="post-card">
-            <a *ngIf="post.featured_image" [href]="'/' + post.slug" class="post-card__image-link">
-              <img src="{{apiUrl + '/' + post.featured_image}}" class="post-card__image img-fluid">
-            </a>
+            
             <div class="post-card__content">
               <a href="/{{post.slug}}" class="post-card__content-link">
                 <header class="post-card__header">
@@ -42,6 +40,9 @@
                 </div>
               </footer>
             </div>
+            <a *ngIf="post.featured_image" [href]="'/' + post.slug" class="post-card__image-link">
+              <img src="{{apiUrl + '/' + post.featured_image}}" class="post-card__image img-fluid">
+            </a>
           </article>
           <div class="d-flex justify-content-center my-5 align-items-center">
             <pagination-controls responsive="true" previousLabel="Prev" nextLabel="Next"

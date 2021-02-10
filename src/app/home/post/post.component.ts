@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HighlightService } from '@app/highlight.service';
 import { environment } from '@environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Post } from '../_models';
 import { HomeService } from '../_services/home.service';
 
@@ -10,19 +12,34 @@ import { HomeService } from '../_services/home.service';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss']
 })
-export class PostComponent implements OnInit {
-
-  post$: Observable<Post>;
+export class PostComponent implements OnInit, OnDestroy, AfterViewChecked {
+  destroyed$ = new Subject<boolean>();
+  post: Post;
   ApiUrl = environment.storageDir;
+  highlighted = false;
 
-  constructor(private route: ActivatedRoute, private _home: HomeService) { }
+  constructor(private _route: ActivatedRoute, private _home: HomeService, private _highlight: HighlightService) { }
 
   ngOnInit() {
-    const slug = this.route.snapshot.paramMap.get("slug");
+    const slug = this._route.snapshot.paramMap.get("slug");
     if (slug && slug !== "") {
-      this.post$ = this._home.getPost(slug);
+      this._home
+        .getPost(slug)
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe(res => this.post = res);
     }
+  }
 
+  ngAfterViewChecked() {
+    if (this.post && !this.highlighted) {
+      this._highlight.highlightAll();
+      this.highlighted = true;
+    }
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 
 }

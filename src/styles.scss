@@ -6,6 +6,9 @@ $input-btn-focus-width: 0.1rem;
 @import "~bootstrap/scss/bootstrap";
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "app/sass/index.scss";
+
+@import "~prismjs/plugins/toolbar/prism-toolbar.css";
+@import "~prismjs/themes/prism-okaidia";
 html,
 body {
   height: 100%;

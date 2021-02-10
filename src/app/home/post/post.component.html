@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12">
             <main class="py-5">
-                <article *ngIf="post$ | async as post" class="post">
+                <article *ngIf="post" class="post">
                     <header class="post__header">
                         <h1 class="post__primary-title">
                             {{post.title}}
@@ -39,8 +39,8 @@
 
                                 <!-- Sharingbutton Facebook -->
                                 <a class="resp-sharing-button__link"
-                                    href="https://facebook.com/sharer/sharer.php?u={{post.slug}}"
-                                    target="_blank" rel="noopener" aria-label="">
+                                    href="https://facebook.com/sharer/sharer.php?u={{post.slug}}" target="_blank"
+                                    rel="noopener" aria-label="">
                                     <div
                                         class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small">
                                         <div aria-hidden="true"
@@ -104,8 +104,8 @@
 
                                 <!-- Sharingbutton E-Mail -->
                                 <a class="resp-sharing-button__link"
-                                    href="mailto:?subject={{post.title}}&amp;body={{post.slug}}"
-                                    target="_blank" rel="noopener" aria-label="">
+                                    href="mailto:?subject={{post.title}}&amp;body={{post.slug}}" target="_blank"
+                                    rel="noopener" aria-label="">
                                     <div
                                         class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small">
                                         <div aria-hidden="true"

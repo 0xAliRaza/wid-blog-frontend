@@ -6,6 +6,8 @@ import { environment } from "@environments/environment";
 import { User } from "@admin/_models";
 import { AdminModule } from "../admin.module";
 import * as jwt_decode from "jwt-decode";
+
+@Injectable()
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;

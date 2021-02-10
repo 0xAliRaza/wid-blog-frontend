@@ -5,6 +5,9 @@ import {  map } from "rxjs/operators";
 import { Post } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
 import { CRUD } from "./crud";
+import { Injectable } from "@angular/core";
+
+@Injectable()
 export class PostsService extends CRUD<Post> {
   models$: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
   newlyCreatedPost: Post;

@@ -9,6 +9,26 @@ $input-btn-focus-width: 0.1rem;
 
 @import "~prismjs/plugins/toolbar/prism-toolbar.css";
 @import "~prismjs/themes/prism-okaidia";
+
+/* The emerging W3C standard
+   that is currently Firefox-only */
+   * {
+   scrollbar-width: thick;
+   scrollbar-color: $color-grey-light-4 $color-grey-light-2;
+ }
+ 
+ /* Works on Chrome/Edge/Safari */
+ *::-webkit-scrollbar {
+   width: pxToRem(10);
+ }
+ *::-webkit-scrollbar-track {
+   background: $color-grey-light-2;
+ }
+ *::-webkit-scrollbar-thumb {
+   background-color: $color-grey-light-4;
+   border-radius: pxToRem(6);
+ }
+
 html,
 body {
   height: 100%;

@@ -9,9 +9,10 @@ import { HomeService } from './_services/home.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PostsComponent } from './posts/posts.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  declarations: [HomeComponent, PostComponent, PostsComponent],
+  declarations: [HomeComponent, PostComponent, PostsComponent, FooterComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,

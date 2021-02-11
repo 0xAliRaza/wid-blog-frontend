@@ -1,0 +1,31 @@
+@import "sass/index.scss";
+.footer {
+  margin-top: auto;
+  background-color: $color-grey-dark-5;
+  &__content {
+    padding: pxToRem(20) pxToRem(24) pxToRem(60);
+    color: $color-grey-light-3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    @include media-breakpoint-up(md) {
+      flex-direction: row;
+    }
+  }
+  a {
+    color: $color-grey-light-3;
+    @include hover-focus {
+      color: $color-grey-light-1;
+      text-decoration: underline;
+    }
+  }
+  &__cp-message {
+    padding: 0;
+    margin: 0;
+    margin-top: pxToRem(8);
+  }
+  &__credits {
+    margin-top: pxToRem(8);
+  }
+}

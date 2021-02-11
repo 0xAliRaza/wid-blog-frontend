@@ -12,22 +12,22 @@ $input-btn-focus-width: 0.1rem;
 
 /* The emerging W3C standard
    that is currently Firefox-only */
-   * {
-   scrollbar-width: thick;
-   scrollbar-color: $color-grey-light-4 $color-grey-light-2;
- }
- 
- /* Works on Chrome/Edge/Safari */
- *::-webkit-scrollbar {
-   width: pxToRem(10);
- }
- *::-webkit-scrollbar-track {
-   background: $color-grey-light-2;
- }
- *::-webkit-scrollbar-thumb {
-   background-color: $color-grey-light-4;
-   border-radius: pxToRem(6);
- }
+* {
+  scrollbar-width: thick;
+  scrollbar-color: $color-grey-light-4 $color-grey-light-2;
+}
+
+/* Works on Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+  width: pxToRem(10);
+}
+*::-webkit-scrollbar-track {
+  background: $color-grey-light-2;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: $color-grey-light-4;
+  border-radius: pxToRem(6);
+}
 
 html,
 body {
@@ -35,8 +35,9 @@ body {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  // font-family: "Nunito", sans-serif;
 
   // overflow: hidden;
 }

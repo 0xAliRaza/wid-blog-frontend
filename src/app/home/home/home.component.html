@@ -3,11 +3,11 @@
     <div class="row">
       <div class="col-sm-12">
         <nav class="top-nav">
-          <a class="top-nav__brand" href="#">Blog</a>
+          <a class="top-nav__brand" routerLink="/">WID</a>
 
           <ul class="top-nav__list mr-auto">
             <li class="top-nav__item">
-              <a class="top-nav__link" href="#">Home <span class="sr-only">(current)</span></a>
+              <a class="top-nav__link" routerLink="/">Home</a>
             </li>
             <li class="top-nav__item">
               <a class="top-nav__link" href="#">Link</a>
@@ -19,14 +19,19 @@
               <a class="top-nav__link" href="#">Third</a>
             </li>
           </ul>
+
           <ul class="top-nav__list">
             <li class="top-nav__item">
-              <a href="#" class="top-nav__link">
+              <a href="#" class="btn btn-sm top-nav__link">
                 <svg-icon icon="search" class="mr-1"></svg-icon> Search
               </a>
             </li>
+            <li class="top-nav__item">
+              <a class="top-nav__link" routerLink="admin">Admin
+                <svg-icon icon="hand-right" class="ml-1"></svg-icon>
+              </a>
+            </li>
           </ul>
-          <a class="btn btn-sm btn-outline-primary ml-2" href="/admin">CPanel</a>
         </nav>
       </div>
       <div class="col-sm-12">
@@ -53,7 +58,7 @@
 </header>
 
 <router-outlet></router-outlet>
-  <!-- <div class="row justify-content-center">
+<!-- <div class="row justify-content-center">
     <div class="col-sm-12 col-lg-9">
       <main class="py-5">
         <article tabindex="0" *ngFor="let post of posts" class="post-card">

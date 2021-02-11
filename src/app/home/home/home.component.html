@@ -5,20 +5,22 @@
         <nav class="top-nav">
           <a class="top-nav__brand" routerLink="/">WID</a>
 
-          <ul class="top-nav__list mr-auto">
-            <li class="top-nav__item">
-              <a class="top-nav__link" routerLink="/">Home</a>
-            </li>
-            <li class="top-nav__item">
-              <a class="top-nav__link" href="#">Link</a>
-            </li>
-            <li class="top-nav__item">
-              <a class="top-nav__link" href="#">Test</a>
-            </li>
-            <li class="top-nav__item">
-              <a class="top-nav__link" href="#">Third</a>
-            </li>
-          </ul>
+          <div *ngIf="topNavVisible" [@slideInOutFromRight] class="top-nav__res-list-wrapper">
+            <ul class="top-nav__list">
+              <li class="top-nav__item">
+                <a class="top-nav__link" routerLink="/">Home</a>
+              </li>
+              <li class="top-nav__item">
+                <a class="top-nav__link" href="#">Link</a>
+              </li>
+              <li class="top-nav__item">
+                <a class="top-nav__link" href="#">Test</a>
+              </li>
+              <li class="top-nav__item">
+                <a class="top-nav__link" href="#">Third</a>
+              </li>
+            </ul>
+          </div>
 
           <ul class="top-nav__list">
             <li class="top-nav__item">
@@ -32,6 +34,10 @@
               </a>
             </li>
           </ul>
+          <a class="top-nav__res-list-toggler" (click)="toggleTopNav()">
+            <span class="top-nav__res-list-toggler-icon"
+              [ngClass]="{'top-nav__res-list-toggler-icon--cross': topNavVisible}"></span>
+          </a>
         </nav>
       </div>
       <div class="col-sm-12">

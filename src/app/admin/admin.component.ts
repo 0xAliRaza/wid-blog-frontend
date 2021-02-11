@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener } from "@angular/core";
+import { Component, OnInit, OnDestroy, HostListener, AfterViewInit } from "@angular/core";
 import { User } from "./_models";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "./_services";
@@ -52,7 +52,7 @@ import { takeUntil } from "rxjs/operators";
     ]),
   ],
 })
-export class AdminComponent implements OnInit, OnDestroy {
+export class AdminComponent implements OnInit, OnDestroy, AfterViewInit {
   destroyed$: Subject<boolean> = new Subject();
   innerWidth: any;
   sideNavVisible: boolean;
@@ -61,21 +61,11 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private auth: AuthenticationService
   ) {
     this.auth.currentUser
       .pipe(takeUntil(this.destroyed$))
       .subscribe((x) => (this.currentUser = x));
-    // this.route.quer
-    //   .pipe(takeUntil(this.destroyed$))
-    //   .subscribe(params => {
-    //     console.log(params);
-    //     if (params['type']) {
-    //       debugger;
-
-    //     }
-    //   })
   }
 
   @HostListener("window:resize", ["$event"])
@@ -108,6 +98,10 @@ export class AdminComponent implements OnInit, OnDestroy {
       this.sideNavVisible = true;
       this.sideNavFloating = false;
     }
+  }
+
+  ngAfterViewInit() {
+
   }
 
 

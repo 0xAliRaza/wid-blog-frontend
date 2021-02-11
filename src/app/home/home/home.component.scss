@@ -7,15 +7,20 @@
 }
 
 .header-top {
+  position: relative;
   background-color: $color-white;
   box-shadow: 0 pxToRem(4) pxToRem(12) rgba(0, 0, 0, 0.04);
+  z-index: 1030;
 }
 
 .top-nav {
   display: flex;
   align-items: center;
-  padding: pxToRem(24) pxToRem(24) 0;
-  flex-wrap: wrap;
+  padding: pxToRem(24) pxToRem(54) 0 pxToRem(24);
+  @include media-breakpoint-up(md) {
+    padding: pxToRem(24) pxToRem(24) 0;
+  }
+  position: relative;
 
   &__brand {
     color: $color-primary;
@@ -25,16 +30,113 @@
     margin-right: pxToRem(24);
     font-size: pxToRem(28);
     font-weight: 300;
-    font-family: 'Nunito', sans-serif;
+    font-family: "Nunito", sans-serif;
     transition: color 0.2s ease;
     @include hover-focus-active {
       color: $color-primary-dark;
     }
   }
 
+  &__res-list-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1030;
+    height: 100%;
+    width: 100%;
+    background-color: $color-grey-light-1;
+    display: flex;
+    justify-content: center;
+    padding-top: pxToRem(100);
+    @include media-breakpoint-up(md) {
+      position: initial;
+      background-color: transparent;
+      padding-top: 0;
+      height: auto;
+      width: auto;
+      margin-right: auto;
+    }
+  }
+  &__res-list-wrapper &__list {
+    flex-direction: column;
+    @include media-breakpoint-up(md) {
+      flex-direction: row;
+    }
+  }
+
+  &__res-list-wrapper &__link {
+    font-size: pxToRem(24);
+    font-weight: 300;
+    @include media-breakpoint-up(md) {
+      font-size: pxToRem(16);
+      font-weight: 400;
+    }
+  }
+
+  &__res-list-toggler {
+    @include media-breakpoint-up(md) {
+      display: none;
+    }
+    position: absolute;
+    right: pxToRem(16);
+    height: pxToRem(20);
+    width: pxToRem(24);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-primary;
+    cursor: pointer;
+
+    @include hover-focus-active {
+      color: $color-primary-dark;
+    }
+
+    z-index: 1031;
+  }
+  &__res-list-toggler-icon {
+    &,
+    &::before,
+    &::after {
+      display: inline-flex;
+      align-items: center;
+      content: "";
+      width: pxToRem(24);
+      height: pxToRem(1);
+      background-color: $color-primary;
+      visibility: visible;
+    }
+
+    position: relative;
+
+    &::before {
+      position: absolute;
+      right: 0;
+      bottom: pxToRem(7);
+    }
+    &::after {
+      position: absolute;
+      right: 0;
+      top: pxToRem(7);
+    }
+
+    &--cross {
+      visibility: hidden;
+      &::before {
+        bottom: 0;
+        transform: rotate(-45deg);
+      }
+      &::after {
+        top: 0;
+        transform: rotate(45deg);
+      }
+    }
+  }
+
   &__list {
     display: flex;
+    flex-direction: row;
     align-items: center;
+    flex-wrap: wrap;
   }
 
   &__item {
@@ -48,8 +150,6 @@
     align-items: center;
     color: $color-primary;
     padding: pxToRem(8) pxToRem(16);
-    transition: color 0.2s ease;
-    border-radius: pxToRem(5);
     @include hover-focus-active {
       color: $color-primary-dark;
       text-decoration: underline;
@@ -85,7 +185,6 @@
     &:not(:last-child) {
       margin-right: pxToRem(32);
     }
-    transition: color 0.2s ease;
     @include hover-focus-active {
       color: $color-grey-dark-3;
     }

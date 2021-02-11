@@ -159,7 +159,22 @@
 }
 
 .top-tags {
-  padding: pxToRem(20) pxToRem(24) pxToRem(4);
+  padding: pxToRem(20) pxToRem(24) pxToRem(6);
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    right: pxToRem(24);
+    top: 50%;
+    width: pxToRem(32);
+    height: pxToRem(16);
+    background-image: linear-gradient(
+      to right,
+      rgba($color-white, 0.2),
+      rgba($color-white, 1)
+    );
+  }
+
   &__list {
     display: flex;
     flex-wrap: nowrap;
@@ -184,11 +199,10 @@
     color: $color-grey-dark-1;
     padding: pxToRem(8) 0;
     &:not(:last-child) {
-      margin-right: pxToRem(32);
+      margin-right: pxToRem(24);
     }
     @include hover-focus-active {
       color: $color-grey-dark-3;
     }
   }
 }
-

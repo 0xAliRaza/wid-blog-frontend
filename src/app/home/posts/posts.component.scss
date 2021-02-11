@@ -1,18 +1,32 @@
 @import "sass/index.scss";
+
+main {
+  @include media-breakpoint-down(sm) {
+    max-width: pxToRem(500);
+    margin: 0 auto;
+  }
+}
 .post-card {
   display: flex;
+  flex-direction: column-reverse;
   margin-top: pxToRem(22);
   background-color: $color-white;
   border: 0.2px solid rgba($color-grey-light-2, 0.5);
   border-radius: pxToRem(2);
   overflow: hidden;
 
+  @include media-breakpoint-up(md) {
+    flex-direction: row;
+  }
+
   &__image-link {
     display: flex;
-    flex: 0 0 pxToRem(250);
-    
-    img {
-      max-height: pxToRem(220);
+
+    @include media-breakpoint-up(md) {
+      img {
+        max-width: pxToRem(260);
+        max-height: pxToRem(220);
+      }
     }
   }
 
@@ -20,7 +34,6 @@
     display: flex;
     flex-direction: column;
     padding: pxToRem(16);
-    flex: 1;
   }
 
   &__content-link {

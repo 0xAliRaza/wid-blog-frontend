@@ -3,7 +3,7 @@
   margin-top: auto;
   background-color: $color-grey-dark-5;
   &__content {
-    padding: pxToRem(20) pxToRem(24) pxToRem(60);
+    padding: pxToRem(12) pxToRem(24) pxToRem(60);
     color: $color-grey-light-3;
     display: flex;
     align-items: center;
@@ -16,7 +16,7 @@
   a {
     color: $color-grey-light-3;
     @include hover-focus {
-      color: $color-grey-light-1;
+      color: $color-grey-light-2;
       text-decoration: underline;
     }
   }

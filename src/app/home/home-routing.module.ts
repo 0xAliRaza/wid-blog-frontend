@@ -17,6 +17,10 @@ const routes: Routes = [
       {
         path: ":slug",
         component: PostComponent,
+      },
+      {
+        path: "tag/:slug",
+        component: PostsComponent,
       }
     ]
   },

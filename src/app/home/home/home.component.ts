@@ -1,7 +1,8 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
 import { environment } from '@environments/environment';
-import { Post } from '../_models';
+import { Observable } from 'rxjs';
+import { Post, Tag } from '../_models';
 import { HomeService } from '../_services/home.service';
 
 
@@ -23,7 +24,11 @@ import { HomeService } from '../_services/home.service';
 export class HomeComponent implements OnInit, AfterViewInit {
   innerWidth: number;
   topNavVisible = false;
-  constructor() { }
+  tags$: Observable<Tag>;
+
+  constructor(private _home: HomeService) {
+    this.tags$ = this._home.indexTags();
+  }
   @HostListener("window:resize", ["$event"])
   onResize(event) {
     this.autoSetTopNavVisibility(window.innerWidth);

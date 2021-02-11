@@ -10,9 +10,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PostsComponent } from './posts/posts.component';
 import { FooterComponent } from './footer/footer.component';
+import { EmailSubComponent } from './email-sub/email-sub.component';
 
 @NgModule({
-  declarations: [HomeComponent, PostComponent, PostsComponent, FooterComponent],
+  declarations: [HomeComponent, PostComponent, PostsComponent, FooterComponent, EmailSubComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,

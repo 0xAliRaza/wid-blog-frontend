@@ -204,5 +204,8 @@
     @include hover-focus-active {
       color: $color-grey-dark-3;
     }
+    &--active {
+      color: $color-grey-dark-3;
+    }
   }
 }

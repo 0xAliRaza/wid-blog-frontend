@@ -34,6 +34,7 @@ main {
     display: flex;
     flex-direction: column;
     padding: pxToRem(16);
+    flex: 1;
   }
 
   &__content-link {

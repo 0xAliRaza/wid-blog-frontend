@@ -1,7 +1,8 @@
 @import "sass/index";
 
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   background-color: $color-grey-light-1;
 }
@@ -235,13 +236,19 @@
 // }
 
 .footer {
+  margin-top: auto;
   background-color: $color-grey-dark-5;
   &__content {
+    padding: pxToRem(20) pxToRem(24) pxToRem(60);
+    color: $color-grey-light-3;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: pxToRem(20) 0 pxToRem(60);
-    color: $color-grey-light-3;
+    flex-direction: column;
+    @include media-breakpoint-up(md) {
+      flex-direction: row;
+    }
+
   }
   a {
     color: $color-grey-light-3;
@@ -253,7 +260,9 @@
   &__cp-message {
     padding: 0;
     margin: 0;
+    margin-top: pxToRem(8);
   }
   &__credits {
+    margin-top: pxToRem(8);
   }
 }

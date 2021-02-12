@@ -1,40 +1,72 @@
-$html-font-size: 16px;
-
-// Strip units like 'px' from value
-@function stripUnit($value) {
-    @return $value / ($value * 0 + 1);
-}
-
-// Convert pixels to rems
-@function pxToRem($pxValue) {
-    @return #{stripUnit($pxValue) / stripUnit($html-font-size)}rem;
-}
-
-
-
 @mixin hover() {
-    &:hover { @content; }
+  &:hover {
+    @content;
   }
-  
-  @mixin hover-focus() {
-    &:hover,
-    &:focus {
-      @content;
+}
+
+@mixin hover-focus() {
+  &:hover,
+  &:focus {
+    @content;
+  }
+}
+
+@mixin plain-hover-focus() {
+  &,
+  &:hover,
+  &:focus {
+    @content;
+  }
+}
+
+@mixin hover-focus-active() {
+  &:hover,
+  &:focus,
+  &:active {
+    @content;
+  }
+}
+
+@mixin blog-post() {
+  & {
+    color: $color-grey-dark-4;
+  }
+  p {
+    font-size: pxToRem(20);
+    font-family: "Lora", serif;
+    line-height: 1.6;
+    padding: 0;
+    margin: 0 0 pxToRem(32);
+  }
+  blockquote {
+    font-size: pxToRem(20);
+    font-family: "Lora", serif;
+    line-height: 1.6;
+    margin: 0 0 pxToRem(30);
+    padding: 0 pxToRem(16);
+    border-left: pxToRem(3) solid $color-primary;
+    p {
+      margin: 0;
     }
   }
-  
-  @mixin plain-hover-focus() {
-    &,
-    &:hover,
-    &:focus {
-      @content;
-    }
+  img {
+    max-width: 100%;
+    height: auto;
+    margin: pxToRem(42) 0;
   }
-  
-  @mixin hover-focus-active() {
-    &:hover,
-    &:focus,
-    &:active {
-      @content;
-    }
+
+  h2 {
+    line-height: 1.25;
+    color: $color-grey-dark-4;
+    font-size: pxToRem(32);
+    padding: 0;
+    margin: pxToRem(25.6) 0 pxToRem(12.8);
   }
+  h3 {
+    line-height: 1.25;
+    color: $color-grey-dark-4;
+    font-size: pxToRem(25);
+    padding: 0;
+    margin: pxToRem(12.5) 0 pxToRem(5);
+  }
+}

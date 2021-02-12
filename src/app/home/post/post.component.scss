@@ -25,43 +25,7 @@
     padding: pxToRem(24) 0;
   }
   &__inner-content-box ::ng-deep {
-    color: $color-grey-dark-4;
-    p {
-      font-size: pxToRem(20);
-      font-family: "Lora", serif;
-      line-height: 1.6;
-      padding: 0;
-      margin: 0 0 pxToRem(32);
-    }
-    blockquote {
-      font-size: pxToRem(20);
-      font-family: "Lora", serif;
-      line-height: 1.6;
-      margin: 0 0 pxToRem(30);
-      padding: 0 pxToRem(30);
-      border-left: pxToRem(3) solid $color-primary;
-    }
-    img {
-      max-width: 100%;
-      height: auto;
-      margin: pxToRem(42) 0;
-    }
-
-    h2 {
-      line-height: 1.25;
-      color: $color-grey-dark-4;
-      font-size: pxToRem(32);
-      padding: 0;
-      margin: pxToRem(25.6) 0 pxToRem(12.8);
-    }
-    h3 {
-      line-height: 1.25;
-
-      color: $color-grey-dark-4;
-      font-size: pxToRem(25);
-      padding: 0;
-      margin: pxToRem(12.5) 0 pxToRem(5);
-    }
+    @include blog-post;
   }
   &__primary-title {
     font-size: pxToRem(48);

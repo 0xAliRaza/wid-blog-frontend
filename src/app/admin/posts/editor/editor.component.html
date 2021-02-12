@@ -62,26 +62,28 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="post col-md-10 col-lg-8 my-5 py-5">
-            <div class="post__form">
-                <form [formGroup]="postForm">
-                    <div class="post__title">
-                        <input placeholder="Post Title" class="post__title-input" formControlName="title">
-                    </div>
-                    <div class="post__text">
-                        <editor (onKeyUp)="onTinymceChange()" (onInit)="onTinymceInit($event)" [init]="tinymceConfig"
-                            id="tinymce-editor"></editor>
-                    </div>
+        <div class="col-12 my-5 py-5">
+            <section class="post">
+                <div class="post__form">
+                    <form [formGroup]="postForm">
+                        <div class="post__title">
+                            <input placeholder="Title..." class="post__title-input" formControlName="title">
+                        </div>
+                        <div class="post__text">
+                            <editor (onKeyUp)="onTinymceChange()" (onInit)="onTinymceInit($event)"
+                                [init]="tinymceConfig" id="tinymce-editor"></editor>
+                        </div>
 
-                </form>
-            </div>
+                    </form>
+                </div>
+            </section>
         </div>
     </div>
 </div>
 
 <aside class="sidebar" @slideInOut *ngIf="isSideNavOpen">
     <div class="sidebar__top-intro">
-        <h4 class="sidebar__top-intro-heading">Post settings</h4>
+        <h4 class="sidebar__top-intro-heading">Settings</h4>
         <button class="sidebar__close-button btn" (click)="toggleSideNav()">
             <svg-icon icon="close"></svg-icon>
         </button>
@@ -92,9 +94,9 @@
                 <label for="post-featured-image">Featured Image</label>
                 <input #featuredImage type="file" accept="image/*" id="post-featured-image" class="form-control-file"
                     (change)="onFeaturedImageChange($event)">
-                <div class="featured-image-thumb" *ngIf="featuredImageUrl">
+                <div class="featured-image-thumb" *ngIf="featuredImageUrl" class="d-flex flex-column">
                     <img [src]="featuredImageUrl" alt="" class="img-fluid img-thumbnail my-1">
-                    <button (click)="removeFeaturedImage($event)" class="btn btn-sm btn-danger">Delete</button>
+                    <button (click)="removeFeaturedImage($event)" class="ml-auto btn btn-sm btn-link text-danger">Remove</button>
                 </div>
             </div>
             <div class="form-group">
@@ -149,9 +151,9 @@
         </form>
     </div>
     <div class="sidebar__delete-post">
-        <button [disabled]="!post.exists" (click)="onDelete()" class="btn btn-outline-danger sidebar__delete-post-btn">
+        <button [disabled]="!post.exists" (click)="onDelete()" class="btn btn-sm btn-outline-danger sidebar__delete-post-btn">
             <svg-icon icon="trash"></svg-icon>
-            <span>Delete Post</span>
+            <span>Delete</span>
         </button>
     </div>
 </aside>

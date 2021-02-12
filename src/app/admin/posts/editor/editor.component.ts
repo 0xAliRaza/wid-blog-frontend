@@ -109,6 +109,9 @@ export class EditorComponent implements OnInit, OnDestroy {
       block_unsupported_drop: false,
       images_upload_url: environment.postImageUploadUrl,
       images_upload_handler: this.onTinymceImageUpload.bind(this),
+      inline: true,
+
+
     };
 
     if (!this.post.published) {
@@ -265,7 +268,10 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.setDefaults();
-
+    const editor = this.tinymceInst;
+    if (editor && editor.getContent() !== "") {
+      this.f.html.setValue(editor.getContent());
+    }
     const formData = new FormData();
     Object.entries(this.postForm.value).forEach(([key, value]: any[]) => {
       if (value === "") {
@@ -309,6 +315,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       this.tinymceInst.setContent(this.post.html);
       this.postForm.patchValue({ html: this.post.html }, { emitEvent: false });
       this.tinymceInst.isNotDirty = true;
+
     }
     e.editor.on("WordCountUpdate", (e) => {
       const wordCount = e.wordCount;

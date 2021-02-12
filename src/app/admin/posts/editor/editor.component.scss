@@ -1,33 +1,64 @@
 @import "sass/index";
 
-:host ::ng-deep editor {
-  .tox-tinymce {
-    border: none;
-    overflow-x: hidden;
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: $color-grey-light-1;
+}
+
+:host ::ng-deep {
+  // .tox-tinymce {
+  //   border: none;
+  //   overflow-x: hidden;
+  // }
+  // .tox-edit-area__iframe#tinymce {
+  //   overflow: hidden;
+  // }
+  editor {
+    #tinymce-editor {
+      &:focus {
+        outline: none;
+      }
+    }
+    @include blog-post;
   }
-  .tox-edit-area__iframe#tinymce {
-    overflow: hidden;
+  .ng-select .ng-select-container {
+    background-color: $color-white;
+    border: pxToRem(0.5) solid $color-grey-light-2;
+  }
+  .ng-select .ng-dropdown-panel {
+    background-color: $color-white;
+    border: pxToRem(0.5) solid $color-grey-light-2;
   }
 }
 
 .post {
+  display: flex;
+  justify-content: center;
   &__title {
-    margin: 0 pxToRem(16) pxToRem(32);
+    margin: 0 0 pxToRem(48);
   }
   &__title-input {
     color: $color-text-black;
     width: 100%;
     border: none;
     background: transparent;
-    font-size: pxToRem(32);
+    font-size: pxToRem(48);
+    font-weight: 500;
     background-attachment: scroll;
     @include hover-focus-active {
       outline: none;
     }
   }
+
+  &__form {
+    max-width: pxToRem(700);
+  }
 }
 
 nav#editor-top-nav {
+  background-color: $color-white;
+  box-shadow: 0 pxToRem(4) pxToRem(12) rgba($color-grey-dark-5, 0.04);
   z-index: 1030;
   .nav-link {
     height: 100%;
@@ -87,7 +118,8 @@ nav#editor-top-nav {
 }
 
 .sidebar {
-  position: absolute;
+  box-shadow: 0 0 pxToRem(8) rgba($color-grey-dark-5, 0.04);
+  position: fixed;
   right: 0;
   top: 0;
   z-index: 1030;
@@ -117,6 +149,11 @@ nav#editor-top-nav {
   &__form {
     padding: 0 pxToRem(24);
     margin-top: pxToRem(16);
+    input:not([type="file"]),
+    textarea {
+      background-color: $color-white;
+      border: pxToRem(0.5) solid $color-grey-light-2;
+    }
   }
 
   &__delete-post {

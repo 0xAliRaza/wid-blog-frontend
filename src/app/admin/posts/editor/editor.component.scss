@@ -130,7 +130,7 @@ nav#editor-top-nav {
   flex-direction: column;
   background-color: $color-grey-light-1;
   color: $color-text-black;
-  border-left: 1px solid $color-grey-light-2;
+  border-left: pxToRem(0.5) solid $color-grey-light-2;
   &__top-intro {
     padding: pxToRem(16) pxToRem(24);
     display: flex;
@@ -157,6 +157,9 @@ nav#editor-top-nav {
   }
 
   &__delete-post {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     padding: pxToRem(16) pxToRem(24);
     margin-top: auto;
     padding-top: pxToRem(32);

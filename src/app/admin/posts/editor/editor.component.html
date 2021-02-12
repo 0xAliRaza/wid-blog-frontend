@@ -60,7 +60,7 @@
     </ul>
 </nav>
 
-<div class="container">
+<div class="container-xl">
     <div class="row justify-content-center">
         <div class="col-12 my-5 py-5">
             <section class="post">
@@ -70,7 +70,7 @@
                             <input placeholder="Title..." class="post__title-input" formControlName="title">
                         </div>
                         <div class="post__text">
-                            <editor (onKeyUp)="onTinymceChange()" (onInit)="onTinymceInit($event)"
+                            <editor (onChange)="onTinymceChange()" (onInit)="onTinymceInit($event)"
                                 [init]="tinymceConfig" id="tinymce-editor"></editor>
                         </div>
 
@@ -91,12 +91,20 @@
     <div class="sidebar__form">
         <form enctype="multipart/form-data" [formGroup]="postForm">
             <div class="form-group">
-                <label for="post-featured-image">Featured Image</label>
-                <input #featuredImage type="file" accept="image/*" id="post-featured-image" class="form-control-file"
-                    (change)="onFeaturedImageChange($event)">
+
+                <div class="custom-file ">
+                    <label for="post-featured-image" class="custom-file-label">{{ f.featured_image_file.value &&
+                        f.featured_image_file.value.name ? f.featured_image_file.value.name : 'Featured image'
+                        }}</label>
+                    <input #featuredImage type="file" accept="image/*" id="post-featured-image"
+                        class="custom-file-input" (change)="onFeaturedImageChange($event)">
+                    <!-- <input type="file" class="custom-file-input" id="customInput" required>
+        <label class="custom-file-label" for="customInput">Choose file...</label> -->
+                </div>
                 <div class="featured-image-thumb" *ngIf="featuredImageUrl" class="d-flex flex-column">
-                    <img [src]="featuredImageUrl" alt="" class="img-fluid img-thumbnail my-1">
-                    <button (click)="removeFeaturedImage($event)" class="ml-auto btn btn-sm btn-link text-danger">Remove</button>
+                    <img [src]="featuredImageUrl" alt="" class="img-fluid img-thumbnail ">
+                    <button (click)="removeFeaturedImage($event)"
+                        class="ml-auto btn btn-sm btn-link text-danger">Remove</button>
                 </div>
             </div>
             <div class="form-group">
@@ -151,7 +159,8 @@
         </form>
     </div>
     <div class="sidebar__delete-post">
-        <button [disabled]="!post.exists" (click)="onDelete()" class="btn btn-sm btn-outline-danger sidebar__delete-post-btn">
+        <button [disabled]="!post.exists" (click)="onDelete()"
+            class="btn btn-sm btn-outline-danger sidebar__delete-post-btn">
             <svg-icon icon="trash"></svg-icon>
             <span>Delete</span>
         </button>

@@ -54,6 +54,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   public tinymceConfig: any;
   public storageDir: string = environment.storageDir;
   public wordCount: any;
+  private tinymceFirstContentSet = false;
 
   @Output() formChange = new EventEmitter<object>();
   @Output() delete = new EventEmitter<void>();
@@ -81,8 +82,9 @@ export class EditorComponent implements OnInit, OnDestroy {
         this.resetFeaturedImage();
       }
       this.post.published ? this.unsubscribeChanges() : this.subscribeChanges();
-      if (this.post.html && this.tinymceInst) {
+      if (this.post.html && !this.tinymceFirstContentSet && this.tinymceInst) {
         this.tinymceInst.setContent(this.post.html);
+        this.tinymceFirstContentSet = true;
       }
       this.postForm.patchValue(this.post, { emitEvent: false });
     }
@@ -100,7 +102,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       toolbar: false,
       placeholder: "Write it all down...",
       plugins:
-        "autoresize quickbars image media hr codesample code autolink image wordcount",
+        "quickbars image media hr codesample code autolink image wordcount",
       quickbars_selection_toolbar: "bold italic link | h2 h3 | blockquote",
       quickbars_insert_toolbar: "image media hr codesample code",
       statusbar: false,
@@ -110,8 +112,10 @@ export class EditorComponent implements OnInit, OnDestroy {
       images_upload_url: environment.postImageUploadUrl,
       images_upload_handler: this.onTinymceImageUpload.bind(this),
       inline: true,
-
-
+      codesample_global_prismjs: true,
+      paste_remove_styles: true,
+      verify_html: false,
+      cleanup: true,
     };
 
     if (!this.post.published) {
@@ -270,7 +274,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.setDefaults();
     const editor = this.tinymceInst;
     if (editor && editor.getContent() !== "") {
-      this.f.html.setValue(editor.getContent());
+      this.f.html.setValue(editor.getContent(), { emitEvent: false });
     }
     const formData = new FormData();
     Object.entries(this.postForm.value).forEach(([key, value]: any[]) => {
@@ -305,21 +309,17 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  onWordCountChange(wordcount) {
-    this.wordCount = wordcount;
-  }
-
   onTinymceInit(e) {
     this.tinymceInst = e.editor;
-    if (this.post && this.post.html) {
+    if (this.post && this.post.html && !this.tinymceFirstContentSet) {
       this.tinymceInst.setContent(this.post.html);
       this.postForm.patchValue({ html: this.post.html }, { emitEvent: false });
       this.tinymceInst.isNotDirty = true;
+      this.tinymceFirstContentSet = true;
 
     }
     e.editor.on("WordCountUpdate", (e) => {
-      const wordCount = e.wordCount;
-      this.onWordCountChange(wordCount);
+      this.wordCount = e.wordCount;
     });
   }
 

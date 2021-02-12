@@ -40,6 +40,8 @@
 
   &__meta {
     display: flex;
+    flex-wrap: wrap;
+    row-gap: pxToRem(8);
     align-items: center;
     padding: pxToRem(14) 0 0;
     margin: pxToRem(24) 0 0;
@@ -169,6 +171,9 @@
 
   &__tags {
     display: flex;
+    flex-wrap: wrap;
+    row-gap: pxToRem(12);
+
     width: 100%;
     max-width: pxToRem(700);
     padding: 0 pxToRem(10);

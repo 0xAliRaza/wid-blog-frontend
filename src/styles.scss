@@ -10,6 +10,11 @@ $input-btn-focus-width: 0.1rem;
 @import "~prismjs/plugins/toolbar/prism-toolbar.css";
 @import "~prismjs/themes/prism-okaidia";
 
+// workaround for weird <pre> tag overflow error
+pre {
+  max-width: 90vw !important;
+}
+
 /* The emerging W3C standard
    that is currently Firefox-only */
 * {

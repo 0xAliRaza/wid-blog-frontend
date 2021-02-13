@@ -38,6 +38,30 @@
     padding: 0;
     margin: 0 0 pxToRem(32);
   }
+
+  ul,
+  ol {
+    margin: 0 0 pxToRem(30);
+    padding: 0 pxToRem(30) 0 pxToRem(26);
+    li {
+      margin: pxToRem(10) 0;
+      padding: 0 0 0 pxToRem(6);
+      font-size: pxToRem(20);
+      font-family: "Lora", serif;
+      line-height: 1.6;
+    }
+    li::marker {
+      
+    }
+  }
+  ol {
+    list-style: decimal;
+  }
+  ul {
+    list-style: disc;
+  }
+  
+
   blockquote {
     font-size: pxToRem(20);
     font-family: "Lora", serif;

@@ -1,8 +1,12 @@
 @import "sass/index.scss";
 
 main {
-  @include media-breakpoint-down(sm) {
-    max-width: pxToRem(500);
+  padding: pxToRem(32) 0;
+  max-width: pxToRem(600);
+  margin: 0 auto;
+
+  @include media-breakpoint-up(md) {
+    max-width: pxToRem(700);
     margin: 0 auto;
   }
 }
@@ -14,22 +18,16 @@ main {
   border: 0.2px solid rgba($color-grey-light-2, 0.5);
   border-radius: pxToRem(3);
   overflow: hidden;
-  align-items: center;
 
-  @include media-breakpoint-up(md) {
-    flex-direction: row;
-  }
 
   &__image-link {
     display: flex;
-    @include media-breakpoint-up(md) {
-      img {
-        box-shadow: 0 0 pxToRem(12) rgba($color-black, 0.4);
-        max-width: pxToRem(280);
-      }
+    align-items: center;
+    justify-content: center;
+    img {
+      max-height: pxToRem(400);
     }
   }
-
 
   &__content {
     display: flex;

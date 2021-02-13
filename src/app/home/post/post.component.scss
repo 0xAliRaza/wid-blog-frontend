@@ -17,12 +17,13 @@
 
   }
   &__inner-content-box {
+  }
+  &__inner-content-box ::ng-deep {
     display: flex;
     flex-direction: column;
     // align-items: center;
     padding: pxToRem(24) 0;
-  }
-  &__inner-content-box ::ng-deep {
+    word-break: break-all;
     @include blog-post;
   }
   &__primary-title {

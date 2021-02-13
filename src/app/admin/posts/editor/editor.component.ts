@@ -102,8 +102,8 @@ export class EditorComponent implements OnInit, OnDestroy {
       toolbar: false,
       placeholder: "Write it all down...",
       plugins:
-        "quickbars image media hr codesample code autolink image wordcount",
-      quickbars_selection_toolbar: "bold italic link | h2 h3 | blockquote",
+        "quickbars image media hr codesample code autolink image wordcount lists",
+      quickbars_selection_toolbar: "bold italic link | h2 h3 | blockquote | numlist bullist",
       quickbars_insert_toolbar: "image media hr codesample code",
       statusbar: false,
       image_title: true,
@@ -112,10 +112,6 @@ export class EditorComponent implements OnInit, OnDestroy {
       images_upload_url: environment.postImageUploadUrl,
       images_upload_handler: this.onTinymceImageUpload.bind(this),
       inline: true,
-      codesample_global_prismjs: true,
-      paste_remove_styles: true,
-      verify_html: false,
-      cleanup: true,
       mobile: {
         theme: 'silver'
       }
@@ -197,7 +193,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     if (this.f.title.value === "") {
       this.f.title.setValue("(Untitled)", { emitEvent: false });
     }
-    if (this.f.slug.value === "") {
+    if (this.f.slug.pristine) {
       this.f.slug.setValue(this.slugify(this.f.title.value), {
         emitEvent: false,
       });

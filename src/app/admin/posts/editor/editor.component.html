@@ -53,9 +53,9 @@
 
         </li>
         <li class="nav-item">
-            <button class="nav-link btn settings-btn" (click)="toggleSideNav()">
-                <svg-icon icon="settings"></svg-icon>
-            </button>
+            <a class="settings-btn" (click)="toggleSideNav()">
+                <span class="settings-btn__icon"></span>
+            </a>
         </li>
     </ul>
 </nav>
@@ -81,9 +81,9 @@
 <aside class="sidebar" @slideInOut *ngIf="isSideNavOpen">
     <div class="sidebar__top-intro">
         <h4 class="sidebar__top-intro-heading">Settings</h4>
-        <button class="sidebar__close-button btn" (click)="toggleSideNav()">
-            <svg-icon icon="close"></svg-icon>
-        </button>
+        <a class="settings-btn" (click)="toggleSideNav()">
+            <span class="settings-btn__icon settings-btn__icon--cross"></span>
+        </a>
     </div>
     <div class="sidebar__form">
         <form enctype="multipart/form-data" [formGroup]="postForm">
@@ -143,11 +143,13 @@
             <div class="form-group">
                 <label for="post-meta-title">Meta Title</label>
                 <input type="text" id="post-meta-title" class="form-control" formControlName="meta_title">
+                <p class="text-warning" *ngIf="f.meta_title.value.length > 60">Warning: recommended `meta_title` length is 60 chars.</p>
             </div>
             <div class="form-group">
                 <label for="post-meta-description">Meta description</label>
                 <textarea rows="3" type="text" id="post-meta-description" class="form-control"
-                    formControlName="meta_description"></textarea>
+                formControlName="meta_description"></textarea>
+                <span class="text-warning" *ngIf="f.meta_description.value.length > 160">Warning: recommended `meta_description` length is 160 chars.</span>
             </div>
             <div class="custom-control custom-checkbox">
                 <input type="checkbox" id="post-featured" class="custom-control-input" formControlName="featured">

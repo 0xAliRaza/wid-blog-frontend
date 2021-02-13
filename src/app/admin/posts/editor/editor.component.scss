@@ -50,7 +50,6 @@
       outline: none;
     }
   }
-
 }
 
 nav#editor-top-nav {
@@ -114,7 +113,59 @@ nav#editor-top-nav {
     }
   }
 }
+.settings-btn {
+  padding: pxToRem(16) pxToRem(16);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: $color-primary;
+  cursor: pointer;
 
+  @include hover-focus-active {
+    color: $color-primary-dark;
+  }
+
+  z-index: 1031;
+}
+
+.settings-btn__icon {
+  &,
+  &::before,
+  &::after {
+    display: inline-flex;
+    align-items: center;
+    content: "";
+    width: pxToRem(20);
+    height: pxToRem(1);
+    background-color: $color-primary;
+    visibility: visible;
+  }
+
+  position: relative;
+
+  &::before {
+    position: absolute;
+    right: 0;
+    bottom: pxToRem(6);
+  }
+  &::after {
+    position: absolute;
+    right: 0;
+    top: pxToRem(6);
+  }
+
+  &--cross {
+    visibility: hidden;
+    &::before {
+      bottom: 0;
+      transform: rotate(-45deg);
+    }
+    &::after {
+      top: 0;
+      transform: rotate(45deg);
+    }
+  }
+}
 .sidebar {
   position: fixed;
   right: 0;

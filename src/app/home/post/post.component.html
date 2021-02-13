@@ -121,7 +121,7 @@
                             </div>
                         </div>
                     </header>
-                    <figure class="post__featured-image">
+                    <figure class="post__featured-image" *ngIf="post.featured_image">
                         <img src="{{ApiUrl + '/' + post.featured_image}}" alt="" class="img-fluid">
                     </figure>
                     <section class="post__content w-700-centered">

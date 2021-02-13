@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
       <div class="col-12 col-lg-10">
         <main class="">
-          <article tabindex="0" *ngFor="let post of posts | paginate : {
+          <article *ngFor="let post of posts | paginate : {
             itemsPerPage: 10,
             currentPage: page,
             totalItems: count
@@ -49,12 +49,6 @@
                 (pageChange)="onTableDataChange($event)">
             </pagination-controls>
         </div>
-          <!-- <div class="load-more py-4 mt-3 d-flex justify-content-center align-items-center">
-            <button class="btn btn-primary d-inline-flex align-items-center justify-content-center" type="button">Load
-              more
-              <svg-icon icon="refresh" class="ml-1"></svg-icon>
-            </button>
-          </div> -->
         </main>
       </div>
     </div>

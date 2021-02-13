@@ -3,7 +3,7 @@
         <div class="col-12">
             <main class="py-5">
                 <article *ngIf="post" class="post">
-                    <header class="post__header">
+                    <header class="post__header w-700-centered">
                         <h1 class="post__primary-title">
                             {{post.title}}
                         </h1>
@@ -124,10 +124,10 @@
                     <figure class="post__featured-image">
                         <img src="{{ApiUrl + '/' + post.featured_image}}" alt="" class="img-fluid">
                     </figure>
-                    <section class="post__content">
+                    <section class="post__content w-700-centered">
                         <div class="post__inner-content-box" [innerHTML]="post.html"></div>
                     </section>
-                    <section class="post__tags">
+                    <section class="post__tags w-700-centered">
                         <a href="#" *ngFor="let tag of post.tags">{{tag.name}}</a>
                     </section>
                 </article>

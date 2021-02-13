@@ -4,8 +4,7 @@
   flex-direction: column;
   align-items: center;
   &__header {
-    padding: 0 pxToRem(10);
-    max-width: pxToRem(700);
+
     width: 100%;
     padding: pxToRem(70) 0 pxToRem(50);
   }
@@ -15,8 +14,7 @@
     margin: pxToRem(25) 0 pxToRem(50);
   }
   &__content {
-    padding: 0 pxToRem(10);
-    max-width: pxToRem(700);
+
   }
   &__inner-content-box {
     display: flex;
@@ -175,8 +173,7 @@
     row-gap: pxToRem(12);
 
     width: 100%;
-    max-width: pxToRem(700);
-    padding: 0 pxToRem(10);
+
     margin: pxToRem(16) 0;
     a {
       background-color: $color-white;

@@ -24,6 +24,7 @@
   position: relative;
 
   &__brand {
+    border-radius: pxToRem(3.2);
     color: $color-primary;
     display: inline-flex;
     justify-content: center;
@@ -144,6 +145,7 @@
   }
 
   &__link {
+    border-radius: pxToRem(3.2);
     font-weight: 400;
     font-size: pxToRem(16);
     display: inline-flex;
@@ -190,6 +192,7 @@
   }
 
   &__link {
+    border-radius: pxToRem(3.2);
     white-space: nowrap;
     font-weight: 500;
     font-size: pxToRem(15);
@@ -198,9 +201,7 @@
     align-items: center;
     color: $color-grey-dark-1;
     padding: pxToRem(8) 0;
-    &:not(:last-child) {
       margin-right: pxToRem(24);
-    }
     @include hover-focus-active {
       color: $color-grey-dark-3;
     }

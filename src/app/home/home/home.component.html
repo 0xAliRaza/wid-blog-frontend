@@ -42,21 +42,12 @@
       </div>
       <div class="col-sm-12">
         <div class="top-tags">
-          <div class="top-tags__list">
-            <a *ngFor="let tag of tags$ | async" [routerLink]="['/tag', tag.slug]"
-              routerLinkActive="top-tags__link--active" class="top-tags__link">{{tag.name}}</a>
-            <!-- <a href="#" class="top-tags__link">Gender</a>
-            <a href="#" class="top-tags__link">Racism</a>
-            <a href="#" class="top-tags__link">Programming</a>
-            <a href="#" class="top-tags__link">Angular</a>
-            <a href="#" class="top-tags__link">React</a>
-            <a href="#" class="top-tags__link">Philosophy</a>
-            <a href="#" class="top-tags__link">Love</a>
-            <a href="#" class="top-tags__link">Write Ups</a>
-            <a href="#" class="top-tags__link">Angular</a>
-            <a href="#" class="top-tags__link">React</a>
-            <a href="#" class="top-tags__link">Philosophy</a> -->
-          </div>
+          <ul class="top-tags__list">
+            <li *ngFor="let tag of tags$ | async">
+              <a [routerLink]="['/tag', tag.slug]" routerLinkActive="top-tags__link--active"
+                class="top-tags__link">{{tag.name}}</a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

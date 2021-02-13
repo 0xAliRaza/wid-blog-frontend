@@ -12,8 +12,9 @@ main {
   margin-top: pxToRem(22);
   background-color: $color-white;
   border: 0.2px solid rgba($color-grey-light-2, 0.5);
-  border-radius: pxToRem(2);
+  border-radius: pxToRem(3);
   overflow: hidden;
+  align-items: center;
 
   @include media-breakpoint-up(md) {
     flex-direction: row;
@@ -21,14 +22,14 @@ main {
 
   &__image-link {
     display: flex;
-
     @include media-breakpoint-up(md) {
       img {
-        max-width: pxToRem(260);
-        max-height: pxToRem(220);
+        box-shadow: 0 0 pxToRem(12) rgba($color-black, 0.4);
+        max-width: pxToRem(280);
       }
     }
   }
+
 
   &__content {
     display: flex;

@@ -17,6 +17,20 @@ import { TagsComponent } from "./tags/tags.component";
 
 const routes: Routes = [
   {
+    path: "editor/post",
+    component: CreateComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "editor/post/:id",
+    component: EditComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "login",
+    component: LoginComponent,
+  },
+  {
     path: "",
     component: AdminComponent,
     canActivate: [AuthGuard],
@@ -55,30 +69,17 @@ const routes: Routes = [
         data: { roles: [Role.SuperAdmin, Role.Admin] },
       },
       {
-        path: "",
-        redirectTo: "dashboard",
+        path: "**",
+        redirectTo: "post",
         pathMatch: "full",
       },
     ],
   },
-  {
-    path: "editor/post",
-    component: CreateComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: "editor/post/:id",
-    component: EditComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: "login",
-    component: LoginComponent,
-  },
+
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AdminRoutingModule {}
+export class AdminRoutingModule { }

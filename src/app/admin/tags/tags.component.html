@@ -1,110 +1,116 @@
-<div class="row">
-    <div class="col-sm-12">
-        <h3 class="text-center my-5">
-            Tags
-        </h3>
-        <div class="d-flex align-items-center justify-content-around my-4">
-            <form *ngIf="createTag; else createTagBtn" class="form-inline">
-                <label class="sr-only" for="create-tag-name">Name</label>
-                <input type="text" class="form-control mr-1 mb-1" id="create-tag-name" placeholder="Name"
-                    [formControl]="f.name">
-                <label class="sr-only" for="create-tag-slug">Slug</label>
-                <input type="text" class="form-control mr-1 mb-1" id="create-tag-slug" placeholder="Slug"
-                    [formControl]="f.slug">
-                <label class="sr-only" for="create-tag-description">Description</label>
-                <input type="text" class="form-control mr-1 mb-1" id="create-tag-description" placeholder="Description"
-                    [formControl]="f.description">
-                <button title="Create Tag" type="button" class="btn btn-link text-danger mr-2"
-                    (click)="createTag = false;form.reset()">Cancel</button>
-                <button title="Create Tag" type="submit" class="btn btn-primary mr-2" (click)="create()"
-                    [disabled]="form.pristine || !form.valid">Submit</button>
+<div class="container">
 
-            </form>
-            <ng-template #createTagBtn>
-                <button title="Add new tag" type="button" class="btn btn-outline-primary mr-2 ml-auto"
-                    (click)="addCreateTagForm()">Add new</button>
-            </ng-template>
-        </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="text-center my-5">
+                Tags
+            </h3>
+            <div class="d-flex align-items-center justify-content-around my-4">
+                <form *ngIf="createTag; else createTagBtn" class="form-inline">
+                    <label class="sr-only" for="create-tag-name">Name</label>
+                    <input type="text" class="form-control mr-1 mb-1" id="create-tag-name" placeholder="Name"
+                        [formControl]="f.name">
+                    <label class="sr-only" for="create-tag-slug">Slug</label>
+                    <input type="text" class="form-control mr-1 mb-1" id="create-tag-slug" placeholder="Slug"
+                        [formControl]="f.slug">
+                    <label class="sr-only" for="create-tag-description">Description</label>
+                    <input type="text" class="form-control mr-1 mb-1" id="create-tag-description"
+                        placeholder="Description" [formControl]="f.description">
+                    <button title="Create Tag" type="button" class="btn btn-link text-danger mr-2"
+                        (click)="createTag = false;form.reset()">Cancel</button>
+                    <button title="Create Tag" type="submit" class="btn btn-primary mr-2" (click)="create()"
+                        [disabled]="form.pristine || !form.valid">Submit</button>
 
-        <button title="Refresh" type="button" (click)="onRefresh()" class="btn btn-link d-inline-flex align-items-center float-right my-1"><svg-icon class="" icon="refresh"></svg-icon></button>
-        <div class="table-responsive shadow-sm">
-            <table class="table m-0">
+                </form>
+                <ng-template #createTagBtn>
+                    <button title="Add new tag" type="button" class="btn btn-outline-primary mr-2 ml-auto"
+                        (click)="addCreateTagForm()">Add new</button>
+                </ng-template>
+            </div>
 
-                <thead class="">
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Slug</th>
-                        <th>Description</th>
-                        <th>Created</th>
-                        <th>Updated</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
+            <button title="Refresh" type="button" (click)="onRefresh()"
+                class="btn btn-link d-inline-flex align-items-center float-right my-1">
+                <svg-icon class="" icon="refresh"></svg-icon>
+            </button>
+            <div class="table-responsive shadow-sm">
+                <table class="table m-0">
 
-                <tbody>
-                    <tr class="position-relative" *ngFor="let tag of tags; let i = index">
-                        <th role="row">{{tag.id}}</th>
-                        <td>
-                            <ng-container *ngIf="editTag && editTag.id === tag.id;else name">
-                                <label class="sr-only" for="name">Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Tag Name"
-                                    [formControl]="f.name">
-                            </ng-container>
-                            <ng-template #name>
-                                {{tag.name}}
-                            </ng-template>
-                        </td>
-                        <td>
-                            <ng-container *ngIf="editTag && editTag.id === tag.id;else slug">
-                                <label class="sr-only" for="slug">Slug</label>
-                                <input type="text" class="form-control" id="slug" placeholder="Tag slug"
-                                    [formControl]="f.slug">
-                            </ng-container>
-                            <ng-template #slug>
-                                {{tag.slug}}
-                            </ng-template>
-                        </td>
-                        <td>
-                            <ng-container *ngIf="editTag && editTag.id === tag.id;else description">
-                                <label class="sr-only" for="description">Description</label>
-                                <input type="text" class="form-control" id="description" placeholder="Tag Description"
-                                    [formControl]="f.description">
-                            </ng-container>
-                            <ng-template #description>
-                                {{tag.description}}
-                            </ng-template>
-                        </td>
-                        <td title="{{tag.created_at | date:'full'}}">{{tag.created_at | date}}</td>
-                        <td title="{{tag.updated_at | date:'full'}}">{{tag.updated_at | date}}</td>
-                        <td [style.width]="'17%'">
-                            <ng-container *ngIf="editTag && editTag.id === tag.id;else generalActions">
+                    <thead class="">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Slug</th>
+                            <th>Description</th>
+                            <th>Created</th>
+                            <th>Updated</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
 
-                                <button (click)="editTag = undefined;form.reset()"
-                                    class="btn btn-sm btn-link text-danger mr-1">
-                                    Cancel
-                                </button>
-                                <button class="btn btn-sm btn-success" (click)="update(i)"
-                                    [disabled]="form.pristine || !form.valid">
-                                    Update
-                                </button>
-                            </ng-container>
-                            <ng-template #generalActions>
-                                <button title="Edit tag (inline)" [ngStyle]="{'font-size': '17px'}" (click)="edit(tag)"
-                                    class="btn text-dark py-0">
-                                    <svg-icon icon="edit"></svg-icon>
-                                </button>
-                                <button title="Delete tag" [ngStyle]="{'font-size': '17px'}"
-                                    class="btn text-danger py-0" (click)="delete(i, tag.id)">
-                                    <svg-icon icon="trash"></svg-icon>
-                                </button>
-                            </ng-template>
-                        </td>
+                    <tbody>
+                        <tr class="position-relative" *ngFor="let tag of tags; let i = index">
+                            <th role="row">{{tag.id}}</th>
+                            <td>
+                                <ng-container *ngIf="editTag && editTag.id === tag.id;else name">
+                                    <label class="sr-only" for="name">Name</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Tag Name"
+                                        [formControl]="f.name">
+                                </ng-container>
+                                <ng-template #name>
+                                    {{tag.name}}
+                                </ng-template>
+                            </td>
+                            <td>
+                                <ng-container *ngIf="editTag && editTag.id === tag.id;else slug">
+                                    <label class="sr-only" for="slug">Slug</label>
+                                    <input type="text" class="form-control" id="slug" placeholder="Tag slug"
+                                        [formControl]="f.slug">
+                                </ng-container>
+                                <ng-template #slug>
+                                    {{tag.slug}}
+                                </ng-template>
+                            </td>
+                            <td>
+                                <ng-container *ngIf="editTag && editTag.id === tag.id;else description">
+                                    <label class="sr-only" for="description">Description</label>
+                                    <input type="text" class="form-control" id="description"
+                                        placeholder="Tag Description" [formControl]="f.description">
+                                </ng-container>
+                                <ng-template #description>
+                                    {{tag.description}}
+                                </ng-template>
+                            </td>
+                            <td title="{{tag.created_at | date:'full'}}">{{tag.created_at | date}}</td>
+                            <td title="{{tag.updated_at | date:'full'}}">{{tag.updated_at | date}}</td>
+                            <td [style.width]="'17%'">
+                                <ng-container *ngIf="editTag && editTag.id === tag.id;else generalActions">
 
-                    </tr>
+                                    <button (click)="editTag = undefined;form.reset()"
+                                        class="btn btn-sm btn-link text-danger mr-1">
+                                        Cancel
+                                    </button>
+                                    <button class="btn btn-sm btn-success" (click)="update(i)"
+                                        [disabled]="form.pristine || !form.valid">
+                                        Update
+                                    </button>
+                                </ng-container>
+                                <ng-template #generalActions>
+                                    <button title="Edit tag (inline)" [ngStyle]="{'font-size': '17px'}"
+                                        (click)="edit(tag)" class="btn text-dark py-0">
+                                        <svg-icon icon="edit"></svg-icon>
+                                    </button>
+                                    <button title="Delete tag" [ngStyle]="{'font-size': '17px'}"
+                                        class="btn text-danger py-0" (click)="delete(i, tag.id)">
+                                        <svg-icon icon="trash"></svg-icon>
+                                    </button>
+                                </ng-template>
+                            </td>
 
-                </tbody>
-            </table>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

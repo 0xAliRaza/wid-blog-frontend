@@ -115,13 +115,11 @@
 
 
     <main class="main__content">
-        <div class="container">
             <button *ngIf="sideNavVisible === false" [@fadeInOut] (click)="toggleSideNav()" type="button"
                 class="main__sidebar-toggler">
                 <svg-icon icon="menu"></svg-icon>
             </button>
             <router-outlet></router-outlet>
-        </div>
     </main>
 
 </div>

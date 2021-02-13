@@ -1,88 +1,98 @@
-<div class="container">
-    <h3 class="text-center mt-5 mb-5">
-        Posts
-    </h3>
+<div class="container-md">
+    <div class="row">
+        <div class="col-12">
 
-    <div class="d-flex flex-row-reverse mb-2">
-        <div class="p-2">
-            <select (change)="onTableSizeChange($event)" class="custom-select">
-                <option *ngFor="let size of tableSizes" [ngValue]="size">
-                    {{ size }}
-                </option>
-            </select>
+            <h3 class="text-center mt-5 mb-5">
+                Posts
+            </h3>
+
+            <div class="d-flex flex-row-reverse mb-2">
+                <div class="p-2">
+                    <select (change)="onTableSizeChange($event)" class="custom-select">
+                        <option *ngFor="let size of tableSizes" [ngValue]="size">
+                            {{ size }}
+                        </option>
+                    </select>
+                </div>
+                <div class="p-2">
+                    <select (change)="onPostsTypeChange($event)" [value]="type" class="custom-select">
+                        <option value="all" selected>
+                            All
+                        </option>
+                        <option value="published">
+                            Published
+                        </option>
+                        <option value="draft">
+                            Draft
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <button title="Refresh" type="button" (click)="onRefresh()"
+                class="btn btn-link d-inline-flex align-items-center float-right my-1">
+                <svg-icon class="" icon="refresh"></svg-icon>
+            </button>
+            <div class="table-responsive shadow-sm">
+                <table class="table table-hover m-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th [ngStyle]="{'min-width': '150px'}">Title</th>
+                            <th>Created</th>
+                            <th>Updated</th>
+                            <th>Featured</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let post of POSTS | paginate : {
+                          itemsPerPage: tableSize,
+                          currentPage: page,
+                          totalItems: count
+                        }" [routerLink]="'/admin/editor/post/' + post.id" [ngStyle]="{cursor: 'pointer'}"
+                            title="Click to edit {{post.title}}">
+                            <th class="align-middle" scope="row">{{post.id}}</th>
+                            <td class="align-middle" class="align-middle">
+                                <div class="text-dark">{{post.title}}</div>
+                                <span class="text-secondary" [ngStyle]="{fontSize: '13px'}">By <b>{{post.user.name}}</b>
+                                    <ng-container *ngIf="post.first_tag"> in
+                                        <b>{{post.first_tag.name}}</b>
+                                    </ng-container>
+                                </span>
+
+                            </td>
+
+                            <td class="align-middle" [title]="post.created_at | date:'full'">{{post.created_at | date}}
+                            </td>
+                            <td class="align-middle" [title]="post.updated_at | date:'full'">{{post.updated_at | date}}
+                            </td>
+                            <td class="align-middle">
+                                <div class="custom-control custom-checkbox ">
+                                    <input [ngStyle]="{pointerEvents: 'none'}" type="checkbox"
+                                        class="custom-control-input position-static" [checked]="!!+post.featured"
+                                        id="post-featured-checkbox">
+                                    <label [ngStyle]="{pointerEvents: 'none'}" (click)="false"
+                                        for="post-featured-checkbox" class="custom-control-label"></label>
+                                </div>
+                            </td>
+                            <td class="align-middle"><span class="badge"
+                                    [ngClass]="{'badge-success': post.published, 'badge-info': !post.published}">
+                                    {{post.published ? "Published" : "Draft"}}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex justify-content-center mt-4 align-items-center">
+                <pagination-controls responsive="true" previousLabel="Prev" nextLabel="Next"
+                    (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+            </div>
+
+            <popup-msg *ngIf="httpErrors || successMsgs.length > 0" (noErrorsLeft)="clearErrors()"
+                (noSuccessMessagesLeft)="clearSuccessMsgs()" [httpErrors]="httpErrors" [successMessages]="successMsgs">
+            </popup-msg>
+
+
         </div>
-        <div class="p-2">
-            <select (change)="onPostsTypeChange($event)" [value]="type" class="custom-select">
-                <option value="all" selected>
-                    All
-                </option>
-                <option value="published">
-                    Published
-                </option>
-                <option value="draft">
-                    Draft
-                </option>
-            </select>
-        </div>
     </div>
-    <button title="Refresh" type="button" (click)="onRefresh()" class="btn btn-link d-inline-flex align-items-center float-right my-1"><svg-icon class="" icon="refresh"></svg-icon></button>
-    <div class="table-responsive shadow-sm">
-        <table class="table table-hover m-0">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Created</th>
-                    <th>Updated</th>
-                    <th>Featured</th>
-                    <th>Type</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let post of POSTS | paginate : {
-                  itemsPerPage: tableSize,
-                  currentPage: page,
-                  totalItems: count
-                }" [routerLink]="'/admin/editor/post/' + post.id" [ngStyle]="{cursor: 'pointer'}"
-                    title="Click to edit {{post.title}}">
-                    <th class="align-middle" scope="row">{{post.id}}</th>
-                    <td class="align-middle" class="align-middle">
-                        <div class="text-dark">{{post.title}}</div>
-                        <span class="text-secondary" [ngStyle]="{fontSize: '13px'}">By <b>{{post.user.name}}</b>
-                            <ng-container *ngIf="post.first_tag"> in
-                                <b>{{post.first_tag.name}}</b>
-                            </ng-container>
-                        </span>
-
-                    </td>
-
-                    <td class="align-middle" [title]="post.created_at | date:'full'">{{post.created_at | date}}</td>
-                    <td class="align-middle" [title]="post.updated_at | date:'full'">{{post.updated_at | date}}</td>
-                    <td class="align-middle">
-                        <div class="custom-control custom-checkbox ">
-                            <input [ngStyle]="{pointerEvents: 'none'}" type="checkbox"
-                                class="custom-control-input position-static" [checked]="!!+post.featured"
-                                id="post-featured-checkbox">
-                            <label [ngStyle]="{pointerEvents: 'none'}" (click)="false" for="post-featured-checkbox"
-                                class="custom-control-label"></label>
-                        </div>
-                    </td>
-                    <td class="align-middle"><span class="badge"
-                            [ngClass]="{'badge-success': post.published, 'badge-info': !post.published}">
-                            {{post.published ? "Published" : "Draft"}}</span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="d-flex justify-content-center mt-4 align-items-center">
-        <pagination-controls responsive="true" previousLabel="Prev" nextLabel="Next"
-            (pageChange)="onTableDataChange($event)">
-        </pagination-controls>
-    </div>
-
-    <popup-msg *ngIf="httpErrors || successMsgs.length > 0" (noErrorsLeft)="clearErrors()"
-        (noSuccessMessagesLeft)="clearSuccessMsgs()" [httpErrors]="httpErrors" [successMessages]="successMsgs">
-    </popup-msg>
-
-
 </div>

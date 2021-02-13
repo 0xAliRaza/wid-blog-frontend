@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { AdminComponent } from "./admin.component";
-import { DashboardComponent } from "./dashboard/dashboard.component";
 import { AdminRoutingModule } from "./admin-routing.module";
 import { AuthGuard } from "./_helpers/auth.guard";
 import { LoginComponent } from "./login/login.component";
@@ -35,7 +34,6 @@ import { TagsService } from "./_services/tags.service";
   declarations: [
     AdminComponent,
     LoginComponent,
-    DashboardComponent,
     PostsComponent,
     PostsCreateComponent,
     PostsEditComponent,

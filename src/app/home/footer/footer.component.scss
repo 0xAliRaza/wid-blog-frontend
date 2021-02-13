@@ -1,6 +1,9 @@
 @import "sass/index.scss";
-.footer {
+
+:host {
   margin-top: auto;
+}
+.footer {
   background-color: $color-grey-dark-5;
   &__content {
     padding: pxToRem(12) pxToRem(24) pxToRem(60);
@@ -15,9 +18,11 @@
   }
   a {
     color: $color-grey-light-3;
+    border-bottom: 1px dotted $color-grey-light-3;
+    padding-bottom: 1px;
     @include hover-focus {
       color: $color-grey-light-2;
-      text-decoration: underline;
+      border-bottom: 1px dotted $color-grey-light-2;
     }
   }
   &__cp-message {

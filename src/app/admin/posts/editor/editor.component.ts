@@ -116,6 +116,9 @@ export class EditorComponent implements OnInit, OnDestroy {
       paste_remove_styles: true,
       verify_html: false,
       cleanup: true,
+      mobile: {
+        theme: 'silver'
+      }
     };
 
     if (!this.post.published) {

@@ -114,7 +114,7 @@
 
 
 
-    <section class="main__content">
+    <main class="main__content">
         <div class="container">
             <button *ngIf="sideNavVisible === false" [@fadeInOut] (click)="toggleSideNav()" type="button"
                 class="main__sidebar-toggler">
@@ -122,6 +122,6 @@
             </button>
             <router-outlet></router-outlet>
         </div>
-    </section>
+    </main>
 
 </div>

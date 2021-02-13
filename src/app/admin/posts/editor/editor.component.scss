@@ -7,14 +7,15 @@
 }
 
 :host ::ng-deep {
-  // .tox-tinymce {
-  //   border: none;
-  //   overflow-x: hidden;
-  // }
-  // .tox-edit-area__iframe#tinymce {
-  //   overflow: hidden;
-  // }
+  @import "~prismjs/themes/prism-okaidia";
   editor {
+    .mce-content-body [contentEditable="false"][data-mce-selected] {
+      outline: none;
+      cursor: pointer;
+    }
+    pre[class*="language-"] {
+      cursor: pointer;
+    }
     #tinymce-editor {
       &:focus {
         outline: none;
@@ -34,7 +35,6 @@
 
 .post {
   display: flex;
-  justify-content: center;
   &__title {
     margin: 0 0 pxToRem(48);
   }
@@ -51,14 +51,12 @@
     }
   }
 
-  &__form {
-    max-width: pxToRem(700);
-  }
 }
 
 nav#editor-top-nav {
   background-color: $color-white;
   box-shadow: 0 pxToRem(4) pxToRem(12) rgba($color-grey-dark-5, 0.04);
+  flex-wrap: wrap;
   z-index: 1030;
   .nav-link {
     height: 100%;
@@ -118,13 +116,13 @@ nav#editor-top-nav {
 }
 
 .sidebar {
-  box-shadow: 0 0 pxToRem(8) rgba($color-grey-dark-5, 0.04);
   position: fixed;
   right: 0;
   top: 0;
   z-index: 1030;
-  width: pxToRem(350);
+  max-width: pxToRem(350);
   height: 100%;
+  box-shadow: 0 0 pxToRem(8) rgba($color-grey-dark-5, 0.04);
   overflow-y: scroll;
   display: flex;
   flex-direction: column;

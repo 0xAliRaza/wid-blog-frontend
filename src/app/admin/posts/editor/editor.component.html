@@ -1,6 +1,6 @@
 <nav id="editor-top-nav" class="navbar navbar-expand">
 
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link posts-link" routerLink="/admin/post">
                 <svg-icon icon="chevron-left" class="mr-1"></svg-icon>Posts
@@ -11,16 +11,16 @@
                 {{this.postStatus | titlecase}}
             </span>
         </li>
-        <li *ngIf="!!wordCount && +wordCount.characters > 0" class="nav-item">
-            <span class="navbar-text text-secondary">
-                characters: {{wordCount.characters}}
-            </span>
-            <span class="navbar-text text-secondary">
-                words: {{wordCount.words}}
-            </span>
-        </li>
     </ul>
-    <ul class="navbar-nav">
+    <ul class="navbar-nav" *ngIf="!!wordCount">
+        <span class="navbar-text navbar-text--wordCount">
+            words: {{+wordCount.words}}
+        </span>
+        <span class="navbar-text navbar-text--wordCount">
+            characters: {{+wordCount.characters}}
+        </span>
+    </ul>
+    <ul class="navbar-nav ml-auto">
 
         <li class="nav-item submit-toggle" #submitMenu>
             <button appToggler #toggler="appToggler" [excluded]="submitMenu"
@@ -61,20 +61,17 @@
 </nav>
 
 <div class="container-xl">
-    <div class="row justify-content-center">
+    <div class="row">
         <div class="col-12 my-5 py-5">
             <section class="post">
-                <div class="post__form">
-                    <form [formGroup]="postForm">
-                        <div class="post__title">
-                            <input placeholder="Title..." class="post__title-input" formControlName="title">
-                        </div>
-                        <div class="post__text">
-                            <editor (onChange)="onTinymceChange()" (onInit)="onTinymceInit($event)"
-                                [init]="tinymceConfig" id="tinymce-editor"></editor>
-                        </div>
-
-                    </form>
+                <div class="w-700-centered">
+                    <div class="post__title">
+                        <input placeholder="Title..." class="post__title-input" [formControl]="f.title">
+                    </div>
+                    <div class="post__text">
+                        <editor (onChange)="onTinymceChange()" (onInit)="onTinymceInit($event)" [init]="tinymceConfig"
+                            id="tinymce-editor"></editor>
+                    </div>
                 </div>
             </section>
         </div>

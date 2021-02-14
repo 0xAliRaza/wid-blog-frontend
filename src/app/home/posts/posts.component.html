@@ -2,6 +2,7 @@
     <div class="row justify-content-center">
       <div class="col-12 col-lg-10">
         <main class="">
+          <h2 *ngIf="posts && posts.length == 0" class="text-center">Wow, such empty! 🙄</h2>
           <article *ngFor="let post of posts | paginate : {
             itemsPerPage: 10,
             currentPage: page,
@@ -44,7 +45,7 @@
               <img src="{{apiUrl + '/' + post.featured_image}}" class="post-card__image img-fluid">
             </a>
           </article>
-          <div class="d-flex justify-content-center my-5 align-items-center">
+          <div *ngIf="nextPageUrl" class="d-flex justify-content-center my-5 align-items-center">
             <pagination-controls responsive="true" previousLabel="Prev" nextLabel="Next"
                 (pageChange)="onTableDataChange($event)">
             </pagination-controls>

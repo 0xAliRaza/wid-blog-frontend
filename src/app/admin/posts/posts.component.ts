@@ -14,40 +14,41 @@ import { ActivatedRoute } from "@angular/router";
   styleUrls: ["./posts.component.scss"],
 })
 export class PostsComponent implements OnInit, OnDestroy {
-  constructor(private posts: PostsService, private route: ActivatedRoute) {}
+  constructor(private posts: PostsService, private route: ActivatedRoute) { }
   httpErrors: HttpErrorResponse;
   successMsgs: string[] = [];
   type = "all";
   POSTS: Post[];
-  page = 1;
+  currentPage = 1;
   count = 0;
   tableSize = 10;
   tableSizes = [5, 10, 20, 50, 100];
+  pagePost = false;
 
   fetchPosts(): void {
     this.posts
-      .indexPaginated(this.page, this.tableSize, this.type)
+      .indexPaginated(this.pagePost, this.currentPage, this.tableSize, this.type)
       .subscribe((response) => {
         this.POSTS = response.data as Post[];
         this.count = response.total;
-        this.page = response.current_page;
+        this.currentPage = response.current_page;
       });
   }
 
   onTableDataChange(event: number) {
-    this.page = event;
+    this.currentPage = event;
     this.fetchPosts();
   }
 
   onTableSizeChange(event): void {
     this.tableSize = event.target.value;
-    this.page = 1;
+    this.currentPage = 1;
     this.fetchPosts();
   }
 
   onPostsTypeChange(event): void {
     this.type = event.target.value;
-    this.page = 1;
+    this.currentPage = 1;
     this.fetchPosts();
   }
 
@@ -82,6 +83,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.pagePost = this.route.snapshot.data.page;
     this.route.queryParams.subscribe((params) => {
       if (params.type === "draft" || params.type === "published") {
         this.type = params.type;
@@ -91,5 +93,5 @@ export class PostsComponent implements OnInit, OnDestroy {
       this.fetchPosts();
     });
   }
-  ngOnDestroy() {}
+  ngOnDestroy() { }
 }

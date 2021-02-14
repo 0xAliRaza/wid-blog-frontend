@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Post, User } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
 import { AuthenticationService, PostsService, TagsService, UsersService } from "@app/admin/_services";
@@ -14,15 +14,17 @@ import { takeUntil } from "rxjs/operators";
 export class CreateComponent implements OnInit, OnDestroy {
   destroyed$: Subject<boolean> = new Subject();
   user: User;
-  postStatus = "New Post";
+  postStatus = "Unsaved";
   tags: Tag[];
   allUsers: User[];
+  page = false;
   constructor(
     private auth: AuthenticationService,
     private posts: PostsService,
     private tagsService: TagsService,
     private usersService: UsersService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.auth.currentUser
       .pipe(takeUntil(this.destroyed$))
@@ -37,10 +39,11 @@ export class CreateComponent implements OnInit, OnDestroy {
       .subscribe((users: User[]) => {
         this.allUsers = users;
       });
+
   }
 
   onFormChange(data: object) {
-    this.postStatus = "Creating new post...";
+    this.postStatus = "Creating...";
     this.posts.create(data).subscribe((post: Post) => {
       if (post.exists) {
         this.posts.newlyCreatedPost = post;
@@ -53,7 +56,11 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.tagsService.pushModel(tag);
   }
 
-  ngOnInit() {}
+  ngOnInit() { 
+    this.page = this.route.snapshot.data.page;
+    console.log(this.route.snapshot.data, 'create');
+
+  }
 
   ngOnDestroy() {
     this.destroyed$.next(true);

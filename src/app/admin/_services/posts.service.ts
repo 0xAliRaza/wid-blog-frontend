@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { environment } from "@environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
-import {  map } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import { Post } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
 import { CRUD } from "./crud";
@@ -26,9 +26,12 @@ export class PostsService extends CRUD<Post> {
     return this.httpClient.delete<boolean>(`${environment.apiUrl}/post/${id}`);
   }
 
-  indexPaginated(page: any, tableSize: any, type: string): Observable<any> {
+  indexPaginated(pagePost: boolean, currentPage: any, tableSize: any, type: string): Observable<any> {
     const params: any = {};
-    params.page = page;
+    if (!!pagePost) {
+      params.pagePost = true;
+    }
+    params.page = currentPage;
     params.per_page = tableSize;
     if (type === "published" || type === "draft") {
       params.type = type;

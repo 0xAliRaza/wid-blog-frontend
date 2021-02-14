@@ -93,6 +93,10 @@ export class EditorComponent implements OnInit, OnDestroy {
     return this._post;
   }
 
+  @Input() set page(val: boolean) {
+    this.f.page.setValue(val, { emitEvent: false });
+  }
+
   @ViewChild("featuredImage", { static: false }) featuredImageInput: ElementRef;
 
   constructor(private slugifyPipe: SlugifyPipe) {
@@ -137,6 +141,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     featured_image: new FormControl(""),
     featured_image_file: new FormControl(""),
     published: new FormControl(false),
+    page: new FormControl(false)
   });
 
   get f() {

@@ -29,6 +29,7 @@ import {
 import { SettingComponent } from "./setting/setting.component";
 import { TagsComponent } from "./tags/tags.component";
 import { TagsService } from "./_services/tags.service";
+import { PagesComponent } from './pages/pages.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { TagsService } from "./_services/tags.service";
     UsersFormComponent,
     SettingComponent,
     TagsComponent,
+    PagesComponent,
   ],
   imports: [
     CommonModule,

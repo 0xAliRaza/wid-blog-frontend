@@ -13,6 +13,7 @@ export class PostsComponent implements OnInit {
   posts: Post[];
   count = 0;
   page = 1;
+  nextPageUrl;
   apiUrl = environment.storageDir;
   constructor(private _home: HomeService) {
     this.fetchPosts();
@@ -23,6 +24,7 @@ export class PostsComponent implements OnInit {
       this.posts = response.data as Post[];
       this.count = response.total;
       this.page = response.current_page;
+      this.nextPageUrl = response.next_page_url;
     });
   }
 

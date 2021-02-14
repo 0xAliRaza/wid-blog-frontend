@@ -13,17 +13,32 @@ import {
 import { Role } from "./_models";
 import { SettingComponent } from "./setting/setting.component";
 import { TagsComponent } from "./tags/tags.component";
+import { PagesComponent } from "./pages/pages.component";
 
 const routes: Routes = [
   {
     path: "editor/post",
     component: CreateComponent,
     canActivate: [AuthGuard],
+    data: { page: false }
   },
   {
     path: "editor/post/:id",
     component: EditComponent,
     canActivate: [AuthGuard],
+    data: { page: false }
+  },
+  {
+    path: "editor/page",
+    component: CreateComponent,
+    canActivate: [AuthGuard],
+    data: { page: true }
+  },
+  {
+    path: "editor/page/:id",
+    component: EditComponent,
+    canActivate: [AuthGuard],
+    data: { page: true }
   },
   {
     path: "login",
@@ -37,6 +52,13 @@ const routes: Routes = [
       {
         path: "post",
         component: PostsComponent,
+        data: { page: false }
+      },
+      {
+        path: "page",
+        component: PostsComponent,
+        data: { page: true }
+
       },
       {
         path: "tag",

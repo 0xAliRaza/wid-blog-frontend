@@ -17,6 +17,7 @@ export class EditComponent implements OnInit, OnDestroy {
   postStatus = "";
   tags: Tag[];
   allUsers: User[];
+  page = false;
   constructor(
     private auth: AuthenticationService,
     private posts: PostsService,
@@ -70,6 +71,8 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.page = this.route.snapshot.data.page;
+    console.log(this.route.snapshot.data, 'create');
     this.route.params
       .pipe(takeUntil(this.destroyed$))
       .subscribe((params: Params) => {

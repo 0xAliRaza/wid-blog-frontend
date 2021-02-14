@@ -10,5 +10,6 @@ export interface Post {
   custom_excerpt: string;
   published_at: Date;
   author: Author;
-  tags: Tag[]
+  tags: Tag[];
+  page?: boolean;
 }

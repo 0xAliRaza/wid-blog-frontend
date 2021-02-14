@@ -22,4 +22,5 @@ export class Post extends Model {
   user: User;
   first_tag?: Tag;
   published: boolean;
+  page?: boolean;
 }

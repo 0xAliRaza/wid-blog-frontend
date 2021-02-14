@@ -10,14 +10,8 @@
               <li class="top-nav__item">
                 <a class="top-nav__link" routerLink="/">Home</a>
               </li>
-              <li class="top-nav__item">
-                <a class="top-nav__link" href="#">Link</a>
-              </li>
-              <li class="top-nav__item">
-                <a class="top-nav__link" href="#">Test</a>
-              </li>
-              <li class="top-nav__item">
-                <a class="top-nav__link" href="#">Third</a>
+              <li *ngFor="let page of pages$ | async" class="top-nav__item">
+                <a class="top-nav__link" [routerLink]="['/', page.slug]">{{page.title}}</a>
               </li>
             </ul>
           </div>

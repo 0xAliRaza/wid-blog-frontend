@@ -10,7 +10,7 @@
           }" class="post-card">
             
             <div class="post-card__content">
-              <a href="/{{post.slug}}" class="post-card__content-link">
+              <a routerLink="/{{post.slug}}" class="post-card__content-link">
                 <header class="post-card__header">
                   <div *ngIf="post.tags.length > 0" class="post-card__tag">
                     {{ post.tags[0].name }}

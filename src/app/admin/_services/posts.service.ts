@@ -10,12 +10,15 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class PostsService extends CRUD<Post> {
   models$: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
-  newlyCreatedPost: Post;
 
   constructor(private httpClient: HttpClient) {
     super(`${environment.apiUrl}/post`, httpClient, Post);
   }
-
+  getPage(id: number): Observable<Post> {
+    return this.httpClient
+      .get<Post>(`${environment.apiUrl}/post/page/${id}`)
+      .pipe(map((res) => new Post(res)));
+  }
   update(id = null, data: object): Observable<Post> {
     return this.httpClient
       .post<Post>(`${environment.apiUrl}/post/update`, data)

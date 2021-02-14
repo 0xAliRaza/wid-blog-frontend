@@ -20,6 +20,10 @@ export class HomeService {
         });
     }
 
+    indexPages(): Observable<any> {
+        return this.http.get(`${environment.apiUrl}/blog/page`);
+    }
+
     indexTags(): Observable<Tag> {
         return this.http.get<Tag>(`${environment.apiUrl}/blog/tag`);
     }

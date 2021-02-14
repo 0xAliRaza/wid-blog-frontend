@@ -60,8 +60,8 @@
                           itemsPerPage: tableSize,
                           currentPage: currentPage,
                           totalItems: count
-                        }" [routerLink]="'/admin/editor/post/' + post.id" [ngStyle]="{cursor: 'pointer'}"
-                            title="Click to edit {{post.title}}">
+                        }" routerLink="/admin/editor/{{pagePost ? 'page': 'post'}}/{{post.id}}"
+                            [ngStyle]="{cursor: 'pointer'}" title="Click to edit {{post.title}}">
                             <th class="align-middle" scope="row">{{post.id}}</th>
                             <td class="align-middle" class="align-middle">
                                 <div class="text-dark">{{post.title}}</div>

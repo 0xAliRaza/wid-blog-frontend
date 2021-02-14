@@ -72,18 +72,17 @@ export class EditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.page = this.route.snapshot.data.page;
-    console.log(this.route.snapshot.data, 'create');
     this.route.params
       .pipe(takeUntil(this.destroyed$))
       .subscribe((params: Params) => {
         if (!!params.id) {
-          if (
-            this.posts.newlyCreatedPost &&
-            this.posts.newlyCreatedPost.id === Number(params.id)
-          ) {
-            this.post = this.posts.newlyCreatedPost;
-            this.posts.newlyCreatedPost = undefined;
-            this.updatePostStatus();
+          if (this.page) {
+            this.posts.getPage(params.id).subscribe((post: Post) => {
+              if (post.exists) {
+                this.post = post;
+                this.updatePostStatus();
+              }
+            });
           } else {
             this.posts.get(params.id).subscribe((post: Post) => {
               if (post.exists) {

@@ -46,8 +46,8 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.postStatus = "Creating...";
     this.posts.create(data).subscribe((post: Post) => {
       if (post.exists) {
-        this.posts.newlyCreatedPost = post;
-        this.router.navigate([`admin/editor/post/${post.id}`]);
+        const url = this.page ? `admin/editor/page/${post.id}` : `admin/editor/post/${post.id}`;
+        this.router.navigate([url]);
       }
     });
   }
@@ -56,10 +56,8 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.tagsService.pushModel(tag);
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.page = this.route.snapshot.data.page;
-    console.log(this.route.snapshot.data, 'create');
-
   }
 
   ngOnDestroy() {

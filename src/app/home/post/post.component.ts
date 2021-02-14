@@ -18,16 +18,21 @@ export class PostComponent implements OnInit, OnDestroy, AfterViewChecked {
   ApiUrl = environment.storageDir;
   highlighted = false;
 
-  constructor(private _route: ActivatedRoute, private _home: HomeService, private _highlight: HighlightService) { }
+  constructor(private _route: ActivatedRoute, private _home: HomeService, private _highlight: HighlightService) {
+  }
+
 
   ngOnInit() {
-    const slug = this._route.snapshot.paramMap.get("slug");
-    if (slug && slug !== "") {
-      this._home
-        .getPost(slug)
-        .pipe(takeUntil(this.destroyed$))
-        .subscribe(res => this.post = res);
-    }
+    this._route.params
+      .pipe(takeUntil(this.destroyed$)).
+      subscribe(params => {
+        const slug = params.slug;
+        if (slug && slug !== "") {
+          this._home
+            .getPost(slug)
+            .subscribe(res => this.post = res);
+        }
+      });
   }
 
   ngAfterViewChecked() {

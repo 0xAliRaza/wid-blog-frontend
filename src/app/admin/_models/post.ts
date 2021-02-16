@@ -1,3 +1,4 @@
+import { Type } from "@app/home/_models";
 import { Model } from "./model";
 import { Tag } from "./tag";
 import { User } from "./user";
@@ -8,19 +9,23 @@ export class Post extends Model {
   }
 
   published_at?: Date;
-  author: number;
-  user_id?: number;
+  author_id: number;
+  user_id: number;
   title: string;
   html?: string;
   featured_image?: string;
   slug: string;
   tags?: Tag[];
+  first_tag?: Tag;
   custom_excerpt?: string;
   meta_title?: string;
   meta_description?: string;
   featured: boolean;
-  user: User;
-  first_tag?: Tag;
+  // user: User;
   published: boolean;
-  page?: boolean;
+  type: Type;
+
+  isPage() {
+    return this.type && this.type === Type.Page;
+  }
 }

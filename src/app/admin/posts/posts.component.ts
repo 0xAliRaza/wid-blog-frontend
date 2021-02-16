@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { environment } from "@environments/environment";
-import { catchError, first, map } from "rxjs/operators";
+import { catchError, first, map, takeUntil } from "rxjs/operators";
 import { Subscription, throwError } from "rxjs";
 import { PostsService } from "../_services/posts.service";
 import { AuthenticationService } from "../_services";
 import { Post } from "../_models";
 import { ActivatedRoute } from "@angular/router";
+import { Type } from "@app/home/_models";
 
 @Component({
   selector: "admin-posts",
@@ -17,23 +18,28 @@ export class PostsComponent implements OnInit, OnDestroy {
   constructor(private posts: PostsService, private route: ActivatedRoute) { }
   httpErrors: HttpErrorResponse;
   successMsgs: string[] = [];
-  type = "all";
+  type: Type = Type.Post;
   POSTS: Post[];
   currentPage = 1;
   count = 0;
   tableSize = 10;
   tableSizes = [5, 10, 20, 50, 100];
-  pagePost = false;
+  published: boolean;
+
+  isPage(): boolean {
+    return this.type === Type.Page;
+  }
 
   fetchPosts(): void {
     this.posts
-      .indexPaginated(this.pagePost, this.currentPage, this.tableSize, this.type)
+      .indexPaginated(this.type, this.published, this.currentPage, this.tableSize)
       .subscribe((response) => {
         this.POSTS = response.data as Post[];
         this.count = response.total;
         this.currentPage = response.current_page;
       });
   }
+
 
   onTableDataChange(event: number) {
     this.currentPage = event;
@@ -46,8 +52,17 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.fetchPosts();
   }
 
-  onPostsTypeChange(event): void {
-    this.type = event.target.value;
+  onPostsStatusChange(event): void {
+    if (event.target.value == 'true') {
+      this.published = true;
+    } else if (event.target.value == 'false') {
+      this.published = false;
+    } else if (event.target.value == 'undefined') {
+      this.published = undefined;
+    }
+    else {
+      return;
+    }
     this.currentPage = 1;
     this.fetchPosts();
   }
@@ -83,15 +98,19 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.pagePost = this.route.snapshot.data.page;
-    this.route.queryParams.subscribe((params) => {
-      if (params.type === "draft" || params.type === "published") {
-        this.type = params.type;
-      } else {
-        this.type = "all";
-      }
-      this.fetchPosts();
-    });
+    if (this.route.snapshot.data.page) {
+      this.type = Type.Page;
+    }
+    this.route.queryParams
+      .subscribe((params) => {
+        if (params.status === "published") {
+          this.published = true;
+        }
+        if (params.status === "draft") {
+          this.published = false;
+        }
+        this.fetchPosts();
+      });
   }
   ngOnDestroy() { }
 }

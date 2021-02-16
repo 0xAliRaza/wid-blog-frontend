@@ -4,7 +4,7 @@ import { HighlightService } from '@app/highlight.service';
 import { environment } from '@environments/environment';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Post } from '../_models';
+import { Post, Type } from '../_models';
 import { HomeService } from '../_services/home.service';
 
 @Component({
@@ -40,6 +40,10 @@ export class PostComponent implements OnInit, OnDestroy, AfterViewChecked {
       this._highlight.highlightAll();
       this.highlighted = true;
     }
+  }
+
+  isPage(): boolean {
+    return this.post ? this.post.type === Type.Page : false;
   }
 
   ngOnDestroy() {

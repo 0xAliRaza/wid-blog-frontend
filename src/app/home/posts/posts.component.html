@@ -1,56 +1,57 @@
 <div class="container-xl">
-    <div class="row justify-content-center">
-      <div class="col-12 col-lg-10">
-        <main class="">
-          <h2 *ngIf="posts && posts.length == 0" class="text-center">Wow, such empty! 🙄</h2>
-          <article *ngFor="let post of posts | paginate : {
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-10">
+      <main class="">
+        <h2 *ngIf="posts && posts.length == 0" class="text-center">Wow, such empty! 🙄</h2>
+        <article *ngFor="let post of posts | paginate : {
             itemsPerPage: 10,
             currentPage: page,
             totalItems: count
           }" class="post-card">
-            
-            <div class="post-card__content">
-              <a routerLink="/{{post.slug}}" class="post-card__content-link">
-                <header class="post-card__header">
-                  <div *ngIf="post.tags.length > 0" class="post-card__tag">
-                    {{ post.tags[0].name }}
-                  </div>
-                  <h2 class="post-card__title">
-                    {{ post.title }}
-                  </h2>
-                </header>
-                <section class="post-card__excerpt">
-                  <p>
-                    {{ post.custom_excerpt }}
-                  </p>
-                </section>
-              </a>
-              <footer class="post-card__meta">
-                <div class="post-card__author-image">
-                  <a href="#">
-                    <img [ngStyle]="{'opacity': '.5'}" src="assets/img/user.png" alt="" class="img-fluid">
-                  </a>
+
+          <a *ngIf="post.featured_image" routerLink="/{{post.slug}}" class="post-card__image-link">
+            <img src="{{apiUrl + '/' + post.featured_image}}" class="post-card__image img-fluid">
+          </a>
+          <div class="post-card__content">
+            <a routerLink="/{{post.slug}}" class="post-card__content-link">
+              <header class="post-card__header">
+                <div *ngIf="post.first_tag" class="post-card__tag">
+                  {{ post.first_tag.name }}
                 </div>
-                <div>
-                  <span>
-                    <a href="#">{{post.author.name}}</a></span>
-                  <span>
-                    <time [dateTime]="post.published_at">{{post.published_at | date}}</time>
-                  </span>
-  
-                </div>
-              </footer>
-            </div>
-            <a *ngIf="post.featured_image" [href]="'/' + post.slug" class="post-card__image-link">
-              <img src="{{apiUrl + '/' + post.featured_image}}" class="post-card__image img-fluid">
+                <h2 class="post-card__title">
+                  {{ post.title }}
+                </h2>
+              </header>
+              <section class="post-card__excerpt">
+                <p>
+                  {{ post.custom_excerpt }}
+                </p>
+              </section>
             </a>
-          </article>
-          <div *ngIf="nextPageUrl" class="d-flex justify-content-center my-5 align-items-center">
-            <pagination-controls responsive="true" previousLabel="Prev" nextLabel="Next"
-                (pageChange)="onTableDataChange($event)">
-            </pagination-controls>
+            <footer class="post-card__meta">
+              <div class="post-card__author-image">
+                <a href="#">
+                  <img [ngStyle]="{'opacity': '.5'}" src="assets/img/user.png" alt="" class="img-fluid">
+                </a>
+              </div>
+              <div>
+                <span>
+                  <a href="#">{{post.author.name}}</a></span>
+                <span>
+                  <time [dateTime]="post.published_at">{{post.published_at | date}}</time>
+                </span>
+
+              </div>
+            </footer>
+          </div>
+
+        </article>
+        <div class="d-flex justify-content-center my-5 align-items-center">
+          <pagination-controls responsive="true" previousLabel="Prev" nextLabel="Next"
+            (pageChange)="onTableDataChange($event)">
+          </pagination-controls>
         </div>
-        </main>
-      </div>
+      </main>
     </div>
   </div>
+</div>

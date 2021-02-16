@@ -12,6 +12,7 @@ import {
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Post, User } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
+import { Type } from "@app/home/_models";
 import { SlugifyPipe } from "@app/slugify.pipe";
 import { environment } from "@environments/environment";
 import { Subscription } from "rxjs";
@@ -66,7 +67,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   private _user: User;
   @Input() set user(user: User) {
     this._user = user;
-    this.f.author.setValue(this.user.id, { emitEvent: false });
+    this.f.author_id.setValue(this.user.id, { emitEvent: false });
   }
   get user(): User {
     return this._user;
@@ -93,8 +94,8 @@ export class EditorComponent implements OnInit, OnDestroy {
     return this._post;
   }
 
-  @Input() set page(val: boolean) {
-    this.f.page.setValue(val, { emitEvent: false });
+  @Input() set type(val: string) {
+    this.f.type.setValue(val, { emitEvent: false });
   }
 
   @ViewChild("featuredImage", { static: false }) featuredImageInput: ElementRef;
@@ -128,7 +129,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   postForm = new FormGroup({
     id: new FormControl(null),
-    author: new FormControl(""),
+    author_id: new FormControl(""),
     title: new FormControl(""),
     html: new FormControl(""),
     slug: new FormControl(""),
@@ -141,11 +142,15 @@ export class EditorComponent implements OnInit, OnDestroy {
     featured_image: new FormControl(""),
     featured_image_file: new FormControl(""),
     published: new FormControl(false),
-    page: new FormControl(false)
+    type: new FormControl(Type.Post)
   });
 
   get f() {
     return this.postForm.controls;
+  }
+
+  isPage(): boolean {
+    return this.f.type.value === Type.Page;
   }
 
   onTinymceImageUpload(blobInfo, success, failure, progress) {

@@ -6,6 +6,7 @@ import { Post } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
 import { CRUD } from "./crud";
 import { Injectable } from "@angular/core";
+import { Type } from "@app/home/_models";
 
 @Injectable()
 export class PostsService extends CRUD<Post> {
@@ -29,16 +30,14 @@ export class PostsService extends CRUD<Post> {
     return this.httpClient.delete<boolean>(`${environment.apiUrl}/post/${id}`);
   }
 
-  indexPaginated(pagePost: boolean, currentPage: any, tableSize: any, type: string): Observable<any> {
+  indexPaginated(type: Type, published: any, currentPage: any, tableSize: any): Observable<any> {
     const params: any = {};
-    if (!!pagePost) {
-      params.pagePost = true;
+    params.type = type;
+    if (published !== undefined) {
+      params.published = Number(published);
     }
     params.page = currentPage;
     params.per_page = tableSize;
-    if (type === "published" || type === "draft") {
-      params.type = type;
-    }
     return this.httpClient.get(`${environment.apiUrl}/post`, {
       params,
     });

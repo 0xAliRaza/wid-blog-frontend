@@ -3,12 +3,12 @@
         <div class="col-12">
 
             <h3 class="text-center mt-5 mb-5">
-                {{!pagePost ? 'Posts' : 'Pages'}}
+                {{!isPage() ? 'Posts' : 'Pages'}}
             </h3>
 
             <div class="d-flex flex-wrap-reverse flex-row-reverse align-center mb-2">
 
-                <div class="p-2" *ngIf="!pagePost;else addPage">
+                <div class="p-2" *ngIf="!isPage();else addPage">
                     <a class="btn btn-primary" routerLink="/admin/editor/post">Create new</a>
                 </div>
                 <ng-template #addPage>
@@ -24,14 +24,12 @@
                     </select>
                 </div>
                 <div class="p-2">
-                    <select (change)="onPostsTypeChange($event)" [value]="type" class="custom-select">
-                        <option value="all" selected>
-                            All
-                        </option>
-                        <option value="published">
+                    <select (change)="onPostsStatusChange($event)" class="custom-select">
+                        <option [value]="undefined" selected>All</option>
+                        <option [value]="true">
                             Published
                         </option>
-                        <option value="draft">
+                        <option [value]="false">
                             Draft
                         </option>
                     </select>
@@ -60,7 +58,7 @@
                           itemsPerPage: tableSize,
                           currentPage: currentPage,
                           totalItems: count
-                        }" routerLink="/admin/editor/{{pagePost ? 'page': 'post'}}/{{post.id}}"
+                        }" routerLink="/admin/editor/{{isPage() ? 'page': 'post'}}/{{post.id}}"
                             [ngStyle]="{cursor: 'pointer'}" title="Click to edit {{post.title}}">
                             <th class="align-middle" scope="row">{{post.id}}</th>
                             <td class="align-middle" class="align-middle">

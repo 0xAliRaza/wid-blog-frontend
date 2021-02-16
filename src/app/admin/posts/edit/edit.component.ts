@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Post, User } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
 import { AuthenticationService, PostsService, TagsService, UsersService } from "@app/admin/_services";
+import { Type } from "@app/home/_models";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 @Component({
@@ -17,7 +18,7 @@ export class EditComponent implements OnInit, OnDestroy {
   postStatus = "";
   tags: Tag[];
   allUsers: User[];
-  page = false;
+  type: Type = Type.Post;
   constructor(
     private auth: AuthenticationService,
     private posts: PostsService,
@@ -46,6 +47,7 @@ export class EditComponent implements OnInit, OnDestroy {
     this.posts.update(null, data).subscribe((post: Post) => {
       if (post.exists) {
         this.post = post;
+        this.tagsService.pull();
         this.updatePostStatus();
       }
     });
@@ -70,13 +72,19 @@ export class EditComponent implements OnInit, OnDestroy {
     this.postStatus = this.post.published ? "Published" : "Draft";
   }
 
+  isPage(): boolean {
+    return this.type === Type.Page;
+  }
+
   ngOnInit() {
-    this.page = this.route.snapshot.data.page;
+    if (this.route.snapshot.data.page) {
+      this.type = Type.Page;
+    }
     this.route.params
       .pipe(takeUntil(this.destroyed$))
       .subscribe((params: Params) => {
         if (!!params.id) {
-          if (this.page) {
+          if (this.isPage()) {
             this.posts.getPage(params.id).subscribe((post: Post) => {
               if (post.exists) {
                 this.post = post;

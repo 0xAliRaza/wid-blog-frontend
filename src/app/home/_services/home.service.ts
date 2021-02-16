@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
-import { Post, Tag } from '../_models';
+import { Post, Tag, Type } from '../_models';
 
 @Injectable()
 export class HomeService {
@@ -12,7 +12,7 @@ export class HomeService {
     //     return this.http.get<any>(`${environment.apiUrl}/blog`);
     // }
 
-    indexPosts(page: any): Observable<any> {
+    indexPosts(page: number): Observable<any> {
         const params: any = {};
         params.page = page;
         return this.http.get(`${environment.apiUrl}/blog`, {

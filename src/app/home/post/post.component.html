@@ -10,7 +10,7 @@
                         <p class="post__excerpt">
                             {{post.custom_excerpt}}
                         </p>
-                        <div *ngIf="!!!post.page" class="post__meta">
+                        <div *ngIf="!isPage()" class="post__meta">
                             <a href="#" class="post__author-image">
                                 <img [ngStyle]="{'opacity': '.5'}" src="assets/img/user.png" alt="" class="img-fluid ">
                             </a>

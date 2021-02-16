@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Post, User } from "@app/admin/_models";
 import { Tag } from "@app/admin/_models/tag";
 import { AuthenticationService, PostsService, TagsService, UsersService } from "@app/admin/_services";
+import { Type } from "@app/home/_models";
 import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -17,7 +18,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   postStatus = "Unsaved";
   tags: Tag[];
   allUsers: User[];
-  page = false;
+  type: Type = Type.Post;
   constructor(
     private auth: AuthenticationService,
     private posts: PostsService,
@@ -46,10 +47,15 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.postStatus = "Creating...";
     this.posts.create(data).subscribe((post: Post) => {
       if (post.exists) {
-        const url = this.page ? `admin/editor/page/${post.id}` : `admin/editor/post/${post.id}`;
+        this.tagsService.pull();
+        const url = this.isPage() ? `admin/editor/page/${post.id}` : `admin/editor/post/${post.id}`;
         this.router.navigate([url]);
       }
     });
+  }
+
+  isPage(): boolean {
+    return this.type === Type.Page;
   }
 
   onCreateTag(tag: Tag) {
@@ -57,7 +63,9 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.page = this.route.snapshot.data.page;
+    if (this.route.snapshot.data.page) {
+      this.type = Type.Page;
+    }
   }
 
   ngOnDestroy() {

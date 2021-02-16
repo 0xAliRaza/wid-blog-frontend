@@ -12,13 +12,12 @@ main {
 }
 .post-card {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   margin-top: pxToRem(22);
   background-color: $color-white;
-  border: 0.2px solid rgba($color-grey-light-2, 0.5);
+  border: pxToRem(0.5) solid rgba($color-grey-light-2, 0.5);
   border-radius: pxToRem(3);
   overflow: hidden;
-
 
   &__image-link {
     display: flex;

@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   tags$: Observable<Tag>;
   pages$: Observable<Post>;
 
-  constructor(private _home: HomeService) {    
+  constructor(private _home: HomeService) {
     this.tags$ = this._home.indexTags();
     this.pages$ = this._home.indexPages();
   }

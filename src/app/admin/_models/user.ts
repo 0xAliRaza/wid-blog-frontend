@@ -8,6 +8,7 @@ export class User extends Model {
 
   name: string;
   email: string;
+  slug: string;
   role: Role;
   token?: string;
 

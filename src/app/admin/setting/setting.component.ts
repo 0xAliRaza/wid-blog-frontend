@@ -14,7 +14,7 @@ export class SettingComponent implements OnInit {
   setting: Setting = new Setting();
   loading = false;
   success = false;
-  constructor(private http: HttpClient, private fb: FormBuilder) {}
+  constructor(private http: HttpClient, private fb: FormBuilder) { }
 
   get f() {
     return this.form.controls;
@@ -73,6 +73,7 @@ export class SettingComponent implements OnInit {
       )
       .subscribe((setting: Setting) => {
         this.setting = setting;
+        this.form.patchValue(this.setting);
       });
   }
 }

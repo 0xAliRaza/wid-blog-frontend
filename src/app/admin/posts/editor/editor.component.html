@@ -146,8 +146,8 @@
             <div class="form-group">
                 <label for="post-meta-title">Meta Title</label>
                 <input type="text" id="post-meta-title" class="form-control" formControlName="meta_title">
-                <p class="text-warning" *ngIf="f.meta_title.value && f.meta_title.value.length > 60">Warning:
-                    recommended `meta_title` length is 60 chars.</p>
+                <span class="text-warning" *ngIf="f.meta_title.value && f.meta_title.value.length > 60">Warning:
+                    recommended `meta_title` length is 60 chars.</span>
             </div>
             <div class="form-group">
                 <label for="post-meta-description">Meta description</label>

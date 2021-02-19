@@ -1,9 +1,9 @@
 <div class="row justify-content-center">
     <div class="col-sm-12 col-md-8 col-lg-6">
-        <form (ngSubmit)="onSubmit()" [formGroup]="form" novalidate>
+        <form autocomplete="disabled" (ngSubmit)="onSubmit()" [formGroup]="form" novalidate>
             <div class="form-group">
                 <label for="fullname">Full Name</label>
-                <input type="text" [formControl]="this.f.name" id="fullname"
+                <input type="text" [formControl]="f.name" id="fullname"
                     [ngClass]="{
                             'form-control': true, 'is-invalid': !f.name.valid && f.name.touched,'is-valid': f.name.valid && f.name.touched}">
                 <div class="invalid-feedback" *ngIf="f.name.hasError('required') && f.name.touched">User name is
@@ -11,7 +11,7 @@
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" [formControl]="this.f.email" id="email" [ngClass]="{
+                <input type="email" [formControl]="f.email" id="email" [ngClass]="{
                         'form-control': true, 'is-invalid': !f.email.valid && f.email.touched, 'is-valid': f.email.valid && f.email.touched
                     }">
                 <div class="invalid-feedback" *ngIf="f.email.hasError('required') && f.email.touched">User email is
@@ -20,17 +20,25 @@
                     valid email address.</div>
             </div>
             <div class="form-group">
+                <label for="slug">Slug</label>
+                <input type="slug" [formControl]="f.slug" [value]="f.slug.value | slugify" id="slug" [ngClass]="{
+                        'form-control': true, 'is-invalid': !f.slug.valid && f.slug.touched, 'is-valid': f.slug.valid && f.slug.touched
+                    }">
+                <div class="invalid-feedback" *ngIf="f.slug.hasError('required') && f.slug.touched">User slug is
+                    required.</div>
+            </div>
+            <div class="form-group">
                 <label for="role">Role</label>
                 <ng-select *ngIf="roles" labelForId="role" [items]="roles" bindLabel="name" bindValue="tag"
-                    [formControl]="this.f.role" placeholder="Select user role">
+                    [formControl]="f.role" placeholder="Select user role">
                 </ng-select>
-                <div class="invalid-feedback" *ngIf="!this.f.role.valid && this.f.role.touched"
-                    [ngStyle]="{display: 'block'}">Please select a user
+                <div class="invalid-feedback" *ngIf="!f.role.valid && f.role.touched" [ngStyle]="{display: 'block'}">
+                    Please select a user
                     role.</div>
             </div>
             <div class="form-group">
                 <label for="password">New password (optional)</label>
-                <input type="password" [formControl]="this.f.password" id="password" [ngClass]="{
+                <input type="password" [formControl]="f.password" id="password" [ngClass]="{
                     'form-control': true, 'is-invalid': !f.password.valid && f.password.touched, 'is-valid': f.password.valid && f.password.touched && f.password.value === !!f.password.value
                 }">
                 <div class="invalid-feedback" *ngIf="f.password.hasError('minLength') && f.password.touched">Password

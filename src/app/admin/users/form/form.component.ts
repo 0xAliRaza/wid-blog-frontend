@@ -47,6 +47,7 @@ export class FormComponent implements OnInit, OnDestroy {
   form = this.fb.group({
     name: [null, Validators.required],
     email: [null, [Validators.required, Validators.email]],
+    slug: ["", Validators.required],
     role: [null, Validators.required],
     password: [null, Validators.minLength(8)],
   });

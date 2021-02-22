@@ -59,6 +59,8 @@ export class FormComponent implements OnInit, OnDestroy {
     email: [null, [Validators.required, Validators.email]],
     slug: ["", Validators.required],
     role: [null, Validators.required],
+    website: [null],
+    description: [null, Validators.maxLength(250)],
     password: [null, [Validators.minLength(8), Validators.required]],
   });
 

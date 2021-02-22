@@ -37,7 +37,25 @@
                     role.</div>
             </div>
             <div class="form-group">
-                <label for="password">New password <ng-container *ngIf="isPassOptional">(optional)</ng-container>
+                <label for="website">Website <span class="text-secondary">(optional)</span></label>
+                <input type="website" [formControl]="f.website" id="website" [ngClass]="{
+                        'form-control': true, 'is-invalid': !f.website.valid && f.website.touched, 'is-valid': f.website.valid && f.website.touched
+                    }">
+            </div>
+            <div class="form-group">
+                <label for="description">Description <span class="text-secondary">(optional)</span></label>
+                <textarea rows="3" type="description" [formControl]="f.description" id="description" [ngClass]="{
+                        'form-control': true, 'is-invalid': !f.description.valid && f.description.touched, 'is-valid': f.description.valid && f.description.touched
+                    }"></textarea>
+                <div class="invalid-feedback" *ngIf="f.description.hasError('maxlength')">Description must not be longer
+                    than 250 characters.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    <ng-container *ngIf="isPassOptional; else pass">New password <span
+                            class="text-secondary">(optional)</span></ng-container>
+                    <ng-template #pass>Password</ng-template>
                 </label>
                 <input type="password" [formControl]="f.password" id="password"
                     [ngClass]="{

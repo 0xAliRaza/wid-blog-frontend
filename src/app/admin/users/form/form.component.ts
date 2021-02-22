@@ -18,7 +18,6 @@ import { EventEmitter } from "@angular/core";
 })
 export class FormComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder) {
-    console.log('constructor', new Date());
 
   }
   loading = false;
@@ -47,7 +46,6 @@ export class FormComponent implements OnInit, OnDestroy {
         this.f.password.updateValueAndValidity();
         this.form.updateValueAndValidity();
         this.isPassOptional = true;
-        console.log('yessssssss');
       }
     }
   }
@@ -82,7 +80,6 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('onInit', new Date());
   }
   ngOnDestroy() { }
 }

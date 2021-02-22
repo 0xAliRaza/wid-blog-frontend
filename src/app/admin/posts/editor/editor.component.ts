@@ -107,9 +107,11 @@ export class EditorComponent implements OnInit, OnDestroy {
       toolbar: false,
       placeholder: "Write it all down...",
       plugins:
-        "quickbars image media hr codesample code autolink image wordcount lists link",
+        "quickbars image media hr codesample code autolink image wordcount lists link paste",
       quickbars_selection_toolbar: "bold italic link | h2 h3 | blockquote | numlist bullist",
       quickbars_insert_toolbar: "image media hr codesample code",
+      contextmenu: "link | copy paste",
+      paste_as_text: true,
       statusbar: false,
       image_title: true,
       file_picker_types: "image",

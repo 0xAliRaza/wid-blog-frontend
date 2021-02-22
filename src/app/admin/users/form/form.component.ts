@@ -17,9 +17,13 @@ import { EventEmitter } from "@angular/core";
   styleUrls: ["./form.component.scss"],
 })
 export class FormComponent implements OnInit, OnDestroy {
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+    console.log('constructor', new Date());
+
+  }
   loading = false;
   success = false;
+  isPassOptional = false;
 
   @Output() formChange = new EventEmitter<any>();
   @Output() delete = new EventEmitter<void>();
@@ -30,12 +34,20 @@ export class FormComponent implements OnInit, OnDestroy {
     if (user.exists) {
       this.form.patchValue(user);
       this.form.markAsPristine();
+
       if (this.loading) {
         this.loading = false;
         this.success = true;
         setTimeout(() => {
           this.success = false;
         }, 1000);
+      }
+      if (!this.isPassOptional) {
+        this.f.password.setValidators([Validators.minLength(8)]);
+        this.f.password.updateValueAndValidity();
+        this.form.updateValueAndValidity();
+        this.isPassOptional = true;
+        console.log('yessssssss');
       }
     }
   }
@@ -49,7 +61,7 @@ export class FormComponent implements OnInit, OnDestroy {
     email: [null, [Validators.required, Validators.email]],
     slug: ["", Validators.required],
     role: [null, Validators.required],
-    password: [null, Validators.minLength(8)],
+    password: [null, [Validators.minLength(8), Validators.required]],
   });
 
   onSubmit() {
@@ -69,6 +81,8 @@ export class FormComponent implements OnInit, OnDestroy {
     this.delete.emit();
   }
 
-  ngOnInit() {}
-  ngOnDestroy() {}
+  ngOnInit() {
+    console.log('onInit', new Date());
+  }
+  ngOnDestroy() { }
 }

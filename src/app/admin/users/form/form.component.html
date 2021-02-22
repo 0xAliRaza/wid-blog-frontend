@@ -37,11 +37,15 @@
                     role.</div>
             </div>
             <div class="form-group">
-                <label for="password">New password (optional)</label>
-                <input type="password" [formControl]="f.password" id="password" [ngClass]="{
-                    'form-control': true, 'is-invalid': !f.password.valid && f.password.touched, 'is-valid': f.password.valid && f.password.touched && f.password.value === !!f.password.value
-                }">
-                <div class="invalid-feedback" *ngIf="f.password.hasError('minLength') && f.password.touched">Password
+                <label for="password">New password <ng-container *ngIf="isPassOptional">(optional)</ng-container>
+                </label>
+                <input type="password" [formControl]="f.password" id="password"
+                    [ngClass]="{
+                    'form-control': true, 'is-invalid': !f.password.valid && f.password.touched, 'is-valid': f.password.valid && f.password.touched}">
+                <div class="invalid-feedback" *ngIf="f.password.hasError('required') && f.password.touched">User
+                    password is
+                    required.</div>
+                <div class="invalid-feedback" *ngIf="f.password.hasError('minlength')">Password
                     must be longer than 8 characters.</div>
             </div>
 

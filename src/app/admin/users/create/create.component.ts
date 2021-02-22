@@ -25,10 +25,10 @@ export class CreateComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     if (this.auth.currentUserValue.isSuperAdmin()) {
-      this.roles.push({ name: "admin", tag: Role.Admin });
+      this.roles.push({ name: "Admin", tag: Role.Admin });
       this.roles.push({ name: "SuperAdmin", tag: Role.SuperAdmin });
     } else if (this.auth.currentUserValue.isAdmin()) {
-      this.roles.push({ name: "admin", tag: Role.Admin });
+      this.roles.push({ name: "Admin", tag: Role.Admin });
     }
   }
 
@@ -39,7 +39,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
   ngOnDestroy() {
     this.destroyed$.next(true);
     this.destroyed$.complete();

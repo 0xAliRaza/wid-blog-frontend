@@ -109,8 +109,8 @@ export class EditorComponent implements OnInit, OnDestroy {
       plugins:
         "quickbars image media hr codesample code autolink image wordcount lists link paste",
       quickbars_selection_toolbar: "bold italic link | h2 h3 | blockquote | numlist bullist",
-      quickbars_insert_toolbar: "image media hr codesample code",
-      contextmenu: "link | copy paste",
+      quickbars_insert_toolbar: "image media hr codesample",
+      contextmenu: "link | copy paste | code",
       paste_as_text: true,
       statusbar: false,
       image_title: true,
@@ -119,9 +119,27 @@ export class EditorComponent implements OnInit, OnDestroy {
       images_upload_url: environment.postImageUploadUrl,
       images_upload_handler: this.onTinymceImageUpload.bind(this),
       inline: true,
+      forced_root_blocks: false,
+      valid_children: "-p[img],h1[img],h2[img],h3[img],h4[img],+div[img],span[img]",
       mobile: {
-        theme: 'silver'
-      }
+        theme: "silver"
+      },
+      codesample_global_prismjs: true,
+      codesample_languages: [
+        { text: 'HTML/XML', value: 'markup' },
+        { text: 'JavaScript', value: 'javascript' },
+        { text: 'TypeScript', value: 'typescript' },
+        { text: 'CSS', value: 'css' },
+        { text: 'Scss', value: 'scss' },
+        { text: 'Sass', value: 'sass' },
+        { text: 'PHP', value: 'php' },
+        { text: 'Ruby', value: 'ruby' },
+        { text: 'Python', value: 'python' },
+        { text: 'Java', value: 'java' },
+        { text: 'C', value: 'c' },
+        { text: 'C#', value: 'csharp' },
+        { text: 'C++', value: 'cpp' }
+      ],
     };
 
     if (!this.post.published) {

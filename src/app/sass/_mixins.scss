@@ -31,6 +31,15 @@
   & {
     color: $color-grey-dark-4;
   }
+
+  a {
+    color: $color-primary;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+      color: $color-primary-dark;
+    }
+  }
   p {
     font-size: pxToRem(20);
     font-family: "Lora", serif;
@@ -51,7 +60,6 @@
       line-height: 1.6;
     }
     li::marker {
-      
     }
   }
   ol {
@@ -60,7 +68,6 @@
   ul {
     list-style: disc;
   }
-  
 
   blockquote {
     font-size: pxToRem(20);

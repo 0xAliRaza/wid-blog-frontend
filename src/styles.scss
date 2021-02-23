@@ -55,10 +55,11 @@ ol {
 }
 
 a {
+  color: $color-primary;
+  cursor: pointer;
   &:hover {
     text-decoration: none;
     color: currentColor;
-    cursor: pointer;
   }
 }
 

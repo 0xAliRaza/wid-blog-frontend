@@ -2,12 +2,7 @@
   <div class="row justify-content-center">
     <div class="col-12 col-lg-10">
       <main class="">
-        <h2 *ngIf="posts && posts.length == 0" class="text-center">Wow, such empty! 🙄</h2>
-        <article *ngFor="let post of posts | paginate : {
-            itemsPerPage: 10,
-            currentPage: page,
-            totalItems: count
-          }" class="post-card">
+        <article *ngFor="let post of posts" class="post-card">
 
           <a *ngIf="post.featured_image" routerLink="/{{post.slug}}" class="post-card__image-link">
             <img src="{{apiUrl + '/' + post.featured_image}}" class="post-card__image img-fluid">
@@ -30,13 +25,13 @@
             </a>
             <footer class="post-card__meta">
               <div class="post-card__author-image">
-                <a href="#">
+                <a routerLink="/author/{{post.author.slug}}">
                   <img [ngStyle]="{'opacity': '.5'}" src="assets/img/user.png" alt="" class="img-fluid">
                 </a>
               </div>
               <div>
                 <span>
-                  <a href="#">{{post.author.name}}</a></span>
+                  <a routerLink="/author/{{post.author.slug}}">{{post.author.name}}</a></span>
                 <span>
                   <time [dateTime]="post.published_at">{{post.published_at | date}}</time>
                 </span>
@@ -46,11 +41,7 @@
           </div>
 
         </article>
-        <div class="d-flex justify-content-center my-5 align-items-center">
-          <pagination-controls responsive="true" previousLabel="Prev" nextLabel="Next"
-            (pageChange)="onTableDataChange($event)">
-          </pagination-controls>
-        </div>
+        
       </main>
     </div>
   </div>

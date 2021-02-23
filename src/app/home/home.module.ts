@@ -9,11 +9,24 @@ import { HomeService } from './_services/home.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PostsComponent } from './posts/posts.component';
-import { FooterComponent } from './footer/footer.component';
+import { FooterComponent } from './landing/footer/footer.component';
 import { EmailSubComponent } from './email-sub/email-sub.component';
+import { AuthorComponent } from './author/author.component';
+import { LandingComponent } from './landing/landing.component';
+import { HeaderComponent } from './landing/header/header.component';
 
 @NgModule({
-  declarations: [HomeComponent, PostComponent, PostsComponent, FooterComponent, EmailSubComponent],
+  declarations: [
+    HomeComponent,
+    PostComponent,
+    PostsComponent,
+    EmailSubComponent,
+    AuthorComponent,
+    HeaderComponent,
+    FooterComponent,
+    LandingComponent,
+
+  ],
   imports: [
     CommonModule,
     HomeRoutingModule,

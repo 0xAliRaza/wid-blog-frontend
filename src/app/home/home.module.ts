@@ -14,6 +14,7 @@ import { EmailSubComponent } from './email-sub/email-sub.component';
 import { AuthorComponent } from './author/author.component';
 import { LandingComponent } from './landing/landing.component';
 import { HeaderComponent } from './landing/header/header.component';
+import { TagComponent } from './tag/tag.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { HeaderComponent } from './landing/header/header.component';
     HeaderComponent,
     FooterComponent,
     LandingComponent,
+    TagComponent,
 
   ],
   imports: [

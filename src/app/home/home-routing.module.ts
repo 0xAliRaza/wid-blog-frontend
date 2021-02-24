@@ -4,7 +4,7 @@ import { AuthorComponent } from './author/author.component';
 import { HomeComponent } from './home/home.component';
 import { LandingComponent } from './landing/landing.component';
 import { PostComponent } from './post/post.component';
-import { PostsComponent } from './posts/posts.component';
+import { TagComponent } from './tag/tag.component';
 
 const routes: Routes = [
   {
@@ -17,16 +17,16 @@ const routes: Routes = [
         component: HomeComponent,
       },
       {
+        path: ":slug",
+        component: PostComponent,
+      },
+      {
         path: "author/:slug",
         component: AuthorComponent,
       },
       {
         path: "tag/:slug",
-        component: PostsComponent,
-      },
-      {
-        path: ":slug",
-        component: PostComponent,
+        component: TagComponent,
       },
     ]
   },

@@ -129,7 +129,7 @@
                         <div class="post__inner-content-box" [innerHTML]="post.html"></div>
                     </section>
                     <section class="post__tags w-700-centered">
-                        <a href="#" *ngFor="let tag of post.tags">{{tag.name}}</a>
+                        <a *ngFor="let tag of post.tags" routerLink="/tag/{{tag.slug}}">{{tag.name}}</a>
                     </section>
                 </article>
             </main>

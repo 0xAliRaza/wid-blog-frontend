@@ -22,7 +22,7 @@
     }
   }
   &__name {
-    margin: 0 0 pxToRem(6) 0;
+    margin: 0 0 pxToRem(8) 0;
     font-size: pxToRem(42);
     @include media-breakpoint-up(sm) {
       font-size: pxToRem(50);

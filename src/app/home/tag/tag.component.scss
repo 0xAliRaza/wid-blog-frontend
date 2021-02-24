@@ -1,0 +1,33 @@
+@import "sass/index";
+.tag {
+  padding: pxToRem(70) 0 pxToRem(20);
+  border-bottom: pxToRem(0.5) solid $color-grey-light-2;
+
+  &__name {
+    margin: 0 0 pxToRem(8) 0;
+    font-size: pxToRem(42);
+    @include media-breakpoint-up(sm) {
+      font-size: pxToRem(50);
+    }
+    color: $color-grey-dark-4;
+  }
+  &__description {
+    font-size: pxToRem(18);
+    @include media-breakpoint-up(sm) {
+      font-size: pxToRem(20);
+    }
+    color: $color-grey-dark-1;
+    font-weight: 400;
+  }
+
+  &__meta {
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+  }
+
+  &__posts-count {
+    font-size: pxToRem(12);
+    color: $color-grey-dark-1;
+  }
+}

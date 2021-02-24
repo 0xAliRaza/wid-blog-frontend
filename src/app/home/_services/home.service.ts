@@ -32,5 +32,9 @@ export class HomeService {
         return this.http.get<Author>(`${environment.apiUrl}/blog/author/${slug}`);
     }
 
+    getTag(slug: string): Observable<Tag> {
+        return this.http.get<Tag>(`${environment.apiUrl}/blog/tag/${slug}`);
+    }
+
 
 }

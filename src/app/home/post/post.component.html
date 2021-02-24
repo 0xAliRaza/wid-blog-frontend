@@ -15,7 +15,8 @@
                                 <img [ngStyle]="{'opacity': '.5'}" src="assets/img/user.png" alt="" class="img-fluid ">
                             </a>
                             <div class="post__meta-content">
-                                <a href="#" class="post__author-name">{{post.author.name}}</a>
+                                <a routerLink="/author/{{post.author.slug}}"
+                                    class="post__author-name">{{post.author.name}}</a>
                                 <time [title]="post.published_at | date:'long'" [dateTime]="post.published_at"
                                     class="post__publish-date">{{post.published_at |
                                     date}}</time>

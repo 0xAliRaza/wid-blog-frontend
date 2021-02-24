@@ -1,2 +1,29 @@
-<h1>Author works!!!</h1>
-<app-posts></app-posts>
+<ng-container *ngIf="(author$ | async) as author">
+    <div class="container-xl">
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-lg-10">
+                <div class="author">
+
+                    <div class="author__image">
+                        <img src="assets/img/developer.jpg" alt="Author image" class="img-fluid">
+                    </div>
+                    <div class="author__details">
+                        <h1 class="author__name">{{ author.name }}</h1>
+                        <h2 class="author__description" *ngIf="author.description">{{author.description}}</h2>
+                        <div class="author__meta">
+                            <span class="author__posts-count">{{ author.posts.length }} total post<ng-container
+                                    *ngIf="author.posts.length > 1">s
+                                </ng-container></span>
+                            <span class="bullet"></span>
+                            <a *ngIf="author.website" target="_blank" [href]="author.website"
+                                class="author__website">Website <svg-icon class="ml-1" icon="external-link"></svg-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-posts [posts]="author.posts"></app-posts>
+</ng-container>

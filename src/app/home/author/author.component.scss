@@ -1,0 +1,66 @@
+@import "sass/index";
+.author {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  @include media-breakpoint-up(sm) {
+    flex-direction: row;
+  }
+  padding: pxToRem(70) 0 pxToRem(20);
+  border-bottom: pxToRem(0.5) solid $color-grey-light-2;
+  &__image {
+    flex: 0 0 pxToRem(140);
+    max-width: pxToRem(140);
+    img {
+      border-radius: pxToRem(200);
+    }
+  }
+  &__details {
+    margin: pxToRem(30) 0 0;
+    @include media-breakpoint-up(sm) {
+      margin: 0 0 0 pxToRem(30);
+    }
+  }
+  &__name {
+    margin: 0 0 pxToRem(6) 0;
+    font-size: pxToRem(42);
+    @include media-breakpoint-up(sm) {
+      font-size: pxToRem(50);
+    }
+    color: $color-grey-dark-4;
+  }
+  &__description {
+    font-size: pxToRem(18);
+    @include media-breakpoint-up(sm) {
+      font-size: pxToRem(20);
+    }
+    color: $color-grey-dark-1;
+    font-weight: 400;
+  }
+
+  &__meta {
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+  }
+
+  &__posts-count {
+    font-size: pxToRem(12);
+    color: $color-grey-dark-1;
+  }
+  &__website {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: pxToRem(12);
+    font-weight: 500;
+    color: $color-grey-dark-3;
+    text-decoration: none;
+    padding: pxToRem(6) 0;
+    @include hover-focus {
+      color: $color-grey-dark-3;
+      text-decoration: underline;
+    }
+
+  }
+}

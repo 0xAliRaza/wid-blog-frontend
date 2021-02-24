@@ -1,5 +1,9 @@
+import { Post } from "./post";
+
 export interface Author {
-    id: number;
     name: string;
-    slug?: string;
+    slug: string;
+    website?: string;
+    description?: string;
+    posts?: Post[];
 }

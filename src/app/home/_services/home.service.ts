@@ -2,15 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
-import { Post, Tag, Type } from '../_models';
+import { Author, Post, Tag, Type } from '../_models';
 
 @Injectable()
 export class HomeService {
     constructor(private http: HttpClient) { }
-
-    // index(): Observable<any> {
-    //     return this.http.get<any>(`${environment.apiUrl}/blog`);
-    // }
 
     indexPosts(page: number): Observable<any> {
         const params: any = {};
@@ -30,6 +26,10 @@ export class HomeService {
 
     getPost(slug: string): Observable<Post> {
         return this.http.get<Post>(`${environment.apiUrl}/blog/${slug}`);
+    }
+
+    getAuthor(slug: string): Observable<Author> {
+        return this.http.get<Author>(`${environment.apiUrl}/blog/author/${slug}`);
     }
 
 

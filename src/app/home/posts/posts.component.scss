@@ -1,7 +1,11 @@
 @import "sass/index.scss";
 
 main {
-  padding: pxToRem(32) 0;
+  padding: pxToRem(40) 0 pxToRem(60);
+  @include media-breakpoint-up(sm) {
+    padding: pxToRem(58) 0 pxToRem(78);
+
+  }
   max-width: pxToRem(600);
   margin: 0 auto;
 
@@ -13,7 +17,9 @@ main {
 .post-card {
   display: flex;
   flex-direction: column;
-  margin-top: pxToRem(22);
+  &:not(:first-child) {
+    margin-top: pxToRem(22);
+  }
   background-color: $color-white;
   border: pxToRem(0.5) solid rgba($color-grey-light-2, 0.5);
   border-radius: pxToRem(3);

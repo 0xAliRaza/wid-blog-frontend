@@ -3,3 +3,14 @@
   margin: 0 auto;
   padding: 0 pxToRem(10);
 }
+
+.bullet {
+  &:before {
+    content: "\2022";
+    display: inline-block;
+    color: $color-grey-dark-1;
+    margin: 0 pxToRem(12);
+    opacity: 0.6;
+    font-weight: 300;
+  }
+}

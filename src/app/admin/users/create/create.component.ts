@@ -1,10 +1,10 @@
-import { HttpClient } from "@angular/common/http";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { Role } from "@app/admin/_models";
+import { Role, User } from "@app/admin/_models";
 import { AuthenticationService } from "@app/admin/_services";
 import { UsersService } from "@app/admin/_services/users.service";
 import { Subject } from "rxjs";
+import { catchError } from "rxjs/operators";
 
 @Component({
   selector: "app-create",
@@ -12,6 +12,8 @@ import { Subject } from "rxjs";
   styleUrls: ["./create.component.scss"],
 })
 export class CreateComponent implements OnInit, OnDestroy {
+  errors: any;
+  loading = false;
   roles: any[] = [
     {
       name: "Writer",
@@ -33,10 +35,18 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(value) {
-    this.users.create(value).subscribe((user) => {
-      this.users.pushModel(user);
-      this.router.navigate([`admin/user/${user.id}`]);
-    });
+    this.loading = true;
+    this.users.create(value)
+      .pipe(catchError(err => {
+        this.errors = err;
+        this.loading = false;
+        return err;
+      }))
+      .subscribe((user: User) => {
+        this.loading = false;
+        this.users.pushModel(user);
+        this.router.navigate([`admin/user/${user.id}`]);
+      });
   }
 
   ngOnInit() { }

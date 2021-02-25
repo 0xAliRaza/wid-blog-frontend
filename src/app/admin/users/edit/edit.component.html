@@ -1,6 +1,9 @@
 <div class="container">
 
-    <h3 class="text-center my-5">{{user?.name + "'s" | titlecase}} profile</h3>
+    <h3 class="text-center my-5">{{user?.name + "'s" | titlecase}} Profile</h3>
     <admin-user-form *ngIf="user && roles" [user]="user" [roles]="roles" (formChange)="onSubmit($event)"
-        (delete)="onDelete()"></admin-user-form>
+        (delete)="onDelete()" [loading]="loading"></admin-user-form>
 </div>
+
+<popup-msg *ngIf="errors || successMessages.length > 0" [httpErrors]="errors" [successMessages]="successMessages"
+    (noErrorsLeft)="errors=undefined" (noSuccessMessagesLeft)="successMessages = []"></popup-msg>

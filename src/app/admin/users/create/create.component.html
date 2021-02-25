@@ -1,4 +1,5 @@
 <div class="container">
     <h3 class="text-center my-5">New User</h3>
-    <admin-user-form (formChange)="onSubmit($event)" [roles]="roles"></admin-user-form>
+    <admin-user-form (formChange)="onSubmit($event)" [roles]="roles" [loading]="loading"></admin-user-form>
 </div>
+<popup-msg *ngIf="errors" [httpErrors]="errors" (noErrorsLeft)="errors = undefined"></popup-msg>

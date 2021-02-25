@@ -20,13 +20,13 @@ export class FormComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder) {
 
   }
-  loading = false;
   success = false;
   isPassOptional = false;
 
   @Output() formChange = new EventEmitter<any>();
   @Output() delete = new EventEmitter<void>();
 
+  @Input() loading: boolean;
   @Input() roles: any[];
 
   @Input() set user(user: User) {
@@ -35,7 +35,6 @@ export class FormComponent implements OnInit, OnDestroy {
       this.form.markAsPristine();
 
       if (this.loading) {
-        this.loading = false;
         this.success = true;
         setTimeout(() => {
           this.success = false;
@@ -72,7 +71,6 @@ export class FormComponent implements OnInit, OnDestroy {
           filtered[key] = this.form.value[key];
         }
       }
-      this.loading = true;
       this.formChange.emit(filtered);
     }
   }

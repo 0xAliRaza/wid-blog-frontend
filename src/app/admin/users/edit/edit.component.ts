@@ -4,7 +4,7 @@ import { Role, User } from "@app/admin/_models";
 import { AuthenticationService } from "@app/admin/_services";
 import { UsersService } from "@app/admin/_services/users.service";
 import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { catchError, takeUntil } from "rxjs/operators";
 
 @Component({
   selector: "admin-user-edit",
@@ -20,6 +20,9 @@ export class EditComponent implements OnInit, OnDestroy {
   ];
   destroyed$ = new Subject<boolean>();
   user: User;
+  errors: any;
+  successMessages: string[] = [];
+  loading = false;
 
   constructor(
     private users: UsersService,
@@ -36,23 +39,38 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(value) {
-    this.users.update(this.user.id, value).subscribe((user) => {
-      if (this.auth.currentUserValue.id === user.id) {
-        this.auth.updateUserData();
-      }
-      this.user = user;
-    });
+    this.loading = true;
+    this.users.update(this.user.id, value)
+      .pipe(catchError(err => {
+        this.errors = err;
+        this.loading = false;
+        return err;
+      }))
+      .subscribe((user: User) => {
+        this.successMessages.push('User was updated successfully.');
+        this.loading = false;
+        if (this.auth.currentUserValue.id === user.id) {
+          this.auth.updateUserData();
+        }
+        this.user = user;
+      });
   }
 
   onDelete() {
     if (!this.user.exists) {
       return;
     }
-    this.users.delete(this.user.id).subscribe((res: boolean) => {
-      if (res === true) {
-        this.router.navigate(["admin/user"]);
-      }
-    });
+    this.users.delete(this.user.id)
+      .pipe(catchError(err => {
+        this.errors = err;
+        this.loading = false;
+        return err;
+      }))
+      .subscribe((res: boolean) => {
+        if (res === true) {
+          this.router.navigate(["admin/user"]);
+        }
+      });
   }
 
   ngOnInit() {

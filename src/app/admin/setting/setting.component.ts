@@ -14,6 +14,7 @@ export class SettingComponent implements OnInit {
   setting: Setting = new Setting();
   loading = false;
   success = false;
+  errors: any;
   constructor(private http: HttpClient, private fb: FormBuilder) { }
 
   get f() {
@@ -37,6 +38,11 @@ export class SettingComponent implements OnInit {
       this.loading = true;
       this.http
         .post<Setting>(`${environment.apiUrl}/setting`, this.form.value)
+        .pipe(catchError(err => {
+          this.errors = err;
+          this.loading = false;
+          return err;
+        }))
         .pipe(map((res) => new Setting(res)))
         .subscribe((setting: Setting) => {
           this.setting = setting;

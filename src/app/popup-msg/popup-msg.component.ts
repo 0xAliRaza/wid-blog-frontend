@@ -11,7 +11,6 @@ export class PopupMsgComponent implements OnInit {
   _errors: string[];
 
   @Input() set errors(errors: string[]) {
-    this._errors = errors;
     debugger;
   }
   get errors() {

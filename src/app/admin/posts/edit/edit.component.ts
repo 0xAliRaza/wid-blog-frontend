@@ -5,7 +5,7 @@ import { Tag } from "@app/admin/_models/tag";
 import { AuthenticationService, PostsService, TagsService, UsersService } from "@app/admin/_services";
 import { Type } from "@app/home/_models";
 import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { catchError, takeUntil } from "rxjs/operators";
 @Component({
   selector: "app-edit",
   templateUrl: "./edit.component.html",
@@ -19,6 +19,8 @@ export class EditComponent implements OnInit, OnDestroy {
   tags: Tag[];
   allUsers: User[];
   type: Type = Type.Post;
+  errors: any;
+  successMessages: string[] = [];
   constructor(
     private auth: AuthenticationService,
     private posts: PostsService,
@@ -44,13 +46,22 @@ export class EditComponent implements OnInit, OnDestroy {
 
   onFormChange(data: object) {
     this.postStatus = "Saving...";
-    this.posts.update(null, data).subscribe((post: Post) => {
-      if (post.exists) {
-        this.post = post;
-        this.tagsService.pull();
-        this.updatePostStatus();
-      }
-    });
+    this.posts.update(null, data)
+      .pipe(catchError((err) => {
+        this.errors = err;
+        this.postStatus = "Error";
+        return err;
+      }))
+      .subscribe((post: Post) => {
+        if (post.exists) {
+          if (post.published) {
+            this.successMessages.push('Post was successfully published.');
+          }
+          this.post = post;
+          this.tagsService.pull();
+          this.updatePostStatus();
+        }
+      });
   }
 
   onCreateTag(tag: Tag) {
@@ -102,6 +113,8 @@ export class EditComponent implements OnInit, OnDestroy {
         }
       });
   }
+
+
 
   ngOnDestroy() {
     this.destroyed$.next(true);

@@ -12,13 +12,14 @@ export class PopupMsgComponent implements OnInit {
 
   @Input() set errors(errors: string[]) {
     this._errors = errors;
+    debugger;
   }
   get errors() {
     return this._errors;
   }
 
   @Input() set httpErrors(err: HttpErrorResponse) {
-    if (err) {
+    if (err && err instanceof HttpErrorResponse) {
       const errors = err.error.errors
         ? Object.keys(err.error.errors).map((key) => err.error.errors[key])
         : [err.error.message];
@@ -30,7 +31,7 @@ export class PopupMsgComponent implements OnInit {
   @Output() noErrorsLeft: EventEmitter<any> = new EventEmitter();
   @Output() noSuccessMessagesLeft: EventEmitter<any> = new EventEmitter();
 
-  constructor() {}
+  constructor() { }
 
   deleteError(e, key) {
     this.errors.splice(key, 1);
@@ -49,5 +50,5 @@ export class PopupMsgComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

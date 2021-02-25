@@ -5,7 +5,7 @@ import { Tag } from "@app/admin/_models/tag";
 import { AuthenticationService, PostsService, TagsService, UsersService } from "@app/admin/_services";
 import { Type } from "@app/home/_models";
 import { Subject, Subscription } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { catchError, takeUntil } from "rxjs/operators";
 
 @Component({
   selector: "app-create",
@@ -19,6 +19,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   tags: Tag[];
   allUsers: User[];
   type: Type = Type.Post;
+  errors: any;
   constructor(
     private auth: AuthenticationService,
     private posts: PostsService,
@@ -45,13 +46,19 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   onFormChange(data: object) {
     this.postStatus = "Creating...";
-    this.posts.create(data).subscribe((post: Post) => {
-      if (post.exists) {
-        this.tagsService.pull();
-        const url = this.isPage() ? `admin/editor/page/${post.id}` : `admin/editor/post/${post.id}`;
-        this.router.navigate([url]);
-      }
-    });
+    this.posts.create(data)
+      .pipe(catchError(err => {
+        this.errors = err;
+        this.postStatus = "Error";
+        return err;
+      }))
+      .subscribe((post: Post) => {
+        if (post.exists) {
+          this.tagsService.pull();
+          const url = this.isPage() ? `admin/editor/page/${post.id}` : `admin/editor/post/${post.id}`;
+          this.router.navigate([url]);
+        }
+      });
   }
 
   isPage(): boolean {

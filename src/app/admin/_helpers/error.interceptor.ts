@@ -13,7 +13,7 @@ import { User } from "../_models";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(private authenticationService: AuthenticationService) { }
 
   intercept(
     request: HttpRequest<any>,
@@ -58,12 +58,6 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.authenticationService.logout();
           location.reload();
         }
-
-        // Check if CRUD error
-        // if (err.status === 422) {
-        //   // Return the whole error instance to get errors[]
-        //   return throwError(err);
-        // }
 
         return throwError(err);
       })

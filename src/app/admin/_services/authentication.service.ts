@@ -9,7 +9,7 @@ import * as jwt_decode from "jwt-decode";
 
 @Injectable()
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<User>;
+  public currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
   constructor(private http: HttpClient) {
@@ -75,19 +75,16 @@ export class AuthenticationService {
     return this.currentUserValue;
   }
 
-  refreshToken(): Observable<any> {
+  refreshToken(expiredToken: string): Observable<any> {
     return this.http
       .post<User>(
-        `${environment.apiUrl}/auth/refresh`,
-        {
-          title: "Refresh token request!",
-        },
+        `${environment.apiUrl}/auth/refresh`, {},
         {
           // Add the expired token
           headers: new HttpHeaders({
             Accept: `application/json`,
             "Content-Type": `application/json`,
-            Authorization: `Bearer ${this.userToken}`,
+            Authorization: `Bearer ${expiredToken}`,
           }),
         }
       )

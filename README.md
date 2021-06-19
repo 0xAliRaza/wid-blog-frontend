@@ -135,4 +135,4 @@ Feel free to contact me for any kind of help or information. Let's get connected
 - [ ] Testing
 - [ ] Search buttons
 - [ ] Hybrid Rendering
-- [ ] CI/CI
+- [ ] CI/CD

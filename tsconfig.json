@@ -11,17 +11,15 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2018", "dom"],
     "paths": {
       "@app/*": ["src/app/*"],
       "@environments/*": ["src/environments/*"],
       "@admin/*": ["src/app/admin/*"]
-  }
+    }
+  },
+  "angularCompilerOptions": {
+    "disableTypeScriptVersionCheck": true
   }
 }

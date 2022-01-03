@@ -103,6 +103,8 @@ export class EditorComponent implements OnInit, OnDestroy {
   constructor(private slugifyPipe: SlugifyPipe) {
     /* Initialize tinymce  */
     this.tinymceConfig = {
+      base_url: environment.tinymce_base_url,
+      suffix: '.min',
       menubar: false,
       toolbar: false,
       placeholder: "Write it all down...",

@@ -5,6 +5,7 @@
 const SERVER_URL = "http://localhost:8000";
 
 export const environment = {
+  tinymce_base_url: '/tinymce',
   production: false,
   serverUrl: SERVER_URL,
   apiUrl: `${SERVER_URL}/api/v1`,

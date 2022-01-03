@@ -1,4 +1,4 @@
-<admin-post-editor *ngIf="user && allUsers && tags.length > 0" [user]="user" [allUsers]="allUsers" [tags]="tags"
+<admin-post-editor *ngIf="user && allUsers" [user]="user" [allUsers]="allUsers" [tags]="tags"
     [postStatus]="postStatus" (createTag)="onCreateTag($event)" (formChange)="onFormChange($event)" [type]="type">
 </admin-post-editor>
 <popup-msg *ngIf="errors" [httpErrors]="errors" (noErrorsLeft)="errors = undefined"></popup-msg>

@@ -13,6 +13,7 @@
   display: flex;
   align-items: center;
   padding: pxToRem(24) pxToRem(54) 0 pxToRem(24);
+  justify-content: space-between;
   @include media-breakpoint-up(md) {
     padding: pxToRem(24) pxToRem(24) 0;
   }
@@ -27,7 +28,7 @@
     margin-right: pxToRem(24);
     font-size: pxToRem(28);
     font-weight: 300;
-    font-family: "Nunito", sans-serif;
+    // font-family: "Nunito", sans-serif;
     transition: color 0.2s ease;
     @include hover-focus-active {
       color: $color-primary-dark;

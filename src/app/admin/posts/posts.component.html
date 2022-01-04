@@ -54,12 +54,15 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- }" routerLink="{{ canUserEdit()}}/admin/editor/{{isPage() ? 'page': 'post'}}/{{post.id}}" -->
                         <tr *ngFor="let post of POSTS | paginate : {
-                          itemsPerPage: tableSize,
-                          currentPage: currentPage,
-                          totalItems: count
-                        }" routerLink="/admin/editor/{{isPage() ? 'page': 'post'}}/{{post.id}}"
-                            [ngStyle]="{cursor: 'pointer'}" title="Click to edit {{post.title}}">
+                            itemsPerPage: tableSize,
+                            currentPage: currentPage,
+                            totalItems: count
+                        }" [routerLink]="canUserEdit(post.user) ? '/admin/editor/' + (isPage() ? 'page/': 'post/') + post.id : null"
+                        [ngStyle]="{cursor: canUserEdit(post.user) ? 'pointer' : 'not-allowed'}"
+                        [title]="canUserEdit(post.user) ? 'Click to edit ' + post.title : 'You are not authorized to edit this.'"
+                        >
                             <th class="align-middle" scope="row">{{post.id}}</th>
                             <td class="align-middle" class="align-middle">
                                 <div class="text-dark">{{post.title}}</div>

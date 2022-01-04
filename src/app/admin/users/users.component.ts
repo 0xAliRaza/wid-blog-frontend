@@ -27,6 +27,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   canUserEdit(model: User): boolean {
+    if (!model) return;
     if (this.auth.currentUserValue.isSuperAdmin()) {
       return true;
     } else if (this.auth.currentUserValue.isAdmin() && !model.isSuperAdmin()) {
@@ -42,7 +43,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   onRefresh() {
     this.usersService.pull();
   }
-  ngOnInit() { }
+  ngOnInit() {}
   ngOnDestroy() {
     this.destroyed$.next(true);
     this.destroyed$.complete();

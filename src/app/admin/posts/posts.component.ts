@@ -1,13 +1,12 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { environment } from "@environments/environment";
-import { catchError, first, map, takeUntil } from "rxjs/operators";
-import { Subscription, throwError } from "rxjs";
+import { HttpErrorResponse } from "@angular/common/http";
+import { catchError } from "rxjs/operators";
+import { throwError } from "rxjs";
 import { PostsService } from "../_services/posts.service";
 import { AuthenticationService } from "../_services";
-import { Post } from "../_models";
+import { Post, User } from "../_models";
 import { ActivatedRoute } from "@angular/router";
-import { Type } from "@app/home/_models";
+import { Type } from "@app/home/_models"; 
 
 @Component({
   selector: "admin-posts",
@@ -15,7 +14,11 @@ import { Type } from "@app/home/_models";
   styleUrls: ["./posts.component.scss"],
 })
 export class PostsComponent implements OnInit, OnDestroy {
-  constructor(private posts: PostsService, private route: ActivatedRoute) { }
+  constructor(
+    private posts: PostsService,
+    private route: ActivatedRoute,
+    private auth: AuthenticationService
+  ) {}
   httpErrors: HttpErrorResponse;
   successMsgs: string[] = [];
   type: Type = Type.Post;
@@ -32,14 +35,18 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   fetchPosts(): void {
     this.posts
-      .indexPaginated(this.type, this.published, this.currentPage, this.tableSize)
+      .indexPaginated(
+        this.type,
+        this.published,
+        this.currentPage,
+        this.tableSize
+      )
       .subscribe((response) => {
         this.POSTS = response.data as Post[];
         this.count = response.total;
         this.currentPage = response.current_page;
       });
   }
-
 
   onTableDataChange(event: number) {
     this.currentPage = event;
@@ -53,14 +60,13 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   onPostsStatusChange(event): void {
-    if (event.target.value == 'true') {
+    if (event.target.value == "true") {
       this.published = true;
-    } else if (event.target.value == 'false') {
+    } else if (event.target.value == "false") {
       this.published = false;
-    } else if (event.target.value == 'undefined') {
+    } else if (event.target.value == "undefined") {
       this.published = undefined;
-    }
-    else {
+    } else {
       return;
     }
     this.currentPage = 1;
@@ -92,25 +98,39 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.successMsgs = [];
   }
 
-
   onRefresh() {
     this.fetchPosts();
+  }
+
+  canUserEdit(model: User): boolean {
+    if (!model) return;
+    model = new User(model);
+    if (this.auth.currentUserValue.isSuperAdmin()) {
+      return true;
+    } else if (this.auth.currentUserValue.isAdmin() && !model.isSuperAdmin()) {
+      return true;
+    } else if (
+      this.auth.currentUserValue.isWriter() &&
+      this.auth.currentUserValue.id === model.id
+    ) {
+      return true;
+    }
+    return false;
   }
 
   ngOnInit(): void {
     if (this.route.snapshot.data.page) {
       this.type = Type.Page;
     }
-    this.route.queryParams
-      .subscribe((params) => {
-        if (params.status === "published") {
-          this.published = true;
-        }
-        if (params.status === "draft") {
-          this.published = false;
-        }
-        this.fetchPosts();
-      });
+    this.route.queryParams.subscribe((params) => {
+      if (params.status === "published") {
+        this.published = true;
+      }
+      if (params.status === "draft") {
+        this.published = false;
+      }
+      this.fetchPosts();
+    });
   }
-  ngOnDestroy() { }
+  ngOnDestroy() {}
 }

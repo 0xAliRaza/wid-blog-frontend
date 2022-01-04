@@ -114,3 +114,5 @@
         </div>
     </div>
 </div>
+
+<popup-msg *ngIf="errors" [httpErrors]="errors" (noErrorsLeft)="errors = undefined"></popup-msg>

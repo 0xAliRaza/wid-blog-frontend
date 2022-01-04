@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
-import { Observable, Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
-import { Tag, User } from "../_models";
-import { AuthenticationService } from "../_services";
+import { Subject } from "rxjs";
+import { catchError, takeUntil } from "rxjs/operators";
+import { Tag } from "../_models";
 import { TagsService } from "../_services/tags.service";
 
 @Component({
@@ -15,10 +14,10 @@ export class TagsComponent implements OnInit, OnDestroy {
   tags: Tag[];
   editTag: Tag;
   createTag = false;
+  errors: any;
   destroyed$: Subject<boolean> = new Subject<boolean>();
   constructor(
     private tagsService: TagsService,
-    private auth: AuthenticationService,
     private fb: FormBuilder
   ) {
     this.tagsService.models$
@@ -64,18 +63,38 @@ export class TagsComponent implements OnInit, OnDestroy {
   }
 
   create() {
-    this.tagsService.create(this.form.value).subscribe((tag: Tag) => {
-      this.tagsService.pushModel(tag);
-      this.createTag = false;
-    });
+    this.tagsService
+      .create(this.form.value)
+      .pipe(
+        catchError((err) => {
+          this.errors = err;
+          return err;
+        })
+      )
+      .subscribe((tag: Tag) => {
+        if (tag) {
+          this.tagsService.pushModel(tag);
+          this.createTag = false;
+          this.errors = null;
+        }
+      });
   }
 
   delete(i: number, id: number) {
-    this.tagsService.delete(id).subscribe((res: boolean) => {
-      if (res === true) {
-        this.tagsService.deleteModel(i);
-      }
-    });
+    this.tagsService
+      .delete(id)
+      .pipe(
+        catchError((err) => {
+          this.errors = err;
+          return err;
+        })
+      )
+      .subscribe((res: boolean) => {
+        if (res === true) {
+          this.tagsService.deleteModel(i);
+          this.errors = null;
+        }
+      });
   }
 
   onRefresh() {

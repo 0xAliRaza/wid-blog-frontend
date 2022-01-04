@@ -1,42 +1,46 @@
 <div class="container">
-<div class="row">
-    <div class="col-sm-12">
-        <h3 class="text-center my-5">
-            Users
-        </h3>
-        <div class="d-flex align-items-center justify-content-end my-4">
-            <button title="Add new user" routerLink="/admin/user/new"
-                class="btn btn-outline-primary d-inline-flex align-items-center mr-2">Create
-                User</button>
-        </div>
-        <button title="Refresh" type="button" (click)="onRefresh()" class="btn btn-link d-inline-flex align-items-center float-right my-1"><svg-icon class="" icon="refresh"></svg-icon></button>
-        <div class="table-responsive shadow-sm">
-            <table class="table table-hover m-0">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="text-center my-5">
+                Users
+            </h3>
+            <div class="d-flex align-items-center justify-content-end my-4">
+                <button title="Add new user" routerLink="/admin/user/new"
+                    class="btn btn-outline-primary d-inline-flex align-items-center mr-2">Create
+                    User</button>
+            </div>
+            <button title="Refresh" type="button" (click)="onRefresh()"
+                class="btn btn-link d-inline-flex align-items-center float-right my-1">
+                <svg-icon class="" icon="refresh"></svg-icon>
+            </button>
+            <div class="table-responsive shadow-sm">
+                <table class="table table-hover m-0">
 
-                <thead class="">
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                    </tr>
-                </thead>
+                    <thead class="">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                    <tr *ngFor="let user of users" title="{{ canUserEdit(user) ? 'Click to edit ' + user.name: '' }}"
-                        [ngStyle]="{cursor: canUserEdit(user) ? 'pointer' : 'not-allowed'}"
-                        [routerLink]="canUserEdit(user) ? ['/admin/user/' + user.id] : []">
-                        <th role="row">{{user.id}}</th>
-                        <td>{{user.name}} <span class="text-secondary" *ngIf="user.id
+                    <tbody>
+                        <tr *ngFor="let user of users"
+                            title="{{ canUserEdit(user) ? 'Click to edit ' + user.name +'.': 'You are unauthorized to edit this user.' }}"
+                            [ngStyle]="{cursor: canUserEdit(user) ? 'pointer' : 'not-allowed'}"
+                            [routerLink]="canUserEdit(user) ? ['/admin/user/' + user.id] : []">
+                            <th role="row">{{user.id}}</th>
+                            <td>{{user.name}} <span class="text-secondary" *ngIf="user.id
                                 === currentUser.id">(you)</span> </td>
-                        <td>{{user.email}}</td>
-                        <td><span class="badge badge-pill"
-                                [ngClass]="{'badge-success': user.isSuperAdmin(), 'badge-info': user.isAdmin(), 'badge-dark': user.isWriter()}">
-                                {{user.role | lowercase}}</span></td>
-                    </tr>
-                </tbody>
-            </table>
+                            <td>{{user.email}}</td>
+                            <td><span class="badge badge-pill"
+                                    [ngClass]="{'badge-success': user.isSuperAdmin(), 'badge-info': user.isAdmin(), 'badge-dark': user.isWriter()}">
+                                    {{user.role | lowercase}}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 </div>

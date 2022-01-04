@@ -1,15 +1,30 @@
 <h1 align="center"> Write It Down (Frontend) </h1>
+
+<p align="center">
+  <a href="https://github.com/0xAliRaza/wid-blog-frontend/blob/master/LICENSE"><img src="https://img.shields.io/github/license/0xaliraza/wid-blog-frontend?sanitize=true" alt="License"></a>
+  <a href="https://github.com/0xAliRaza/wid-blog-frontend/actions/workflows/build.yml"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/0xaliraza/wid-blog-frontend/Build" alt="Build Status"></a>
+  <a href="https://github.com/0xAliRaza/wid-blog-frontend/actions/workflows/pages/pages-build-deployment"><img alt="GitHub Workflow Status" src="https://github.com/0xAliRaza/wid-blog-frontend/actions/workflows/pages/pages-build-deployment/badge.svg" alt="Build Status"></a>
+  
+</p>
+
 <p align="center">
 	<a href="#getting-started">Quick Install (node js)</a> |
 	<a href="#about">About</a> |
 	<a href="#features">Features</a> |
 	<a href="#authors">Authors</a> |
-	<a href="#to-do">Upcoming</a>
+	<a href="https://0xali.com/wid-blog-frontend">Live Demo</a>
 </p>
 
-Also, check out the [wid-blog-backend](http://github.com/0xaliraza/wid-blog-backend).
 
-Write It Down - Frontend is a free to use fully-featured Single Page Application built with [Angular 8.x](https://angular.io).
+
+<p align="center">
+Write It Down - Frontend is a free to use fully-featured SPA blog built with <a href="https://angular.io">Angular 8</a>.
+</p>
+
+<p align="center">
+(Also, don't forget to check out the <a href="http://github.com/0xaliraza/wid-blog-backend">wid-blog-backend</a>. 😉)
+
+</p>
 
 ![wid-blog-backend preview](https://i.imgur.com/KH6rLyO.png)
 
@@ -135,4 +150,4 @@ Feel free to contact me for any kind of help or information. Let's get connected
 - [ ] Testing
 - [ ] Search buttons
 - [ ] Hybrid Rendering
-- [ ] CI/CD
+- [x] CI/CD

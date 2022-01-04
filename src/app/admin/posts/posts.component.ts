@@ -6,7 +6,7 @@ import { PostsService } from "../_services/posts.service";
 import { AuthenticationService } from "../_services";
 import { Post, User } from "../_models";
 import { ActivatedRoute } from "@angular/router";
-import { Type } from "@app/home/_models"; 
+import { Type } from "@app/home/_models";
 
 @Component({
   selector: "admin-posts",
@@ -123,11 +123,12 @@ export class PostsComponent implements OnInit, OnDestroy {
       this.type = Type.Page;
     }
     this.route.queryParams.subscribe((params) => {
-      if (params.status === "published") {
+      if (params.type === "published") {
         this.published = true;
-      }
-      if (params.status === "draft") {
+      } else if (params.type === "draft") {
         this.published = false;
+      } else {
+        this.published = undefined;
       }
       this.fetchPosts();
     });

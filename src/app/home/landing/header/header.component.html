@@ -1,50 +1,51 @@
 <header class="header-top">
-    <div class="container-xl">
-      <div class="row">
-        <div class="col-sm-12">
-          <nav class="top-nav">
-            <a class="top-nav__brand" routerLink="/">WID</a>
-  
-            <div *ngIf="topNavVisible" [@slideInOutFromRight] class="top-nav__res-list-wrapper">
-              <ul class="top-nav__list">
-                <li class="top-nav__item">
-                  <a class="top-nav__link" routerLink="/">Home</a>
-                </li>
-                <li *ngFor="let page of pages$ | async" class="top-nav__item">
-                  <a class="top-nav__link" [routerLink]="['/', page.slug]">{{page.title}}</a>
-                </li>
-              </ul>
-            </div>
-  
+  <div class="container-xl">
+    <div class="row">
+      <div class="col-sm-12">
+        <nav class="top-nav">
+          <a class="top-nav__brand" routerLink="/">WID</a>
+
+          <div *ngIf="topNavVisible" [@slideInOutFromRight] class="top-nav__res-list-wrapper">
             <ul class="top-nav__list">
-              <!-- <li class="top-nav__item">
+              <li class="top-nav__item">
+                <a class="top-nav__link" routerLink="/" (click)="topNavVisible = false">Home</a>
+              </li>
+              <li *ngFor="let page of pages$ | async" class="top-nav__item">
+                <a class="top-nav__link" [routerLink]="['/', page.slug]"
+                  (click)="topNavVisible = false">{{page.title}}</a>
+              </li>
+            </ul>
+          </div>
+
+          <ul class="top-nav__list">
+            <!-- <li class="top-nav__item">
                 <a href="#" class="btn btn-sm top-nav__link">
                   <svg-icon icon="search" class="mr-1"></svg-icon> Search
                 </a>
               </li> -->
-              <li class="top-nav__item">
-                <a class="top-nav__link" routerLink="/admin">Dashboard
-                  <svg-icon icon="external-link" class="ml-1"></svg-icon>
-                </a>
-              </li>
-            </ul>
-            <a class="top-nav__res-list-toggler" (click)="toggleTopNav()">
-              <span class="top-nav__res-list-toggler-icon"
-                [ngClass]="{'top-nav__res-list-toggler-icon--cross': topNavVisible}"></span>
-            </a>
-          </nav>
-        </div>
-        <div class="col-sm-12">
-          <div class="top-tags">
-            <ul class="top-tags__list">
-              <li *ngFor="let tag of tags$ | async">
-                <a [routerLink]="['/tag', tag.slug]" routerLinkActive="top-tags__link--active"
-                  class="top-tags__link">{{tag.name}}</a>
-              </li>
-            </ul>
-          </div>
+            <li class="top-nav__item">
+              <a class="top-nav__link" routerLink="/admin" >Dashboard
+                <svg-icon icon="external-link" class="ml-1"></svg-icon>
+              </a>
+            </li>
+          </ul>
+          <a class="top-nav__res-list-toggler" (click)="toggleTopNav()">
+            <span class="top-nav__res-list-toggler-icon"
+              [ngClass]="{'top-nav__res-list-toggler-icon--cross': topNavVisible}"></span>
+          </a>
+        </nav>
+      </div>
+      <div class="col-sm-12">
+        <div class="top-tags">
+          <ul class="top-tags__list">
+            <li *ngFor="let tag of tags$ | async">
+              <a [routerLink]="['/tag', tag.slug]" routerLinkActive="top-tags__link--active"
+                class="top-tags__link">{{tag.name}}</a>
+            </li>
+          </ul>
         </div>
       </div>
-  
     </div>
-  </header>
+
+  </div>
+</header>

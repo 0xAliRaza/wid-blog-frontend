@@ -2,8 +2,8 @@
 
 <p align="center">
   <a href="https://github.com/0xAliRaza/wid-blog-frontend/blob/master/LICENSE"><img src="https://img.shields.io/github/license/0xaliraza/wid-blog-frontend?sanitize=true" alt="License"></a>
-  <a href="https://github.com/0xAliRaza/wid-blog-frontend/actions/workflows/build.yml"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/0xaliraza/wid-blog-frontend/Build" alt="Build Status"></a>
-  <a href="https://github.com/0xAliRaza/wid-blog-frontend/actions/workflows/pages/pages-build-deployment"><img alt="GitHub Workflow Status" src="https://github.com/0xAliRaza/wid-blog-frontend/actions/workflows/pages/pages-build-deployment/badge.svg" alt="Build Status"></a>
+  <a href="https://github.com/0xAliRaza/wid-blog-frontend/actions/workflows/build.yml"><img src="https://img.shields.io/github/workflow/status/0xaliraza/wid-blog-frontend/Build" alt="Build Status"></a>
+  <a href="https://github.com/0xAliRaza/wid-blog-frontend/actions/workflows/pages/pages-build-deployment"><img src="https://github.com/0xAliRaza/wid-blog-frontend/actions/workflows/pages/pages-build-deployment/badge.svg" alt="Pages Build Status"></a>
   
 </p>
 

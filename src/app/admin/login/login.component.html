@@ -43,11 +43,11 @@
               autofocus
               [ngClass]="{
                 'form-control': true,
-                'is-invalid': submitted && f.email.errors
+                'is-invalid': loginForm.dirty && f.email.errors
               }"
             />
             <div
-              *ngIf="submitted && f.email.errors"
+              *ngIf="loginForm && f.email.errors"
               class="invalid-feedback d-block"
             >
               <div *ngIf="f.email.errors.required">Email is required.</div>
@@ -66,12 +66,12 @@
               spellcheck="false"
               [ngClass]="{
                 'form-control': true,
-                'is-invalid': submitted && f.password.errors
+                'is-invalid': loginForm.dirty && f.password.errors
               }"
             />
 
             <div
-              *ngIf="submitted && f.password.errors"
+              *ngIf="loginForm.dirty && f.password.errors"
               class="invalid-feedback d-block"
             >
               <div *ngIf="f.password.errors.required">

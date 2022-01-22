@@ -13,13 +13,8 @@ import { User } from "../_models";
   encapsulation: ViewEncapsulation.None,
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  loginForm = this.fb.group({
-    email: ["demo-admin@example.com", [Validators.required, Validators.email]],
-    password: ["demo-admin", Validators.required],
-    demoUserRole: ["admin", Validators.required],
-  });
+  loginForm: FormGroup;
   loading = false;
-  submitted = false;
   returnUrl: string;
   error = "";
   private loginSubscription: Subscription;
@@ -34,6 +29,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(["admin"]);
     }
+    this.loginForm = this.fb.group({
+      email: [
+        "demo-admin@example.com",
+        [Validators.required, Validators.email],
+      ],
+      password: ["demo-admin", Validators.required],
+      demoUserRole: ["admin", Validators.required],
+    });
   }
 
   onDemoUserRoleChange() {
@@ -58,7 +61,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.submitted = true;
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {

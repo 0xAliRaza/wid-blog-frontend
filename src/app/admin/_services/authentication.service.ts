@@ -7,7 +7,6 @@ import { User } from "@admin/_models";
 
 @Injectable()
 export class AuthenticationService {
-
   // An rxjs behavior subject which keeps the latest user data stored.
   private currentUserSubject: BehaviorSubject<User>;
 
@@ -15,9 +14,7 @@ export class AuthenticationService {
   // -the actual data (currentUserSubject in this case) directly.
   currentUser: Observable<User>;
 
-
   constructor(private http: HttpClient) {
-
     // Get stored user data from local storage and store it to Subject
     this.currentUserSubject = new BehaviorSubject<User>(
       new User(JSON.parse(localStorage.getItem("currentUser")))
@@ -26,7 +23,6 @@ export class AuthenticationService {
     // Convert User Subject to Observable to make it subscribable
     this.currentUser = this.currentUserSubject.asObservable();
   }
-
 
   /**
    * Gets logged in user's data.
@@ -37,7 +33,6 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-
   /**
    * Gets logged in User's authentication token.
    *
@@ -46,7 +41,6 @@ export class AuthenticationService {
   get userToken(): string {
     return this.currentUserValue.token;
   }
-
 
   /**
    * Gets the latest user data from API.
@@ -61,7 +55,6 @@ export class AuthenticationService {
       .pipe(map((res) => new User(res)));
   }
 
-
   /**
    * Submits a http Post request with user credentials to the API
    * and stores the returned user data including JWT.
@@ -74,12 +67,12 @@ export class AuthenticationService {
   login(email: string, password: string): Observable<User> {
     return this.http
       .post(`${environment.apiUrl}/auth/login`, { email, password })
-      .pipe(map((res) => new User(res)))
-
-      // Save the user data as a side effect.
-      .pipe(tap((user: User) => this.storeUserData(user)));
+      .pipe(
+        map((res) => new User(res)),
+        // Save the user data as a side effect.
+        tap((user: User) => this.storeUserData(user))
+      );
   }
-
 
   /**
    * Submits a request to the API to get latest user data from currently stored JWT
@@ -92,7 +85,6 @@ export class AuthenticationService {
     this.me()
       .pipe(
         map((res) => {
-
           // Convert the response to type `User` and add token to it.
           const user = new User(res);
           user.token = this.userToken;
@@ -107,7 +99,6 @@ export class AuthenticationService {
     return this.currentUserValue;
   }
 
-
   /**
    * Submits provided user data to `currentUserSubject`.
    *
@@ -116,7 +107,6 @@ export class AuthenticationService {
   feedNewUserData(user: User) {
     this.currentUserSubject.next(user);
   }
-
 
   /**
    * Refreshes the expired token and return latest user data.
@@ -128,7 +118,8 @@ export class AuthenticationService {
   refreshToken(expiredToken: string): Observable<User> {
     return this.http
       .post<User>(
-        `${environment.apiUrl}/auth/refresh`, {},
+        `${environment.apiUrl}/auth/refresh`,
+        {},
         {
           // Add the expired token and other important headers.
           headers: new HttpHeaders({
@@ -144,7 +135,6 @@ export class AuthenticationService {
       );
   }
 
-
   /**
    * Stores provided user to local storage and feeds it
    * to the subscribers of `currentUserSubject`.
@@ -156,7 +146,6 @@ export class AuthenticationService {
     this.currentUserSubject.next(user);
   }
 
-
   /**
    * Sends a request to APi to logout the current user and
    * deletes the saved user data from local storage.
@@ -164,11 +153,8 @@ export class AuthenticationService {
    * @return void
    */
   logout(): void {
-
     // Send a http request to invalidate current user token.
-    this.http
-      .post(`${environment.apiUrl}/auth/logout`, {})
-      .subscribe();
+    this.http.post(`${environment.apiUrl}/auth/logout`, {}).subscribe();
 
     // Remove current user data from the local storage
     // - and feed null to subscribers of the Subject.

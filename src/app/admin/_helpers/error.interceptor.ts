@@ -4,6 +4,7 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpErrorResponse,
 } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError, switchMap, filter, take } from "rxjs/operators";
@@ -11,40 +12,33 @@ import { catchError, switchMap, filter, take } from "rxjs/operators";
 import { AuthenticationService } from "@admin/_services";
 import { User } from "../_models";
 
-
 /**
  * Catches errors and if the error is related
  * token expiry then refreshes the current user token.
  */
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService) {}
 
   // A variable to determine if the interceptor is currently
   // - refreshing a user token or not.
   private isRefreshingToken = false;
-
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
-
       catchError((err) => {
-
         // Check if unauthorized error was thrown
         if (err.status === 401) {
-          return this.handleUnauthorized(request, next);
+          return this.handleUnauthorized(request, next, err);
         }
 
         return throwError(err);
       })
-
     );
   }
-
 
   /**
    * Adds jwt token a http request for authorization along
@@ -57,30 +51,36 @@ export class ErrorInterceptor implements HttpInterceptor {
     return request.clone({
       setHeaders: {
         Accept: `application/json`,
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
   }
-
 
   /**
    * Refreshes expired token and continues the requests.
    *
    * @param request Request in which error has occurred.
    * @param next Handler to call when done.
+   * @param error Forwarded error.
    */
-  private handleUnauthorized(request: HttpRequest<any>, next: HttpHandler) {
+  private handleUnauthorized(
+    request: HttpRequest<any>,
+    next: HttpHandler,
+    error: HttpErrorResponse | any
+  ) {
     if (this.isRefreshingToken) {
-      
       // If token refresh is in progress, we'll wait until it's refreshed
-      return this.authenticationService.currentUser
-        .pipe(
-          filter((user: User) => user.token != null),
-          take(1),
-          switchMap((user: User) => {
-            return next.handle(this.addToken(request, user.token));
-          }));
-    } else {
+      return this.authenticationService.currentUser.pipe(
+        filter((user: User) => user.token != null),
+        take(1),
+        switchMap((user: User) => {
+          return next.handle(this.addToken(request, user.token));
+        })
+      );
+    } else if (
+      this.authenticationService.currentUserValue &&
+      this.authenticationService.userToken
+    ) {
       this.isRefreshingToken = true;
 
       const expiredToken = this.authenticationService.userToken;
@@ -107,8 +107,8 @@ export class ErrorInterceptor implements HttpInterceptor {
           }
         })
       );
-
+    } else {
+      return throwError(error);
     }
   }
-
 }

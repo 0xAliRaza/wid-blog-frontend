@@ -83,7 +83,10 @@
             Note: For demo purposes inputs are already filled with existing
             credentials.
           </div>
-          <button [disabled]="loading" class="btn btn-primary btn-block">
+          <button
+            [disabled]="loading || loginForm.invalid"
+            class="btn btn-primary btn-block"
+          >
             <span
               *ngIf="loading"
               class="spinner-border spinner-border-sm mr-1"
@@ -95,7 +98,9 @@
           </div>
           <p class="alert alert-warning my-2">
             Warning: This login interface is just for demo purposes of
-            <a href="https://github.com/0xaliraza/wid-blog-frontend" target="_blank"
+            <a
+              href="https://github.com/0xaliraza/wid-blog-frontend"
+              target="_blank"
               >Write It Down</a
             >
             by

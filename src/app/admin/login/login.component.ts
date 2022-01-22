@@ -1,15 +1,23 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { first } from "rxjs/operators";
+import { catchError, first } from "rxjs/operators";
 
 import { AuthenticationService } from "@admin/_services";
 import { Subscription } from "rxjs";
-import { User } from '../_models';
+import { User } from "../_models";
 
-@Component({ templateUrl: "login.component.html" })
+@Component({
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.scss"],
+  encapsulation: ViewEncapsulation.None,
+})
 export class LoginComponent implements OnInit, OnDestroy {
-  loginForm: FormGroup;
+  loginForm = this.fb.group({
+    email: ["demo-admin@example.com", [Validators.required, Validators.email]],
+    password: ["demo-admin", Validators.required],
+    demoUserRole: ["admin", Validators.required],
+  });
   loading = false;
   submitted = false;
   returnUrl: string;
@@ -17,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private loginSubscription: Subscription;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService
@@ -28,17 +36,23 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
+  onDemoUserRoleChange() {
+    if (!this.loginForm) return;
+    if (this.f.demoUserRole.value === "admin") {
+      this.f.email.setValue("demo-admin@example.com");
+      this.f.password.setValue("demo-admin");
+    } else if (this.f.demoUserRole.value === "writer") {
+      this.f.email.setValue("demo-writer@example.com");
+      this.f.password.setValue("demo-writer");
+    }
+  }
+
   // convenience getter for easy access to form fields
   get f() {
     return this.loginForm.controls;
   }
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
-      email: ["", Validators.required],
-      password: ["", Validators.required],
-    });
-
     // get return url from route parameters or default to '/admin'
     this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/admin";
   }
@@ -53,17 +67,20 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.loginSubscription = this.authenticationService
       .login(this.f.email.value, this.f.password.value)
+
       .subscribe(
         (data: User) => {
           this.router.navigateByUrl(this.returnUrl);
         },
         (error) => {
           console.log(error);
-          this.error = error;
+          this.error =
+            error.error.message ||
+            `${error.status} ${error.statusText}: ${error.message}` ||
+            error;
         }
       );
   }
 
-  ngOnDestroy() {
-  }
+  ngOnDestroy() {}
 }

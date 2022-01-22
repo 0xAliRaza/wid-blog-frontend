@@ -1,0 +1,56 @@
+@import "sass/index";
+body {
+  background: $color-grey-light-1;
+}
+.login {
+  .personal-brand {
+    font-size: 28px;
+    font-weight: 500;
+    color: $color-primary;
+    text-decoration: none;
+    @include hover-focus {
+      color: $color-primary-dark;
+    }
+  }
+  &-form {
+    max-width: 400px;
+
+    .form-control {
+      transition: border 0.3s ease-in-out, -webkit-box-shadow 0.3s ease-in-out;
+      transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      min-height: 45px;
+      border: 1px solid $color-grey-light-2;
+      @include hover-focus {
+        border: 1px solid rgba(9, 132, 227, 0.25);
+        box-shadow: 0 0 4px 0px rgba(9, 132, 227, 0.25);
+      }
+      &.is-invalid {
+        border: 1px solid $color-danger;
+      }
+    }
+
+    .form-label {
+      font-size: 15px;
+      color: $color-grey-dark-2;
+    }
+    .form-text {
+      font-size: 14px;
+      color: $color-grey-dark-1;
+    }
+    .btn {
+      padding: 8px 16px;
+      background-color: $color-primary;
+      border: 1px solid rgba($color-primary-dark, 0.7);
+      @include hover-focus {
+        background-color: $color-primary-dark;
+        border: 1px solid rgba($color-primary-darker, 0.7);
+      }
+    }
+    a {
+      color: $color-primary;
+      @include hover-focus {
+        color: $color-primary-dark;
+      }
+    }
+  }
+}

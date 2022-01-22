@@ -1,34 +1,108 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-6 offset-md-3 mt-5">
-            <div class="card">
-                <h4 class="card-header">Please Login...</h4>
-                <div class="card-body">
-                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" formControlName="email" class="form-control"
-                                [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-                            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                                <div *ngIf="f.email.errors.required">Email is required</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" formControlName="password" class="form-control"
-                                [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                                <div *ngIf="f.password.errors.required">Password is required</div>
-                            </div>
-                        </div>
-                        <button [disabled]="loading" class="btn btn-primary">
-                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                            Login
-                        </button>
-                        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
-                    </form>
-                </div>
-            </div>
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <main
+        class="py-5 login d-flex flex-column justify-content-center align-items-center min-vh-100"
+      >
+        <div class="mb-4">
+          <a href="https://0xali.com" class="personal-brand" target="_blank"
+            >@0xAliRaza</a
+          >
         </div>
+
+        <form
+          class="login-form mx-auto"
+          [formGroup]="loginForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <div class="form-group">
+            <label class="form-label" for="role">Demo User Role</label>
+            <select
+              name="role"
+              id="role"
+              class="form-control"
+              formControlName="demoUserRole"
+              (change)="onDemoUserRoleChange()"
+            >
+              <option [ngValue]="'admin'" selected>Admin</option>
+              <option [ngValue]="'writer'">Writer</option>
+              <option disabled>Superadmin</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input
+              type="email"
+              formControlName="email"
+              id="username"
+              inputmode="email"
+              required
+              autocomplete="username"
+              autocapitalize="none"
+              spellcheck="false"
+              autofocus
+              [ngClass]="{
+                'form-control': true,
+                'is-invalid': submitted && f.email.errors
+              }"
+            />
+            <div
+              *ngIf="submitted && f.email.errors"
+              class="invalid-feedback d-block"
+            >
+              <div *ngIf="f.email.errors.required">Email is required.</div>
+              <div *ngIf="f.email.errors.email">Email is invalid.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <input
+              type="password"
+              formControlName="password"
+              id="password"
+              required
+              autocomplete="current-password"
+              autocapitalize="none"
+              spellcheck="false"
+              [ngClass]="{
+                'form-control': true,
+                'is-invalid': submitted && f.password.errors
+              }"
+            />
+
+            <div
+              *ngIf="submitted && f.password.errors"
+              class="invalid-feedback d-block"
+            >
+              <div *ngIf="f.password.errors.required">
+                Password is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-text mb-2">
+            Note: For demo purposes inputs are already filled with existing
+            credentials.
+          </div>
+          <button [disabled]="loading" class="btn btn-primary btn-block">
+            <span
+              *ngIf="loading"
+              class="spinner-border spinner-border-sm mr-1"
+            ></span>
+            Login
+          </button>
+          <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+            {{ error }}
+          </div>
+          <p class="alert alert-warning my-2">
+            Warning: This login interface is just for demo purposes of
+            <a href="https://github.com/0xaliraza/wid-blog-frontend" target="_blank"
+              >Write It Down</a
+            >
+            by
+            <a href="https://github.com/0xaliraza" target="_blank">Ali Raza</a>.
+          </p>
+        </form>
+      </main>
     </div>
+  </div>
 </div>

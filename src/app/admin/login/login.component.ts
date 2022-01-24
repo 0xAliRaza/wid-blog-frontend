@@ -61,9 +61,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-
+    this.loading = true;
     // stop here if form is invalid
     if (this.loginForm.invalid) {
+      this.loading = false;
       return;
     }
 
@@ -72,9 +73,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       .subscribe(
         (data: User) => {
-          this.router.navigateByUrl(this.returnUrl);
+          try {
+            this.router.navigateByUrl(this.returnUrl);
+          } catch (error) {
+            this.loading = false;
+            console.log(error);
+          }
         },
         (error) => {
+          this.loading = false;
           console.log(error);
           this.error =
             error.error.message ||
